@@ -100,10 +100,53 @@ exports.register = async (req, res) => {
             { expiresIn: '30d' } // Production session length
         );
 
+        const SENDER = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
+        const OWNER_EMAIL = process.env.OWNER_EMAIL || process.env.EMAIL_USER;
+
         res.status(201).json({
             token,
             user: { id: user._id, name: user.name, email: user.email, phone: user.phone, deliveryAddress: user.deliveryAddress, isAdmin: user.isAdmin }
         });
+
+        // Send welcome emails asynchronously (after response so signup is instant)
+        transporter.sendMail({
+            from: `Venthulir Organic <${SENDER}>`,
+            to: email,
+            subject: '🌿 Welcome to Venthulir Organic Harvest!',
+            html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
+                <div style="background: #0b3d2e; padding: 30px; text-align: center;">
+                    <h1 style="color: #d4af37; margin: 0; letter-spacing: 3px;">VENTHULIR</h1>
+                    <p style="color: #a7f3d0; font-size: 13px; margin: 5px 0 0;">Organic Harvest</p>
+                </div>
+                <div style="padding: 30px;">
+                    <h2 style="color: #0b3d2e;">Welcome, ${name}! 🎉</h2>
+                    <p style="color: #555; line-height: 1.7;">Your Venthulir account has been created successfully. You can now shop our premium organic products, track your orders, and enjoy exclusive member benefits.</p>
+                    <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 16px; margin: 20px 0;">
+                        <p style="margin: 0; color: #166534; font-size: 14px;"><strong>📧 Email:</strong> ${email}</p>
+                    </div>
+                    <p style="color: #777; font-size: 13px;">If you did not create this account, please contact us immediately at theventhulir@gmail.com</p>
+                </div>
+                <div style="background: #0b3d2e; padding: 16px; text-align: center; font-size: 12px; color: #a7f3d0;">
+                    <p style="margin: 0;">© ${new Date().getFullYear()} Venthulir Royal Reserves. All rights reserved.</p>
+                </div>
+            </div>`
+        }).catch(console.error);
+
+        // Notify owner of new signup
+        transporter.sendMail({
+            from: `Venthulir System <${SENDER}>`,
+            to: OWNER_EMAIL,
+            subject: `🆕 New Customer Registered: ${name}`,
+            html: `<div style="font-family: Arial; padding: 20px; max-width: 500px; border: 1px solid #eee; border-radius: 8px;">
+                <h3 style="color: #0b3d2e;">New Customer Registered</h3>
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Phone:</strong> ${phone}</p>
+                <p><strong>Registered At:</strong> ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</p>
+            </div>`
+        }).catch(console.error);
+
     } catch (err) {
         console.error(err);
         res.status(500).json({ msg: 'Sovereign Server Error' });

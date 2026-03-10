@@ -188,7 +188,7 @@ exports.applyCheckout = async (req, res) => {
         try {
             // Customer confirmation
             await transporter.sendMail({
-                from: `"Venthulir Official" <${process.env.EMAIL_USER}>`,
+                from: `Venthulir Official <${process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'}>`,
                 to: customerEmail,
                 subject: `✅ Order Confirmed - #${newOrder._id} | Venthulir`,
                 html: emailHtml
@@ -196,7 +196,7 @@ exports.applyCheckout = async (req, res) => {
 
             // Owner notification
             await transporter.sendMail({
-                from: `"Venthulir Orders" <${process.env.EMAIL_USER}>`,
+                from: `Venthulir Orders <${process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'}>`,
                 to: OWNER_EMAIL,
                 subject: `🛒 NEW ORDER ₹${finalAmount} from ${customerName} - #${newOrder._id}`,
                 html: ownerHtml
