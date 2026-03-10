@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
-const nodemailer = require('nodemailer');
+// Shared transporter used instead
 require('dotenv').config();
 
 // Ensure uploads directory exists
@@ -29,13 +29,7 @@ app.use(cors());
 app.use('/uploads', express.static(uploadDir));
 
 // 0. EMAIL CONFIGURATION
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
-});
+const transporter = require('./utils/email');
 
 const LOGO_URL = 'https://i.ibb.co/S4vWN0XK/organic.png';
 
@@ -288,7 +282,9 @@ app.delete('/api/admin/products/:id', async (req, res) => {
 app.post('/api/admin/upload', upload.array('images', 10), (req, res) => {
     try {
         if (!req.files || req.files.length === 0) return res.status(400).json({ error: 'No images provided' });
-        const imageUrls = req.files.map(file => `http://localhost:7000/uploads/${file.filename}`);
+        const protocol = req.protocol;
+        const host = req.get('host');
+        const imageUrls = req.files.map(file => `${protocol}://${host}/uploads/${file.filename}`);
         res.json({ imageUrls });
     } catch (err) {
         res.status(500).json({ error: 'Upload Error' });
@@ -374,5 +370,21 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
+// Debug Email Route
+app.get('/api/test-email', async (req, res) => {
+    try {
+        await transporter.sendMail({
+            from: `"Venthulir Debug" <${process.env.EMAIL_USER}>`,
+            to: process.env.EMAIL_USER,
+            subject: 'Venthulir SMTP Reliability Test',
+            text: 'Connection verified! Port 465 is OPEN and SSL is TRUE.'
+        });
+        res.json({ msg: 'Success! Test email sent to ' + process.env.EMAIL_USER });
+    } catch (err) {
+        res.status(500).json({ error: err.message, stack: err.stack });
+    }
+});
+
 const PORT = 7000;
 app.listen(PORT, () => console.log(`🚀 Royal Server running at http://localhost:${PORT}`));
+

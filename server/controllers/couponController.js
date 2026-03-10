@@ -1,15 +1,7 @@
 const Coupon = require('../models/Coupon');
 const Product = require('../models/Product');
 const Order = require('../models/Order');
-const nodemailer = require('nodemailer');
-
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
-});
+const transporter = require('../utils/email');
 
 const LOGO_URL = 'https://i.ibb.co/rGZwVGYP/organic.png';
 const DELIVERY_PHONE = process.env.DELIVERY_PHONE || '8778476414';
