@@ -1,0 +1,20 @@
+{
+    "name": "e-com-c-root",
+    "version": "1.0.0",
+    "description": "Production ready e-commerce setup",
+    "private": true,
+    "scripts": {
+        "install-all": "npm install --legacy-peer-deps && cd client && npm install --legacy-peer-deps && cd ../server && npm install --legacy-peer-deps",
+        "client": "cd client && npm run dev",
+        "admin": "cd client && npm run dev -- --mode admin",
+        "server": "cd server && npm start",
+        "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run admin\"",
+        "build": "cd client && npm run build",
+        "build-admin": "cd client && npm run build -- --mode admin",
+        "build-all": "npm run build && npm run build-admin && xcopy /E /I /Y client\\dist-admin client\\dist\\admin",
+        "start": "cd server && npm start"
+    },
+    "devDependencies": {
+        "concurrently": "^8.2.2"
+    }
+}

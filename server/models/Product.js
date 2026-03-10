@@ -1,0 +1,40 @@
+const mongoose = require('mongoose');
+
+const ProductSchema = new mongoose.Schema({
+    productCode: {
+        type: String,
+        unique: true,
+        // Auto-generated as VNT-XXXXXX if not provided
+    },
+    name: { type: String, required: true },
+    price: { type: Number, required: true },
+    description: { type: String, required: true },
+    imageUrl: { type: String },
+    images: { type: [String], default: [] },
+    category: { type: String, default: "General" },
+    badge: { type: String, default: "" },
+    shippingCharge: { type: Number, default: 0 },
+    originalPrice: { type: Number }, // To store manual MRP if desired
+    discountPercent: { type: Number }, // To store manual discount % if desired
+    variants: [{
+        label: { type: String, required: true },
+        price: { type: Number, required: true }
+    }],
+    initialStock: { type: Number, default: 0, min: 0 },
+    currentStock: { type: Number, default: 0, min: 0 },
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now },
+});
+
+// Auto-generate productCode and handle illusion dates
+ProductSchema.pre('save', async function (next) {
+    this.updatedAt = new Date();
+
+    if (!this.productCode) {
+        const randomPart = Math.floor(100000 + Math.random() * 900000); // 6-digit number
+        this.productCode = `VNT-${randomPart}`;
+    }
+    next();
+});
+
+module.exports = mongoose.model('Product', ProductSchema, 'ProductDetails');

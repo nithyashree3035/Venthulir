@@ -1,0 +1,62 @@
+/* =========================================
+   CINEMATIC BACKGROUND - VIDEO IMPLEMENTATION
+   Theme: Venthulir (Bright Royal Green / Spring Rain)
+   ========================================= */
+
+.at-nature-scene {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: #0b2e1f;
+    z-index: 0;
+}
+
+/* --- 1. VIDEO STYLING --- */
+.nature-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    /* Brightness boost for "Bright" request */
+    filter: brightness(1.15) contrast(1.1) saturate(1.2);
+}
+
+/* --- 2. OVERLAYS --- */
+
+/* Green Tint: Mixes with the video to ensure it matches the brand */
+.video-overlay-tint {
+    position: absolute;
+    inset: 0;
+    background: rgba(11, 46, 31, 0.2);
+    /* Reduced opacity for more brightness */
+    mix-blend-mode: overlay;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Gradient removed or minimal to allow full video visibility */
+.video-overlay-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+            rgba(5, 26, 18, 0.1) 0%,
+            transparent 50%,
+            rgba(5, 26, 18, 0.1) 100%);
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* --- 3. PARTICLES (Leaves) --- */
+.feature-leaf {
+    position: absolute;
+    color: #ffffff;
+    /* Pure white/silver for pop against green */
+    opacity: 0.9;
+    z-index: 4;
+    pointer-events: none;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.6));
+}

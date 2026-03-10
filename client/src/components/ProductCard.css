@@ -1,0 +1,291 @@
+/* --- FULL FILE: PRODUCTCARD.CSS --- */
+.venthulir-product-card {
+    background: #fff;
+    border: 1px solid #eef0f2;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.3s ease;
+    height: 100%;
+    width: 100%;
+    overflow: visible;
+}
+
+.venthulir-product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* THE ELECTRIC THUNDER EFFECT */
+.electric-thunder {
+    border: 1px solid #00d2ff !important;
+    animation: thunderPulse 2s infinite ease-in-out;
+}
+
+@keyframes thunderPulse {
+    0% {
+        box-shadow: 0 0 0px rgba(0, 210, 255, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(0, 210, 255, 0.4), inset 0 0 10px rgba(0, 210, 255, 0.1);
+    }
+
+    100% {
+        box-shadow: 0 0 0px rgba(0, 210, 255, 0);
+    }
+}
+
+.thunder-visual-glow {
+    position: absolute;
+    inset: -2px;
+    border-radius: 14px;
+    background: linear-gradient(90deg, transparent, #00d2ff, transparent);
+    background-size: 200% 100%;
+    animation: thunderSlide 3s linear infinite;
+    z-index: -1;
+    opacity: 0.5;
+}
+
+@keyframes thunderSlide {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* CARD MEDIA */
+.card-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    background: #fdfdfd;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.product-img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    transition: transform 0.5s ease;
+}
+
+.status-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #0b2e1f;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    z-index: 2;
+}
+
+/* HOVER ACTIONS */
+.hover-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: 0.3s;
+    z-index: 2;
+}
+
+.venthulir-product-card:hover .hover-actions {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #fff;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    color: #0b2e1f;
+    transition: 0.2s;
+}
+
+.icon-btn:hover {
+    background: #0b2e1f;
+    color: #fff;
+}
+
+.icon-btn.active-red {
+    color: #ff4757;
+}
+
+/* CARD BODY */
+.card-body {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.cat-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.product-title.big-title {
+    font-size: 17px;
+    font-weight: 850;
+    color: #0b2e1f;
+    line-height: 1.2;
+    margin-bottom: 6px;
+    height: 2.4em;
+}
+
+.offer-illusion {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.discount-tag {
+    background: #cc0c39;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 950;
+    animation: offerPulse 1.5s infinite ease-in-out;
+}
+
+@keyframes offerPulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.mega-tag {
+    color: #cc0c39;
+    font-size: 11px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #cc0c39, #ff5e62, #cc0c39);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 2s linear infinite;
+}
+
+@keyframes shimmer {
+    to {
+        background-position: 200% center;
+    }
+}
+
+.pricing-section {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.price-container {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.price-symbol {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0b2e1f;
+}
+
+.price-value {
+    font-size: 26px;
+    font-weight: 950;
+    color: #0b2e1f;
+}
+
+.mrp-value {
+    font-size: 13px;
+    color: #666;
+    margin-left: 5px;
+    font-weight: 500;
+}
+
+.mrp-value s {
+    color: #cc0c39;
+    font-weight: 700;
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+}
+
+.button-footer {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.cart-action-btn {
+    height: 40px;
+    background: #0b2e1f;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.cart-action-btn.item-added {
+    background: #27ae60;
+}
+
+.buy-now-btn {
+    height: 40px;
+    background: transparent;
+    border: 1px solid #0b2e1f;
+    color: #0b2e1f;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+}

@@ -1,0 +1,45 @@
+/* --- FULL FILE: HOME.CSS --- */
+
+.home-unified-root {
+    position: relative;
+    width: 100%;
+}
+
+.leaf-overlay-container {
+    position: fixed;
+    top: -50px;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.v-royal-leaf {
+    position: absolute;
+    color: #0b3d2e;
+    /* Royal Dark Green */
+    opacity: 0;
+    animation: royalLeafFall linear infinite;
+}
+
+@keyframes royalLeafFall {
+    0% {
+        transform: translateY(0vh) rotate(0deg);
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 0.7;
+    }
+
+    90% {
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
+}

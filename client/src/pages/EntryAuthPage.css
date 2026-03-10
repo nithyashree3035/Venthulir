@@ -1,0 +1,489 @@
+.vent-auth-viewport {
+    position: relative;
+    width: 100vw;
+    height: 100%;
+    min-height: 100vh;
+    background: #fdf5e0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-family: 'Outfit', sans-serif;
+    color: #0a2e1f;
+    padding: 80px 20px;
+    box-sizing: border-box;
+}
+
+.content-stack {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+}
+
+/* CINEMATIC ELEMENTS */
+.environment-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.ethereal-sun {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120vw;
+    height: 100vh;
+    background: radial-gradient(circle at center, rgba(212, 175, 55, 0.1) 0%, rgba(26, 77, 51, 0.05) 40%, rgba(0, 0, 0, 0) 70%);
+    filter: blur(120px);
+    bottom: -80vh;
+    opacity: 0;
+    transition: all 2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ethereal-sun.rise-up {
+    bottom: -40vh;
+    opacity: 1;
+}
+
+.silhouette {
+    position: absolute;
+    bottom: 0;
+    width: 25%;
+    height: 20vh;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0.1;
+    background: linear-gradient(to top, #0a2e1f 0%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 50%, transparent 100%);
+}
+
+.silhouette.tree-l {
+    left: -5%;
+    transform: skewY(15deg);
+}
+
+.silhouette.tree-r {
+    right: -5%;
+    transform: skewY(-15deg);
+}
+
+.a-auth-logo {
+    color: #0a2e1f;
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: 12px;
+    margin-bottom: 40px;
+    z-index: 10;
+    text-align: center;
+    transition: all 0.5s ease;
+}
+
+@media (max-width: 480px) {
+    .a-auth-logo {
+        font-size: 24px;
+        letter-spacing: 8px;
+        margin-bottom: 30px;
+    }
+}
+
+/* Removed .mini text title as it is hidden when logo is present in auth view */
+
+/* PREMIUM AUTH CARD */
+.amazon-auth-card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 440px;
+    padding: 55px 45px;
+    border-radius: 20px;
+    box-shadow: 0 40px 100px rgba(10, 46, 31, 0.1);
+    text-align: left;
+    position: relative;
+    border: 1px solid rgba(10, 46, 31, 0.08);
+    z-index: 10;
+    box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+    .amazon-auth-card {
+        padding: 35px 20px;
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+        border-radius: 12px;
+    }
+
+    .brand-title-pressure {
+        display: none;
+    }
+
+    .vent-auth-viewport {
+        padding: 40px 15px;
+        height: auto;
+        min-height: 100vh;
+        justify-content: flex-start;
+        /* Preferred for mobile scroll */
+    }
+}
+
+.back-x {
+    position: absolute;
+    right: 28px;
+    top: 28px;
+    background: #f8fafc;
+    border: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #0a2e1f;
+}
+
+.card-inner h2 {
+    margin-bottom: 35px;
+    font-size: 30px;
+    font-weight: 800;
+    color: #0a2e1f;
+}
+
+/* INPUT STYLING - FIXED 50PX HEIGHT ALL ROUND */
+.input-wrap {
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.input-wrap label {
+    display: block;
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: #0a2e1f;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.input-wrap input {
+    width: 100%;
+    height: 50px;
+    padding: 0 18px;
+    border: 1.5px solid rgba(10, 46, 31, 0.12);
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
+    background: #fcf8ee;
+    color: #0a2e1f;
+    box-sizing: border-box;
+}
+
+/* OTP BOX - REFINED PADDING & ALIGNMENT */
+.otp-box-standard {
+    background: #fcf8ee;
+    /* Sandal Tint */
+    padding: 24px;
+    border-radius: 16px;
+    border: 2px dashed rgba(10, 46, 31, 0.1);
+    margin-bottom: 25px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.otp-box-standard label {
+    display: block;
+    font-size: 12px;
+    font-weight: 800;
+    color: #0a2e1f;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.a-verify-group {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.a-verify-group input {
+    flex: 1;
+    height: 50px;
+    margin: 0 !important;
+    text-align: center;
+    letter-spacing: 4px;
+    font-weight: 700;
+    border: 1.5px solid rgba(10, 46, 31, 0.12);
+    border-radius: 12px;
+    min-width: 0;
+}
+
+.a-button-verify-inline {
+    height: 50px;
+    padding: 0 24px;
+    background: white;
+    color: #0a2e1f;
+    border: 2px solid #0a2e1f;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+    .a-button-verify-inline {
+        padding: 0 16px;
+        font-size: 12px;
+    }
+}
+
+.a-button-verify-inline:hover {
+    background: #0a2e1f;
+    color: white;
+}
+
+/* RESEND / TIMER ROW */
+.timer-resend-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.timer-resend-row .timer {
+    font-size: 12px;
+    font-weight: 800;
+    color: #0a2e1f;
+}
+
+.timer-resend-row .resend-btn {
+    background: none;
+    border: none;
+    color: #0a2e1f;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 800;
+    text-decoration: underline;
+    padding: 0;
+}
+
+/* PASSWORD EYE CLAMPING */
+.a-password-input-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.a-password-input-wrapper input {
+    padding-right: 48px !important;
+    margin-bottom: 0 !important;
+}
+
+.a-password-toggle-btn {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: rgba(10, 46, 31, 0.5);
+    display: flex;
+    z-index: 5;
+}
+
+/* PRIMARY ACT */
+.royal-submit-action {
+    width: 100%;
+    height: 50px;
+    background: #0a2e1f;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+    box-shadow: 0 10px 25px rgba(10, 46, 31, 0.1);
+}
+
+.a-auth-error-alert {
+    background: #fffafa;
+    border: 1.5px solid #df3312;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    text-align: left;
+    box-shadow: 0 4px 15px rgba(223, 51, 18, 0.08);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.a-alert-icon {
+    color: #df3312;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.a-alert-content h4 {
+    color: #df3312;
+    margin: 0 0 4px 0;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.a-alert-content p {
+    color: #111;
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.5;
+    font-weight: 500;
+}
+
+/* FOOTER ELEMENTS */
+.a-auth-card-footer {
+    border-top: 1px solid #f1f5f9;
+    margin-top: 30px;
+    padding-top: 25px;
+}
+
+.legal-msg {
+    font-size: 11.5px;
+    color: #64748b;
+    line-height: 1.6;
+    letter-spacing: 0.2px;
+    text-align: left;
+}
+
+.legal-msg span {
+    color: #0a2e1f;
+    font-weight: 800;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.a-auth-help-section {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.a-help-trigger {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #0a2e1f;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.a-help-dropdown {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 15px 0 0 21px;
+}
+
+/* OUTER FOOTER */
+.switch-footer {
+    width: 100%;
+    max-width: 440px;
+    margin-top: 35px;
+    text-align: center;
+}
+
+.divider-line {
+    width: 100%;
+    margin-bottom: 25px;
+    border-top: 1.5px solid rgba(10, 46, 31, 0.08);
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.divider-line span {
+    position: absolute;
+    top: -11px;
+    background: #fdf5e0;
+    padding: 0 15px;
+    color: #94a3b8;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.switch-footer {
+    width: 100%;
+    max-width: 440px;
+    margin: 35px auto 0;
+    text-align: center;
+}
+
+.toggle-btn {
+    width: 100%;
+    background: white;
+    border: 2px solid #0a2e1f;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 14px;
+    color: #0a2e1f;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.a-cancel-return-btn {
+    margin-top: 35px;
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: 3px;
+    cursor: pointer;
+    text-transform: uppercase;
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+/* CHECKBOX FIX */
+.remember-me-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.remember-me-wrapper input {
+    width: 20px;
+    height: 20px;
+    margin: 0 12px 0 0 !important;
+    cursor: pointer;
+    accent-color: #0a2e1f;
+}
+
+.remember-me-wrapper label {
+    font-size: 14px;
+    color: #0a2e1f;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 0;
+}

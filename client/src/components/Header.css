@@ -1,0 +1,256 @@
+:root {
+    --royal-green: #1b4d3e;
+    --dark-green: #0b261d;
+    --gold: #d4af37;
+    --cream: #f4f7f4;
+}
+
+/* LAYER 1: THE TICKER */
+.announcement-ticker {
+    background-color: var(--dark-green);
+    color: #fff;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.ticker-wrap {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.ticker-move {
+    display: inline-block;
+    animation: marquee-loop 30s linear infinite;
+}
+
+.ticker-move span {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 500;
+    padding-right: 0;
+    text-transform: uppercase;
+}
+
+@keyframes marquee-loop {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* LAYER 2: MAIN NAV */
+.nav-main {
+    background-color: var(--royal-green);
+    padding: 12px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    color: white;
+}
+
+.nav-logo {
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-location {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 5px;
+    border: 1px solid transparent;
+}
+
+.nav-location:hover {
+    border: 1px solid white;
+    border-radius: 2px;
+}
+
+.text-small {
+    font-size: 11px;
+    display: block;
+    color: #b3c7bf;
+}
+
+.text-bold {
+    font-size: 14px;
+    font-weight: 700;
+    display: block;
+}
+
+.nav-search {
+    flex: 1;
+    max-width: 500px;
+    display: flex;
+    height: 40px;
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.nav-search input {
+    flex: 1;
+    border: none;
+    padding: 0 15px;
+    outline: none;
+    font-size: 14px;
+}
+
+.search-btn {
+    background: var(--gold);
+    border: none;
+    width: 45px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.nav-link-item {
+    color: white;
+    text-decoration: none;
+    padding: 5px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    position: relative;
+}
+
+.nav-link-item:hover {
+    border: 1px solid white;
+    border-radius: 2px;
+}
+
+/* PROFILE DROPDOWN */
+.profile-dropdown:hover .dropdown-panel {
+    display: block;
+}
+
+.dropdown-panel {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    width: 210px;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    color: #333;
+}
+
+.login-btn {
+    width: 100%;
+    background: linear-gradient(to bottom, #f7dfa1, var(--gold));
+    border: 1px solid #a88734;
+    padding: 8px;
+    border-radius: 3px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.signup-note {
+    font-size: 11px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.signup-note span {
+    color: var(--royal-green);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.nav-divider {
+    margin: 12px 0;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+
+.dropdown-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown-links li {
+    font-size: 13px;
+    padding: 5px 0;
+    cursor: pointer;
+}
+
+.dropdown-links li:hover {
+    color: var(--royal-green);
+    text-decoration: underline;
+}
+
+/* CART */
+.cart-icon-container {
+    position: relative;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -10px;
+    right: -8px;
+    background: var(--gold);
+    color: var(--dark-green);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-icon {
+    font-size: 22px;
+}
+
+/* LAYER 3: SUB NAV */
+.nav-sub {
+    background-color: #265d4c;
+    padding: 8px 25px;
+}
+
+.nav-sub ul {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-size: 14px;
+}
+
+.nav-sub li {
+    cursor: pointer;
+    padding: 4px 8px;
+    border: 1px solid transparent;
+}
+
+.nav-sub li:hover {
+    border: 1px solid white;
+    border-radius: 2px;
+}

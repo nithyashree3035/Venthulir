@@ -1,0 +1,156 @@
+.imperial-footer-beige {
+    background: #f5f5dc;
+    padding: 80px 0 40px;
+    position: relative;
+    border-top: 1px solid #d4af37;
+    width: 100%;
+}
+
+.footer-main-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+}
+
+.footer-grid-layout {
+    display: grid;
+    /* Desktop Logic */
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    margin-bottom: 50px;
+}
+
+.royal-green-title {
+    color: #0a2e1f;
+    font-size: 15px;
+    letter-spacing: 3px;
+    margin-bottom: 25px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.footer-p {
+    line-height: 1.8;
+    color: #1a1a1a;
+    font-size: 14px;
+    text-align: justify;
+}
+
+/* Form Styles */
+.traditional-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.traditional-form input,
+.traditional-form select,
+.traditional-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d4af37;
+    background: #ffffff;
+    font-size: 13px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    /* Logic: Essential to prevent shrinking outside screen */
+}
+
+.traditional-form textarea {
+    height: 90px;
+    resize: none;
+}
+
+.royal-btn {
+    background: #0a2e1f;
+    color: #f5f5dc;
+    border: none;
+    padding: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: 0.3s;
+    width: 100%;
+}
+
+/* BRAND MOTION */
+.circular-motion-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 0;
+}
+
+.rotating-brand {
+    width: 120px;
+    height: 120px;
+    animation: rotateSlow 15s linear infinite;
+}
+
+@keyframes rotateSlow {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.footer-bottom-info {
+    text-align: center;
+    border-top: 1px solid rgba(10, 46, 31, 0.1);
+    padding-top: 30px;
+    font-size: 11px;
+    color: #0a2e1f;
+    font-weight: 600;
+}
+
+.back-to-top {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0a2e1f;
+    color: #f5f5dc;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* --- FOOTER ALIGNMENT FIX FOR MOBILE --- */
+@media (max-width: 850px) {
+    .footer-grid-layout {
+        /* Logic: Force the columns to stack vertically so they don't shrink */
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+    }
+
+    .form-split {
+        /* Force form fields to stack on top of each other on small phones */
+        grid-template-columns: 1fr;
+    }
+
+    .traditional-form {
+        text-align: left;
+        /* Keep form labels readable */
+    }
+
+    .imperial-footer-beige {
+        padding: 60px 0 30px;
+    }
+}

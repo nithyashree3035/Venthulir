@@ -1,0 +1,206 @@
+/* --- 1. MODERN TECH FONT IMPORT (INTER) --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ROYAL COLOR COMBO */
+:root {
+  --dark-green: #0b3d2e;
+  --light-green: #2d6b4a;
+  --beige: #f5f1e8;
+  --pure-white: #ffffff;
+  --bg-color: #ffffff;
+  --card-bg: #ffffff;
+  --text-main: var(--dark-green);
+  --text-muted: #6b7a74;
+  --border-color: #e8e6df;
+  --input-bg: var(--beige);
+  --header-height: 100px;
+  /* Reduced for mobile */
+  --font-main: 'Inter', sans-serif;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-height: 153px;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--pure-white);
+  color: var(--text-main);
+  overflow-x: hidden;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- MODERN BOLD HEADLINES --- */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-main) !important;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--dark-green);
+}
+
+/* Typography Scale - Mobile First */
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  h1 {
+    font-size: 3rem;
+  }
+
+  h2 {
+    font-size: 2.25rem;
+  }
+}
+
+.main-content-stage {
+  padding-top: 0px !important;
+  min-height: 100vh;
+  margin: 0 !important;
+}
+
+/* Container logic - Mobile First */
+.at-container-max {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 15px;
+  /* Less padding on mobile */
+}
+
+@media (min-width: 768px) {
+  .at-container-max {
+    padding: 0 40px;
+  }
+}
+
+a,
+button {
+  text-decoration: none;
+  font-family: var(--font-main);
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+/* --- CUSTOM SCROLLBAR --- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--beige);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--dark-green);
+  border-radius: 4px;
+}
+
+/* --- TOP RUNNING SLOGAN BAR --- */
+.at-top-bar {
+  background: var(--dark-green) !important;
+  color: var(--beige) !important;
+  height: 32px;
+  /* Compact on mobile */
+  display: flex !important;
+  align-items: center;
+  overflow: hidden;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  font-family: var(--font-main);
+  z-index: 5001;
+}
+
+@media (min-width: 768px) {
+  .at-top-bar {
+    height: 38px;
+    font-size: 12px;
+  }
+}
+
+.at-ticker-move {
+  display: inline-block;
+  white-space: nowrap;
+  animation: atMarquee 40s linear infinite;
+}
+
+@keyframes atMarquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* --- BRANDING --- */
+.at-logo-animated {
+  font-family: var(--font-main);
+  font-weight: 900;
+  font-size: 20px;
+  /* Smaller on mobile */
+  letter-spacing: -1px;
+}
+
+@media (min-width: 768px) {
+  .at-logo-animated {
+    font-size: 28px;
+  }
+}
+
+/* --- SEARCH BAR --- */
+.at-search-v2 {
+  display: none;
+  /* Hidden on small mobile usually, or modified */
+}
+
+@media (min-width: 768px) {
+  .at-search-v2 {
+    display: flex;
+    align-items: center;
+    background: var(--beige);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    height: 50px;
+  }
+}
+
+/* --- BUTTONS --- */
+.at-primary-btn {
+  background: var(--dark-green);
+  color: var(--beige);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 700;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.at-primary-btn:hover {
+  background: var(--light-green);
+  transform: translateY(-2px);
+}

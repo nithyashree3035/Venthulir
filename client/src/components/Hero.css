@@ -1,0 +1,30 @@
+.at-hero-v4 {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    max-width: 100vw;
+    /* Crucial: This clips the 'MotionLayer' so it can't cut off on the right */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    z-index: 1;
+}
+
+.home-content-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+}
+
+@media (max-width: 768px) {
+    .at-hero-v4 {
+        min-height: 100vh;
+        height: auto;
+        overflow: hidden;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+}

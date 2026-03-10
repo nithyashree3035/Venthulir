@@ -1,0 +1,159 @@
+.new-arrivals-root {
+    min-height: 100vh;
+    padding-top: 120px;
+    background: #fdfcf7;
+    /* Royal cream/white */
+    color: #0b3d2e;
+}
+
+.arrivals-hero {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.new-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(11, 61, 46, 0.1);
+    padding: 6px 16px;
+    border-radius: 20px;
+    color: #0b3d2e;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.arrivals-hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    font-family: serif;
+}
+
+.arrivals-hero p {
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0.8;
+    line-height: 1.6;
+}
+
+/* NOTIFY CARD */
+.notify-section {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.notify-card {
+    background: #ffffff;
+    border: 1px solid rgba(11, 61, 46, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    border-radius: 15px;
+    padding: 40px;
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.royal-gold-icon {
+    color: #ffd700;
+    margin-bottom: 20px;
+}
+
+.notify-form h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.input-group {
+    display: flex;
+    margin-top: 25px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.input-group input {
+    flex: 1;
+    border: none;
+    padding: 15px;
+    outline: none;
+    font-size: 1rem;
+}
+
+.notify-submit-btn {
+    background: #0b3d2e;
+    color: white;
+    border: none;
+    padding: 0 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.notify-submit-btn:hover {
+    background: #0d4d3a;
+}
+
+/* SUCCESS STATE */
+.success-msg {
+    animation: fadeIn 0.5s ease;
+}
+
+.check-circle {
+    width: 50px;
+    height: 50px;
+    background: #0b3d2e;
+    color: #ffd700;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 1.5rem;
+}
+
+/* PREVIEW SKELETON */
+.seasonal-preview {
+    max-width: 1200px;
+    margin: 80px auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.preview-placeholder-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.skeleton-card {
+    height: 300px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #f8f8f8 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 12px;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

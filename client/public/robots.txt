@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://venthulir.com/sitemap.xml
+Disallow: /admin

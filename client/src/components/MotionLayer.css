@@ -1,0 +1,353 @@
+/* --- PREMIUM EDITORIAL HERO CSS + STUDENT QUEUE --- */
+.premium-hero-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background: #fcfcfc;
+    z-index: 1;
+}
+
+/* Base Light Glow */
+.premium-glow-sphere {
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    transform: translateY(-50%);
+    width: 900px;
+    height: 900px;
+    background: radial-gradient(circle, rgba(230, 245, 235, 1) 0%, rgba(244, 250, 246, 0.6) 45%, rgba(252, 252, 252, 0) 70%);
+    border-radius: 50%;
+    z-index: 2;
+    pointer-events: none;
+    animation: slow-pulse 10s ease-in-out infinite alternate;
+}
+
+@keyframes slow-pulse {
+    0% {
+        transform: translateY(-50%) scale(0.9);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateY(-50%) scale(1.1);
+        opacity: 1;
+    }
+}
+
+.premium-hero-content {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 1400px;
+    height: 100vh;
+    padding: 140px 5% 0;
+    /* Clears Navbar exactly on all screens */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* --- Left Column: Typography --- */
+.hero-text-column {
+    flex: 0 0 45%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    margin-top: 15px;
+    /* Perfect optic balance */
+}
+
+.brand-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #4a7c59;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: flex-start;
+    font-family: 'Inter', sans-serif;
+}
+
+.organic-dot {
+    width: 8px;
+    height: 8px;
+    background: #4a7c59;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 10px rgba(74, 124, 89, 0.5);
+}
+
+.hero-monumental-title {
+    font-size: 82px;
+    line-height: 1.05;
+    font-weight: 900;
+    color: #0b3d2e;
+    font-family: 'Playfair Display', serif;
+    margin: 0 0 24px 0;
+    letter-spacing: -2px;
+    text-shadow: 0 15px 35px rgba(0, 0, 0, 0.04);
+}
+
+.text-highlight {
+    color: #4a7c59;
+    font-style: italic;
+    font-weight: 600;
+}
+
+.hero-sophisticated-desc {
+    font-size: 18px;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 40px;
+    font-weight: 400;
+    max-width: 480px;
+}
+
+.hero-action-row {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.premium-primary-btn {
+    padding: 18px 36px;
+    background: #0b3d2e;
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 15px 25px rgba(11, 61, 46, 0.15);
+}
+
+.premium-primary-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 30px rgba(11, 61, 46, 0.25);
+    background: #0f4d3a;
+}
+
+.premium-secondary-btn {
+    padding: 16px 0;
+    background: transparent;
+    color: #0b3d2e;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.premium-secondary-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #0b3d2e;
+    transform: scaleX(0.3);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.premium-secondary-btn:hover::after {
+    transform: scaleX(1);
+}
+
+/* --- Right Column: Visual Composition --- */
+.hero-visual-column {
+    flex: 0 0 50%;
+    position: relative;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5vh;
+    /* Center optic balance offset */
+}
+
+/* --- The Student Line Stack (Centered in right column) --- */
+.epic-stack-stage {
+    position: relative;
+    width: 380px;
+    height: 480px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.epic-stack-card {
+    position: absolute;
+    width: 320px;
+    height: 450px;
+    cursor: pointer;
+    will-change: transform, opacity;
+    transform-origin: bottom center;
+    border-radius: 30px;
+    padding: 20px;
+    background: transparent;
+    transition: background 0.6s ease, box-shadow 0.6s ease, border 0.6s ease;
+    border: 2px solid transparent;
+}
+
+.epic-stack-card.active-salute {
+    /* The glowing border effect when stepping forward to the front */
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(74, 124, 89, 0.6);
+    box-shadow: 0 25px 60px rgba(74, 124, 89, 0.15),
+        inset 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
+.product-image-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* Enforces images to scale perfectly uniformly inside wrapper */
+    filter: drop-shadow(0 25px 40px rgba(0, 0, 0, 0.15));
+}
+
+/* Overall texture overlay */
+.luxury-noise-overlay {
+    position: absolute;
+    inset: 0;
+    background: url('https://www.transparenttextures.com/patterns/soft-wallpaper.png');
+    opacity: 0.15;
+    z-index: 30;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 1024px) {
+    .premium-hero-container {
+        height: auto;
+        min-height: 100vh;
+        position: relative;
+        padding-bottom: 80px;
+    }
+
+    .premium-hero-content {
+        flex-direction: column;
+        justify-content: flex-start;
+        text-align: center;
+        padding-top: 70px;
+        /* Reduced further to maximize screen real-estate on mobile */
+        height: auto;
+    }
+
+    .hero-text-column {
+        flex: 0 0 auto;
+        max-width: 100%;
+        align-items: center;
+        text-align: center;
+        z-index: 20;
+    }
+
+    .brand-eyebrow,
+    .hero-action-row {
+        justify-content: center;
+    }
+
+    .hero-visual-column {
+        flex: 1 1 auto;
+        width: 100%;
+        height: auto;
+        margin-top: 5px;
+        z-index: 15;
+    }
+
+    .epic-stack-stage {
+        width: 250px;
+        height: 340px;
+    }
+
+    .epic-stack-card {
+        width: 210px;
+        height: 300px;
+    }
+
+    .hero-monumental-title {
+        margin-bottom: 15px;
+    }
+
+    .hero-sophisticated-desc {
+        margin-bottom: 25px;
+    }
+
+    .brand-eyebrow {
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-monumental-title {
+        font-size: 48px;
+    }
+
+    .hero-sophisticated-desc {
+        font-size: 15px;
+    }
+
+    .hero-action-row {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .premium-primary-btn {
+        width: 100%;
+        max-width: 250px;
+    }
+
+    .premium-secondary-btn {
+        padding: 12px 0;
+    }
+
+    .premium-secondary-btn::after {
+        left: 0;
+        transform: scaleX(0.5);
+        /* Wider line for better mobile presence */
+        transform-origin: center;
+    }
+
+    .premium-secondary-btn:hover::after {
+        transform: scaleX(1);
+    }
+
+    .epic-stack-stage {
+        width: 250px;
+        height: 280px;
+        margin-top: 20px;
+    }
+
+    .epic-stack-card {
+        width: 170px;
+        height: 230px;
+    }
+}
