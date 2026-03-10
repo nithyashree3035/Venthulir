@@ -4,9 +4,10 @@ const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
     secure: true, // Use SSL
-    connectionTimeout: 10000, // 10 seconds
+    connectionTimeout: 10000,
     greetingTimeout: 10000,
     socketTimeout: 20000,
+    family: 4, // Force IPv4 to prevent ENETUNREACH on Render
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
