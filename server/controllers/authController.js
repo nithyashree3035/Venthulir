@@ -15,7 +15,7 @@ exports.sendRegisterOTP = async (req, res) => {
         const salt = await bcrypt.genSalt(6);
         const hashedOtp = await bcrypt.hash(otp, salt);
 
-        otpCache.set(email, { otpHash: hashedOtp, expires: Date.now() + 300000, type: 'register' }); // 5 minutes expiration
+        otpCache.set(email, { otpHash: hashedOtp, expires: Date.now() + 60000, type: 'register' }); // 1 minute expiration
 
         const mailOptions = {
             from: `"Venthulir Organic" <${process.env.EMAIL_USER}>`,
@@ -32,7 +32,7 @@ exports.sendRegisterOTP = async (req, res) => {
                 <div style="text-align: center; margin: 30px 0;">
                     <span style="font-size: 32px; font-weight: bold; letter-spacing: 5px; color: #0a2e1f; background: #f8f9f8; padding: 15px 30px; border-radius: 8px; border: 1px solid #e2e8f0;">${otp}</span>
                 </div>
-                <p style="color: #c40000; font-size: 13px; text-align: center; font-weight: bold;">This code is valid for 30 seconds.</p>
+                <p style="color: #c40000; font-size: 13px; text-align: center; font-weight: bold;">This code is valid for 60 seconds.</p>
             </div>
             `
         };
@@ -192,7 +192,7 @@ exports.sendOTP = async (req, res) => {
 
         const salt = await bcrypt.genSalt(6);
         user.otp = await bcrypt.hash(otp, salt);
-        user.otpExpires = Date.now() + 300000; // 5 minutes expiration
+        user.otpExpires = Date.now() + 60000; // 1 minute expiration
         await user.save();
 
         const mailOptions = {
@@ -210,7 +210,7 @@ exports.sendOTP = async (req, res) => {
                 <div style="text-align: center; margin: 30px 0;">
                     <span style="font-size: 32px; font-weight: bold; letter-spacing: 5px; color: #0a2e1f; background: #f8f9f8; padding: 15px 30px; border-radius: 8px; border: 1px solid #e2e8f0;">${otp}</span>
                 </div>
-                <p style="color: #c40000; font-size: 13px; text-align: center; font-weight: bold;">This code is valid for 30 seconds.</p>
+                <p style="color: #c40000; font-size: 13px; text-align: center; font-weight: bold;">This code is valid for 60 seconds.</p>
                 <p style="color: #777; font-size: 12px; text-align: center; margin-top: 30px;">If you did not request this, please safely ignore this email.</p>
             </div>
             `
@@ -278,7 +278,7 @@ exports.forgotPassword = async (req, res) => {
         const salt = await bcrypt.genSalt(6);
         const hashedOtp = await bcrypt.hash(otp, salt);
 
-        otpCache.set(email, { otpHash: hashedOtp, expires: Date.now() + 300000, type: 'reset' }); // 5 minutes expiration
+        otpCache.set(email, { otpHash: hashedOtp, expires: Date.now() + 60000, type: 'reset' }); // 1 minute expiration
 
         const mailOptions = {
             from: `"Venthulir Support" <${process.env.EMAIL_USER}>`,
@@ -292,7 +292,7 @@ exports.forgotPassword = async (req, res) => {
                 <div style="text-align: center; margin: 30px 0;">
                     <span style="font-size: 32px; font-weight: bold; letter-spacing: 5px; color: #0a2e1f; background: #f8f9f8; padding: 15px 30px; border-radius: 8px; border: 1px solid #e2e8f0;">${otp}</span>
                 </div>
-                <p style="color: #c40000; font-size: 13px; text-align: center; font-weight: bold;">This code is valid for 30 seconds.</p>
+                <p style="color: #c40000; font-size: 13px; text-align: center; font-weight: bold;">This code is valid for 60 seconds.</p>
             </div>
             `
         };
