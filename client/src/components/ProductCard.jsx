@@ -37,15 +37,22 @@ const ProductCard = ({ product }) => {
     const computedBadge = product?.badge ? product.badge : (isNewArrival ? 'New Arrival' : null);
 
     // MEGA OFFER LOGIC
-    // 1. Use manual discount % if set, otherwise 2. Use manual originalPrice if set, otherwise 3. Default illusion
     const currentPrice = defaultVariant ? defaultVariant.price : product.price;
     let mrp = product.originalPrice;
     let displayDiscount = product.discountPercent;
+    const basePrice = product.price || currentPrice;
 
     if (displayDiscount) {
         mrp = Math.round(currentPrice / (1 - (displayDiscount / 100)));
     } else if (mrp) {
-        displayDiscount = Math.round(((mrp - currentPrice) / mrp) * 100);
+        displayDiscount = Math.round(((mrp - basePrice) / mrp) * 100);
+        if (displayDiscount <= 0) displayDiscount = 30;
+
+        if (currentPrice === basePrice && product.originalPrice > currentPrice) {
+            mrp = product.originalPrice;
+        } else {
+            mrp = Math.round(currentPrice / (1 - (displayDiscount / 100)));
+        }
     } else {
         // Full illusion default
         displayDiscount = 30;

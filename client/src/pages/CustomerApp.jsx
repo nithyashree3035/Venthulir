@@ -8,6 +8,7 @@ import WishlistPage from './WishlistPage';
 import EntryAuthPage from './EntryAuthPage';
 import ShopGrid from '../components/ShopGrid';
 import { useAppNavigation } from '../context/NavigationContext';
+import { Helmet } from 'react-helmet-async';
 
 const CustomerApp = () => {
     const { currentView, viewParams } = useAppNavigation();
@@ -53,8 +54,16 @@ const CustomerApp = () => {
             content = <Home />;
     }
 
+    const noIndexViews = ['cart', 'auth', 'checkout', 'profile', 'wishlist'];
+    const shouldNoIndex = noIndexViews.includes(currentView);
+
     return (
         <React.Fragment>
+            {shouldNoIndex && (
+                <Helmet>
+                    <meta name="robots" content="noindex, nofollow" />
+                </Helmet>
+            )}
             {content}
         </React.Fragment>
     );

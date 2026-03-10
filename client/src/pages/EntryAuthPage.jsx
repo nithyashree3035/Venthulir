@@ -14,7 +14,7 @@ const EntryAuthPage = ({ onLoginSuccess, redirectView, redirectParams }) => {
     const [error, setError] = useState('');
     const [formData, setFormData] = useState({ name: '', email: '', phone: '', password: '', otp: '' });
     const [isVerifying, setIsVerifying] = useState(false);
-    const [timeLeft, setTimeLeft] = useState(30);
+    const [timeLeft, setTimeLeft] = useState(60);
     const [isEmailVerified, setIsEmailVerified] = useState(false);
     const [isForgotVerified, setIsForgotVerified] = useState(false);
     const [isRegisterOtpMode, setIsRegisterOtpMode] = useState(false);
@@ -71,7 +71,7 @@ const EntryAuthPage = ({ onLoginSuccess, redirectView, redirectParams }) => {
         const reqRes = await requestRegisterOTP(formData.email);
         setIsVerifying(false);
         if (reqRes.success) {
-            const expiry = Date.now() + 30000;
+            const expiry = Date.now() + 60000;
             setOtpExpiry(expiry);
             sessionStorage.setItem('venthulir_otp_expiry', expiry.toString());
             setIsRegisterOtpMode(true);
@@ -136,7 +136,7 @@ const EntryAuthPage = ({ onLoginSuccess, redirectView, redirectParams }) => {
             const res = await forgotPassword(formData.email);
             setIsVerifying(false);
             if (res.success) {
-                const expiry = Date.now() + 30000;
+                const expiry = Date.now() + 60000;
                 setOtpExpiry(expiry);
                 sessionStorage.setItem('venthulir_otp_expiry', expiry.toString());
                 setForgotStep(2);
@@ -168,7 +168,7 @@ const EntryAuthPage = ({ onLoginSuccess, redirectView, redirectParams }) => {
         const res = await forgotPassword(formData.email);
         setIsVerifying(false);
         if (res.success) {
-            const expiry = Date.now() + 30000;
+            const expiry = Date.now() + 60000;
             setOtpExpiry(expiry);
             sessionStorage.setItem('venthulir_otp_expiry', expiry.toString());
             setError('');

@@ -251,11 +251,19 @@ const ProductDetailPage = ({ id }) => {
                                 const currentPrice = (selectedVariant ? selectedVariant.price : product.price) || 0;
                                 let mrp = product.originalPrice;
                                 let disc = product.discountPercent;
+                                const basePrice = product.price || currentPrice;
 
                                 if (disc) {
                                     mrp = Math.round(currentPrice / (1 - (disc / 100)));
                                 } else if (mrp) {
-                                    disc = Math.round(((mrp - currentPrice) / mrp) * 100);
+                                    disc = Math.round(((mrp - basePrice) / mrp) * 100);
+                                    if (disc <= 0) disc = 30;
+
+                                    if (currentPrice === basePrice && product.originalPrice > currentPrice) {
+                                        mrp = product.originalPrice;
+                                    } else {
+                                        mrp = Math.round(currentPrice / (1 - (disc / 100)));
+                                    }
                                 } else {
                                     disc = 30;
                                     mrp = Math.round(currentPrice / 0.7);

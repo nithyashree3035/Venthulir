@@ -22,8 +22,9 @@ const Home = () => {
     return (
         <div className="home-unified-root">
             <Helmet>
-                <title>Venthulir Organic Harvest | Premium Wood Pressed Oils & Spices</title>
-                <meta name="description" content="Authentic wood-pressed oils, forest-fresh honey, and premium spices from the roots of Salem. Experience royal organic quality with Venthulir." />
+                <title>Venthulir | Buy Wood-Pressed Oils, Honey & Organic Spices — Salem Tamil Nadu</title>
+                <meta name="description" content="Shop 100% natural wood-pressed oils, raw forest honey, and pure handpicked spices at Venthulir. Salem's most trusted organic store. No chemicals, delivered across India." />
+                <meta name="keywords" content="buy wood pressed oil Salem, organic honey Salem, cold pressed sesame oil Tamil Nadu, pure coconut oil Salem, traditional spices online, chemical-free oils India, venthulir organic harvest" />
                 <link rel="canonical" href="https://venthulir.com/" />
                 <script type="application/ld+json">
                     {`

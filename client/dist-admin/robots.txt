@@ -1,4 +1,17 @@
 User-agent: *
 Allow: /
-Sitemap: https://venthulir.com/sitemap.xml
+Allow: /all-products
+Allow: /new-arrivals
+Allow: /product/
+
 Disallow: /admin
+Disallow: /auth
+Disallow: /cart
+Disallow: /checkout
+Disallow: /wishlist
+Disallow: /profile
+Disallow: /*?*
+Allow: /api/products/sitemap.xml
+Disallow: /api/
+
+Sitemap: https://venthulir.onrender.com/api/products/sitemap.xml

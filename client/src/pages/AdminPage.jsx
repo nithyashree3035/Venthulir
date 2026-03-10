@@ -203,7 +203,14 @@ function AdminPage({ onLogout }) {
 
                 if (uploadRes.ok) {
                     const data = await uploadRes.json();
-                    uploadedUrls = data.imageUrls;
+                    // Ensure image URLs use the production API base if they come back with localhost
+                    uploadedUrls = data.imageUrls.map(url => {
+                        if (url.includes('localhost:7000')) {
+                            const productionBase = API_BASE.replace('/api', '');
+                            return url.replace('http://localhost:7000', productionBase);
+                        }
+                        return url;
+                    });
                 } else {
                     const errorMsg = await uploadRes.text();
                     console.error("Upload error response:", errorMsg);
