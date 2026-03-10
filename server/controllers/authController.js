@@ -23,7 +23,7 @@ exports.sendRegisterOTP = async (req, res) => {
         const salt = await bcrypt.genSalt(6);
         const hashedOtp = await bcrypt.hash(otp, salt);
 
-        otpCache.set(email, { otpHash: hashedOtp, expires: Date.now() + 32000, type: 'register' }); // 30s + 2s buffer
+        otpCache.set(email, { otpHash: hashedOtp, expires: Date.now() + 300000, type: 'register' }); // 5 minutes expiration
 
         const mailOptions = {
             from: `"Venthulir Organic" <${process.env.EMAIL_USER}>`,
@@ -200,7 +200,7 @@ exports.sendOTP = async (req, res) => {
 
         const salt = await bcrypt.genSalt(6);
         user.otp = await bcrypt.hash(otp, salt);
-        user.otpExpires = Date.now() + 32000; // 32 seconds (30s + 2s buffer)
+        user.otpExpires = Date.now() + 300000; // 5 minutes expiration
         await user.save();
 
         const mailOptions = {
@@ -286,7 +286,7 @@ exports.forgotPassword = async (req, res) => {
         const salt = await bcrypt.genSalt(6);
         const hashedOtp = await bcrypt.hash(otp, salt);
 
-        otpCache.set(email, { otpHash: hashedOtp, expires: Date.now() + 32000, type: 'reset' }); // 30s + 2s buffer
+        otpCache.set(email, { otpHash: hashedOtp, expires: Date.now() + 300000, type: 'reset' }); // 5 minutes expiration
 
         const mailOptions = {
             from: `"Venthulir Support" <${process.env.EMAIL_USER}>`,
