@@ -37,7 +37,9 @@ exports.sendRegisterOTP = async (req, res) => {
             `
         };
 
+        console.log(`📤 Dispatching verification code to: ${email}`);
         await transporter.sendMail(mailOptions);
+        console.log(`✅ Royal dispatch successful to: ${email}`);
         res.json({ msg: 'Verification code sent safely.' });
 
     } catch (err) {
@@ -216,7 +218,9 @@ exports.sendOTP = async (req, res) => {
             `
         };
 
+        console.log(`📤 Dispatching login code to: ${email}`);
         await transporter.sendMail(mailOptions);
+        console.log(`✅ Login courier reached destination: ${email}`);
         res.json({ msg: 'Verification code sent safely to your chamber.' });
 
     } catch (err) {
@@ -297,7 +301,9 @@ exports.forgotPassword = async (req, res) => {
             `
         };
 
+        console.log(`📤 Dispatching password reset code to: ${email}`);
         await transporter.sendMail(mailOptions);
+        console.log(`✅ Status: Reset code delivered to ${email}`);
         res.json({ msg: 'Password reset code sent to your email.' });
     } catch (err) {
         res.status(500).json({ msg: 'Failed to send reset code.' });
