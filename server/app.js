@@ -55,14 +55,15 @@ app.get('/', (req, res) => {
 // Debug Email Route
 app.get('/api/test-email', async (req, res) => {
     const transporter = require('./utils/email');
+    const SENDER = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
     try {
         await transporter.sendMail({
-            from: `"Venthulir Debug" <${process.env.EMAIL_USER}>`,
-            to: process.env.EMAIL_USER,
-            subject: 'Venthulir SMTP Reliability Test',
-            text: 'Connection verified! SSL is active and Port 465 is OPEN.'
+            from: `Venthulir Debug <${SENDER}>`,
+            to: process.env.OWNER_EMAIL || process.env.EMAIL_USER,
+            subject: 'Venthulir Email Connectivity Test',
+            html: '<h2>✅ It works!</h2><p>Resend API is connected. All OTP emails will now reach customers.</p>'
         });
-        res.json({ msg: 'Success! Test email sent to ' + process.env.EMAIL_USER });
+        res.json({ msg: '✅ Success! Test email sent to ' + (process.env.OWNER_EMAIL || process.env.EMAIL_USER) });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

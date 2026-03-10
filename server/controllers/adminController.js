@@ -134,7 +134,7 @@ exports.resolveMessage = async (req, res) => {
 
         if (reply) {
             const mailOptions = {
-                from: `"Venthulir Official" <${process.env.EMAIL_USER}>`,
+                from: `Venthulir Official <${process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'}>`,
                 to: message.customerEmail,
                 subject: 'Response to your Query — Venthulir Royal Reserves',
                 html: `
