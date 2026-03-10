@@ -1,29 +1,37 @@
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
-const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false, // Use STARTTLS (Port 587)
-    connectionTimeout: 10000,
-    greetingTimeout: 10000,
-    socketTimeout: 20000,
-    family: 4, // Force IPv4
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+// Wrapper that mimics nodemailer's sendMail interface
+const transporter = {
+    sendMail: async ({ from, to, subject, html, text }) => {
+        const { data, error } = await resend.emails.send({
+            from: from || `Venthulir Organic <onboarding@resend.dev>`,
+            to: Array.isArray(to) ? to : [to],
+            subject,
+            html: html || `<p>${text}</p>`
+        });
+
+        if (error) {
+            console.error('Resend Email Error:', error);
+            throw new Error(error.message || 'Failed to send email via Resend');
+        }
+
+        console.log('✅ Email sent successfully via Resend. ID:', data.id);
+        return data;
     },
-    tls: {
-        rejectUnauthorized: false // Helps in cloud environments
+    verify: (callback) => {
+        // Resend doesn't need a live connection check — always ready
+        if (process.env.RESEND_API_KEY) {
+            console.log('✅ Resend API Key is configured. Mail service ready.');
+            if (callback) callback(null, true);
+        } else {
+            console.error('❌ RESEND_API_KEY is missing from environment variables!');
+            if (callback) callback(new Error('Missing RESEND_API_KEY'));
+        }
     }
-});
+};
 
-// Verify connection configuration
-transporter.verify(function (error, success) {
-    if (error) {
-        console.error('Core SMTP Connection Error:', error);
-    } else {
-        console.log('Royal Mail Server is ready to take messages');
-    }
-});
+transporter.verify();
 
 module.exports = transporter;

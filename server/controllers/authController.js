@@ -18,7 +18,7 @@ exports.sendRegisterOTP = async (req, res) => {
         otpCache.set(email, { otpHash: hashedOtp, expires: Date.now() + 60000, type: 'register' }); // 1 minute expiration
 
         const mailOptions = {
-            from: `"Venthulir Organic" <${process.env.EMAIL_USER}>`,
+            from: `Venthulir Organic <${process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'}>`,
             to: email,
             subject: 'Verify Your Royal Registry - Venthulir',
             html: `
@@ -198,7 +198,7 @@ exports.sendOTP = async (req, res) => {
         await user.save();
 
         const mailOptions = {
-            from: `"Venthulir Organic" <${process.env.EMAIL_USER}>`,
+            from: `Venthulir Organic <${process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'}>`,
             to: email,
             subject: 'Your Royal Login Code - Venthulir',
             html: `
@@ -285,7 +285,7 @@ exports.forgotPassword = async (req, res) => {
         otpCache.set(email, { otpHash: hashedOtp, expires: Date.now() + 60000, type: 'reset' }); // 1 minute expiration
 
         const mailOptions = {
-            from: `"Venthulir Support" <${process.env.EMAIL_USER}>`,
+            from: `Venthulir Support <${process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'}>`,
             to: email,
             subject: 'Reset Your Venthulir Password',
             html: `
