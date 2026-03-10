@@ -1,4 +1,5 @@
 const Order = require('../models/Order');
+const User = require('../models/User');
 const { restoreStock } = require('./inventoryController');
 
 /**
@@ -7,12 +8,16 @@ const { restoreStock } = require('./inventoryController');
  */
 exports.getMyOrders = async (req, res) => {
     try {
+        // Fetch user first to ensure we have the email, supporting older tokens that lacked it
+        const user = await User.findById(req.user.id);
+        if (!user) return res.status(404).json({ error: 'User not found' });
+
         // Case-insensitive email match to find all orders for this user
         const orders = await Order.find({
-            customerEmail: { $regex: new RegExp(`^${req.user.email}$`, 'i') }
+            customerEmail: { $regex: new RegExp(`^${user.email}$`, 'i') }
         }).sort({ createdAt: -1 });
 
-        console.log(`📦 Orders fetched for ${req.user.email}: ${orders.length} orders found`);
+        console.log(`📦 Orders fetched for ${user.email}: ${orders.length} orders found`);
         res.json(orders);
     } catch (err) {
         console.error('Order fetch error:', err);
@@ -29,8 +34,11 @@ exports.cancelOrder = async (req, res) => {
         const order = await Order.findById(req.params.id);
         if (!order) return res.status(404).json({ error: 'Order not found' });
 
-        // Ensure user actually owns this order
-        if (order.customerEmail !== req.user.email) {
+        const user = await User.findById(req.user.id);
+        if (!user) return res.status(404).json({ error: 'User not found' });
+
+        // Ensure user actually owns this order (case-insensitive check)
+        if (order.customerEmail.toLowerCase() !== user.email.toLowerCase()) {
             return res.status(403).json({ error: 'Unauthorized to cancel this order' });
         }
 

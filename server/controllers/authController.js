@@ -95,7 +95,7 @@ exports.register = async (req, res) => {
         await user.save();
 
         const token = jwt.sign(
-            { id: user._id, isAdmin: user.isAdmin, name: user.name },
+            { id: user._id, isAdmin: user.isAdmin, name: user.name, email: user.email },
             process.env.JWT_SECRET || 'venthulir_secret_key',
             { expiresIn: '30d' } // Production session length
         );
@@ -164,7 +164,7 @@ exports.login = async (req, res) => {
 
         const expiresIn = rememberMe ? '30d' : '7d';
         const token = jwt.sign(
-            { id: user._id, isAdmin: user.isAdmin, name: user.name },
+            { id: user._id, isAdmin: user.isAdmin, name: user.name, email: user.email },
             process.env.JWT_SECRET || 'venthulir_secret_key',
             { expiresIn }
         );
@@ -302,7 +302,7 @@ exports.verifyOTP = async (req, res) => {
 
         const expiresIn = rememberMe ? '30d' : '7d';
         const token = jwt.sign(
-            { id: user._id, isAdmin: user.isAdmin, name: user.name },
+            { id: user._id, isAdmin: user.isAdmin, name: user.name, email: user.email },
             process.env.JWT_SECRET || 'venthulir_secret_key',
             { expiresIn }
         );
