@@ -7,9 +7,15 @@ const { restoreStock } = require('./inventoryController');
  */
 exports.getMyOrders = async (req, res) => {
     try {
-        const orders = await Order.find({ customerEmail: req.user.email }).sort({ createdAt: -1 });
+        // Case-insensitive email match to find all orders for this user
+        const orders = await Order.find({
+            customerEmail: { $regex: new RegExp(`^${req.user.email}$`, 'i') }
+        }).sort({ createdAt: -1 });
+
+        console.log(`📦 Orders fetched for ${req.user.email}: ${orders.length} orders found`);
         res.json(orders);
     } catch (err) {
+        console.error('Order fetch error:', err);
         res.status(500).json({ error: 'Server Error fetching your orders' });
     }
 };

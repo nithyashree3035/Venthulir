@@ -38,4 +38,22 @@ seedAdmin();
 
 app.listen(PORT, () => {
     console.log(`🚀 Production Ready Server spinning at http://localhost:${PORT}`);
+
+    // Keep-alive ping: prevents Render free tier cold starts (pings every 13 mins)
+    if (process.env.NODE_ENV === 'production' || process.env.RENDER) {
+        const RENDER_URL = process.env.RENDER_EXTERNAL_URL || 'https://venthulir.onrender.com';
+        setInterval(async () => {
+            try {
+                const https = require('https');
+                https.get(`${RENDER_URL}/`, (res) => {
+                    console.log(`♻️ Keep-alive ping sent. Status: ${res.statusCode}`);
+                }).on('error', (e) => {
+                    console.warn('⚠️ Keep-alive ping failed:', e.message);
+                });
+            } catch (e) {
+                console.warn('Keep-alive error:', e.message);
+            }
+        }, 13 * 60 * 1000); // Every 13 minutes
+        console.log('♻️ Keep-alive scheduler activated (13-min interval)');
+    }
 });

@@ -131,7 +131,7 @@ exports.register = async (req, res) => {
                     <p style="margin: 0;">© ${new Date().getFullYear()} Venthulir Royal Reserves. All rights reserved.</p>
                 </div>
             </div>`
-        }).catch(console.error);
+        }).catch(err => console.error('❌ Welcome email failed:', err.message));
 
         // Notify owner of new signup
         transporter.sendMail({
