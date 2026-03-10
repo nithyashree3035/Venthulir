@@ -68,3 +68,36 @@ exports.getProductById = async (req, res) => {
         res.status(500).json({ error: 'Server Error' });
     }
 };
+
+exports.getSitemap = async (req, res) => {
+    try {
+        const products = await Product.find({}).select('_id updatedAt');
+
+        // Build XML
+        let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+        xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+
+        // Core Pages
+        const corePages = ['/', '/all-products', '/new-arrivals'];
+        corePages.forEach(page => {
+            xml += `  <url>\n    <loc>https://venthulir.com${page}</loc>\n    <priority>1.0</priority>\n  </url>\n`;
+        });
+
+        // Dynamic Product Pages
+        products.forEach(product => {
+            const date = product.updatedAt ? product.updatedAt.toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
+            xml += `  <url>\n`;
+            xml += `    <loc>https://venthulir.com/product/${product._id}</loc>\n`;
+            xml += `    <lastmod>${date}</lastmod>\n`;
+            xml += `    <priority>0.8</priority>\n`;
+            xml += `  </url>\n`;
+        });
+
+        xml += `</urlset>`;
+
+        res.header('Content-Type', 'application/xml');
+        res.send(xml);
+    } catch (err) {
+        res.status(500).send('Error generating sitemap');
+    }
+};
