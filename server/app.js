@@ -43,20 +43,31 @@ app.use('/api/messages', require('./routes/messageRoutes'));
 app.use('/api/coupons', require('./routes/couponRoutes'));
 app.use('/api/orders', require('./routes/orderRoutes'));
 
-// Production setup — Serving Isolated Frontend Apps
-if (process.env.NODE_ENV === 'production') {
-    // 1. Customer Portal (served from dist) — must be registered first as /admin is a subfolder
-    app.use(express.static(path.join(__dirname, '../client/dist')));
-
-    // Router Handler: If path starts with /admin, give dist/admin/admin.html, else index.html
-    app.get('*', (req, res) => {
-        if (req.originalUrl.toLowerCase().startsWith('/admin')) {
-            res.sendFile(path.resolve(__dirname, '../client', 'dist', 'admin', 'admin.html'));
-        } else {
-            res.sendFile(path.resolve(__dirname, '../client', 'dist', 'index.html'));
-        }
+// API Diagnostic Routes
+app.get('/', (req, res) => {
+    res.json({
+        status: 'Online',
+        message: 'Venthulir Imperial API is successfully running on Render.',
+        region: 'Production'
     });
-}
+});
+
+// Debug Email Route
+app.get('/api/test-email', async (req, res) => {
+    const transporter = require('./utils/email');
+    try {
+        await transporter.sendMail({
+            from: `"Venthulir Debug" <${process.env.EMAIL_USER}>`,
+            to: process.env.EMAIL_USER,
+            subject: 'Venthulir SMTP Reliability Test',
+            text: 'Connection verified! SSL is active and Port 465 is OPEN.'
+        });
+        res.json({ msg: 'Success! Test email sent to ' + process.env.EMAIL_USER });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 
 // Error Handler
 app.use((err, req, res, next) => {
