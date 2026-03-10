@@ -287,3 +287,33 @@
     background-color: #F7CA00;
     border-color: #F2C200;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    .cp-order-stats {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    
+    .cp-meta-value {
+        font-size: 12px;
+        word-break: break-all;
+    }
+    
+    .cp-order-meta {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cp-order-status-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .cp-item-row {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+}

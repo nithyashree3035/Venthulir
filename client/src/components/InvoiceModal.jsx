@@ -48,56 +48,57 @@ const InvoiceModal = ({ isOpen, onClose, orderData }) => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-8 md:mb-16">
                                 <div>
                                     <h4 className="text-[10px] uppercase tracking-[0.3em] font-black text-[#d4af37] mb-4">Registry Details</h4>
-                                    <p className="text-sm font-bold text-[#1b4d3e] mb-1">H.H. John Doe</p>
+                                    <p className="text-sm font-bold text-[#1b4d3e] mb-1">{orderData?.customerName || orderData?.deliveryAddress?.fullName || 'Customer'}</p>
                                     <p className="text-sm text-gray-500 font-light leading-relaxed">
-                                        12 Royal Circle, Green Vista <br />
-                                        Bengaluru, Karnataka 560001 <br />
-                                        India
+                                        {orderData?.deliveryAddress?.address || 'Address'} <br />
+                                        {orderData?.deliveryAddress?.city || 'City'}, {orderData?.deliveryAddress?.state || 'State'} {orderData?.deliveryAddress?.zipCode || ''}
                                     </p>
+                                    <p className="text-sm text-gray-500 font-light font-bold mt-2">Ph: {orderData?.phone || 'Not Provided'}</p>
                                 </div>
                                 <div className="text-left md:text-right">
                                     <h4 className="text-[10px] uppercase tracking-[0.3em] font-black text-[#d4af37] mb-4">Financial Record</h4>
-                                    <p className="text-sm font-bold text-[#1b4d3e] mb-1">Harvest Date: 12 Oct 2026</p>
-                                    <p className="text-sm font-bold text-[#1b4d3e]">Payment Status: Verified Royale</p>
+                                    <p className="text-sm font-bold text-[#1b4d3e] mb-1">Harvest Date: {new Date(orderData?.createdAt).toLocaleDateString()}</p>
+                                    <p className="text-sm font-bold text-[#1b4d3e]">Payment Status: {orderData?.paymentMethod || 'Cash on Delivery'}</p>
+                                    <p className="text-sm text-gray-500 font-light mt-1">Order Status: {orderData?.status}</p>
                                 </div>
                             </div>
 
-                            <div className="overflow-x-auto">
-                                <table className="w-full mb-8 md:mb-16 min-w-[500px]">
-                                    <thead className="border-b border-[#d4af37]/20">
-                                        <tr className="text-left text-[10px] uppercase tracking-widest text-gray-400">
-                                            <th className="pb-4">Harvested Selection</th>
-                                            <th className="pb-4 text-center">Qty</th>
-                                            <th className="pb-4 text-right">Net Weight</th>
-                                            <th className="pb-4 text-right">Price</th>
+                            <div className="overflow-x-auto border-t-2 border-b-2 border-dashed border-gray-200 py-4 mb-8 md:mb-16">
+                                <table className="w-full min-w-[500px]">
+                                    <thead>
+                                        <tr className="text-left text-[11px] uppercase tracking-widest text-[#1b4d3e] border-b border-gray-100 font-black">
+                                            <th className="pb-4 pt-2">Harvested Selection</th>
+                                            <th className="pb-4 pt-2 text-center">Variant</th>
+                                            <th className="pb-4 pt-2 text-center">Qty</th>
+                                            <th className="pb-4 pt-2 text-right">Price</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-50">
                                         {orderData.items.map((item, idx) => (
                                             <tr key={idx} className="text-sm">
-                                                <td className="py-6 font-bold text-[#1b4d3e]">{item.name}</td>
-                                                <td className="py-6 text-center text-gray-500">x1</td>
-                                                <td className="py-6 text-right text-gray-500">500ml</td>
-                                                <td className="py-6 text-right font-black text-[#1b4d3e]">₹{item.price}</td>
+                                                <td className="py-5 font-bold text-[#1b4d3e]">{item.name}</td>
+                                                <td className="py-5 text-center text-gray-500">{item.variant || 'Standard'}</td>
+                                                <td className="py-5 text-center text-gray-500">x{item.quantity || 1}</td>
+                                                <td className="py-5 text-right font-black text-[#1b4d3e]">₹{((item.price || 0) * (item.quantity || 1)).toLocaleString()}</td>
                                             </tr>
                                         ))}
                                     </tbody>
                                 </table>
                             </div>
 
-                            <div className="flex justify-end pt-8 border-t-2 border-[#1b4d3e]">
-                                <div className="w-full md:w-64 space-y-4">
+                            <div className="flex justify-end pt-4 border-[#1b4d3e]">
+                                <div className="w-full md:w-64 space-y-3">
                                     <div className="flex justify-between text-sm text-gray-500">
-                                        <span>Registry Subtotal:</span>
-                                        <span>₹{orderData.total}</span>
+                                        <span>Subtotal:</span>
+                                        <span>₹{(orderData?.originalAmount || orderData?.totalAmount || orderData?.total || 0).toLocaleString()}</span>
                                     </div>
-                                    <div className="flex justify-between text-sm text-gray-500">
-                                        <span>Royal Freight:</span>
-                                        <span>₹0.00 (Gratis)</span>
+                                    <div className="flex justify-between text-sm text-[#B12704]">
+                                        <span>Discount:</span>
+                                        <span>- ₹{(orderData?.discountAmount || 0).toLocaleString()}</span>
                                     </div>
-                                    <div className="flex justify-between text-xl font-black text-[#1b4d3e] pt-4 border-t border-gray-100">
+                                    <div className="flex justify-between text-xl font-black text-[#1b4d3e] pt-4 border-t border-gray-200">
                                         <span>GRAND TOTAL:</span>
-                                        <span>₹{orderData.total}</span>
+                                        <span>₹{(orderData?.totalAmount || orderData?.total || 0).toLocaleString()}</span>
                                     </div>
                                 </div>
                             </div>
@@ -108,11 +109,8 @@ const InvoiceModal = ({ isOpen, onClose, orderData }) => {
                                     <span className="text-[10px] font-bold uppercase tracking-widest text-center md:text-left">100% Certified Sovereign Authentic</span>
                                 </div>
                                 <div className="flex gap-4 w-full md:w-auto">
-                                    <button className="flex-1 md:flex-none justify-center items-center gap-2 px-6 py-3 border border-gray-200 text-[#1b4d3e] font-bold text-xs tracking-widest uppercase hover:bg-gray-50 transition-all">
+                                    <button onClick={() => window.print()} className="flex-1 md:flex-none justify-center items-center gap-2 px-6 py-3 border border-gray-200 text-[#1b4d3e] font-bold text-xs tracking-widest uppercase hover:bg-gray-50 transition-all">
                                         <Printer size={16} /> Print
-                                    </button>
-                                    <button className="flex-1 md:flex-none justify-center items-center gap-2 px-6 py-3 bg-[#1b4d3e] text-[#d4af37] font-bold text-xs tracking-widest uppercase hover:bg-[#0a2e1f] transition-all">
-                                        <Download size={16} /> Download PDF
                                     </button>
                                 </div>
                             </div>
