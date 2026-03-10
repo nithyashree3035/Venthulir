@@ -17,6 +17,7 @@ const CustomerPage = () => {
     const [isSending, setIsSending] = useState(false);
     const [grievances, setGrievances] = useState([]);
     const [orders, setOrders] = useState([]);
+    const [products, setProducts] = useState([]);
     const [activeSection, setActiveSection] = useState('Dashboard');
 
     const [profileAddress, setProfileAddress] = useState({
@@ -37,6 +38,7 @@ const CustomerPage = () => {
         if (user?.email) {
             fetchGrievances();
             fetchOrders();
+            fetchProducts();
         }
         if (user?.deliveryAddress) {
             setProfileAddress({
@@ -83,6 +85,19 @@ const CustomerPage = () => {
             }
         } catch (err) {
             console.error('Failed to fetch orders', err);
+        }
+    };
+
+    const fetchProducts = async () => {
+        try {
+            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:7000/api';
+            const res = await fetch(`${API_URL}/products`);
+            if (res.ok) {
+                const data = await res.json();
+                setProducts(data.products || (Array.isArray(data) ? data : []));
+            }
+        } catch (err) {
+            console.error('Failed to fetch products', err);
         }
     };
 
@@ -340,15 +355,26 @@ const CustomerPage = () => {
                                             <OrderTracking status={order.status} />
 
                                             <div className="cp-order-items">
-                                                {order.items.map((item, idx) => (
-                                                    <div key={idx} className="cp-item-row">
-                                                        <div className="cp-item-icon"><ShoppingBag size={24} /></div>
-                                                        <div className="cp-item-details">
-                                                            <p className="cp-item-name">{item.name}</p>
-                                                            <p className="cp-item-price">₹{item.price}</p>
+                                                {order.items.map((item, idx) => {
+                                                    const itemProduct = products.find(p => String(p._id) === String(item.product) || String(p.id) === String(item.product));
+                                                    const itemImage = item.imageUrl || itemProduct?.imageUrl || itemProduct?.images?.[0] || null;
+                                                    return (
+                                                        <div key={idx} className="cp-item-row" style={{ display: 'flex', alignItems: 'center', gap: '20px', padding: '16px', border: '1px solid #e2e8f0', borderRadius: '12px', background: '#FAFAFA', marginBottom: '10px' }}>
+                                                            <div className="cp-item-icon" style={{ width: '80px', height: '80px', borderRadius: '8px', overflow: 'hidden', background: '#fff', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                                                                {itemImage ? (
+                                                                    <img src={itemImage} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                                ) : (
+                                                                    <ShoppingBag size={32} color="#cbd5e1" />
+                                                                )}
+                                                            </div>
+                                                            <div className="cp-item-details" style={{ flex: 1 }}>
+                                                                <p className="cp-item-name" style={{ fontSize: '16px', fontWeight: 'bold', color: '#0b3d2e', margin: '0 0 4px 0', textDecoration: 'none' }}>{item.name}</p>
+                                                                <p className="cp-item-variant" style={{ fontSize: '13px', color: '#64748b', margin: '0 0 8px 0' }}>{item.variant || 'Standard'} &nbsp;•&nbsp; Qty: {item.quantity}</p>
+                                                                <p className="cp-item-price" style={{ fontSize: '15px', fontWeight: 'bold', color: '#B12704', margin: 0 }}>₹{(item.price * (item.quantity || 1)).toLocaleString()}</p>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                ))}
+                                                    );
+                                                })}
                                             </div>
                                         </div>
                                     </motion.div>
