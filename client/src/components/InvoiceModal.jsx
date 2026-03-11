@@ -1,133 +1,186 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Download, ShieldCheck, Printer } from 'lucide-react';
+import { X, ShieldCheck, Printer } from 'lucide-react';
 
 const InvoiceModal = ({ isOpen, onClose, orderData }) => {
     if (!orderData) return null;
 
+    const orderId = String(orderData._id || orderData.id || '');
+    const shortId = orderId.slice(-8).toUpperCase();
+    const orderDate = orderData.createdAt
+        ? new Date(orderData.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
+        : 'N/A';
+
+    const subtotal = orderData.originalAmount || orderData.totalAmount || 0;
+    const discount = orderData.discountAmount || 0;
+    const total = orderData.totalAmount || 0;
+
     return (
         <AnimatePresence>
             {isOpen && (
-                <div className="fixed inset-0 z-[3000] flex items-center justify-center p-4">
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    style={{
+                        position: 'fixed', inset: 0, zIndex: 9999,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        background: 'rgba(10, 46, 31, 0.85)', backdropFilter: 'blur(6px)',
+                        padding: '16px'
+                    }}
+                    onClick={onClose}
+                >
                     <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={onClose}
-                        className="absolute inset-0 bg-[#0a2e1f]/80 backdrop-blur-md"
-                    />
-
-                    <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                        className="relative w-full max-w-[800px] bg-[#fdfdfd] shadow-[0_50px_100px_rgba(0,0,0,0.5)] overflow-hidden origin-top"
+                        initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                        animate={{ scale: 1, opacity: 1, y: 0 }}
+                        exit={{ scale: 0.95, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                        onClick={e => e.stopPropagation()}
+                        style={{
+                            background: '#fdfdfd',
+                            borderRadius: '4px',
+                            width: '100%',
+                            maxWidth: '680px',
+                            maxHeight: '90vh',
+                            overflowY: 'auto',
+                            boxShadow: '0 25px 60px rgba(0,0,0,0.4)',
+                            position: 'relative',
+                            fontFamily: 'Arial, sans-serif'
+                        }}
                     >
-                        {/* Paper Texture Overlay */}
-                        <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
+                        {/* Gold top border */}
+                        <div style={{ height: '6px', background: 'linear-gradient(90deg, #0b3d2e, #d4af37, #0b3d2e)' }} />
 
-                        {/* Header Border (Golden Scallop) */}
-                        <div className="h-2 bg-[radial-gradient(circle,var(--gold-500)_1px,transparent_0)] bg-[length:10px_10px]" />
+                        <div style={{ padding: 'max(16px, 4vw)' }}>
 
-                        <div className="p-8 md:p-12">
-                            <div className="flex flex-col md:flex-row justify-between items-start mb-8 md:mb-16 gap-6">
+                            {/* HEADER */}
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '32px', flexWrap: 'wrap', gap: '16px' }}>
                                 <div>
-                                    <div className="flex items-center gap-2 mb-4">
-                                        <div className="w-8 h-8 bg-[#1b4d3e] rounded-full flex items-center justify-center text-[#d4af37] font-black italic">V</div>
-                                        <h2 className="text-2xl font-black italic font-serif text-[#1b4d3e]">VENTHULIR</h2>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
+                                        <div style={{ width: '36px', height: '36px', background: '#0b3d2e', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#d4af37', fontWeight: '900', fontSize: '18px', fontStyle: 'italic' }}>V</div>
+                                        <h2 style={{ margin: 0, fontSize: '22px', fontWeight: '900', color: '#0b3d2e', letterSpacing: '2px' }}>VENTHULIR</h2>
                                     </div>
-                                    <p className="text-[11px] text-gray-500 uppercase tracking-widest font-bold">Venthulir Organic Certification #VO7726</p>
+                                    <p style={{ margin: 0, fontSize: '11px', color: '#888', letterSpacing: '1px', textTransform: 'uppercase' }}>Organic Harvest · Salem, Tamil Nadu</p>
+                                    <p style={{ margin: '4px 0 0', fontSize: '11px', color: '#888' }}>theventhulir@gmail.com</p>
                                 </div>
-                                <div className="text-left md:text-right">
-                                    <h1 className="text-4xl font-bold text-[#1b4d3e] mb-2 font-serif italic">Invoice</h1>
-                                    <p className="text-sm font-bold text-gray-400">Transaction ID: {orderData.id}</p>
+                                <div style={{ textAlign: 'right' }}>
+                                    <h1 style={{ margin: '0 0 6px', fontSize: '36px', fontWeight: '900', color: '#0b3d2e', fontStyle: 'italic' }}>Invoice</h1>
+                                    <p style={{ margin: '0 0 2px', fontSize: '13px', color: '#555', fontWeight: 'bold' }}>Order # <span style={{ fontFamily: 'monospace', color: '#0b3d2e', fontSize: '14px' }}>{shortId}</span></p>
+                                    <p style={{ margin: 0, fontSize: '12px', color: '#888' }}>Full ID: <span style={{ fontFamily: 'monospace', fontSize: '11px', wordBreak: 'break-all' }}>{orderId}</span></p>
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-8 md:mb-16">
+                            {/* META ROW */}
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '24px', marginBottom: '28px', padding: '16px', background: '#f9f9f9', borderRadius: '8px', border: '1px solid #eee' }}>
                                 <div>
-                                    <h4 className="text-[10px] uppercase tracking-[0.3em] font-black text-[#d4af37] mb-4">Registry Details</h4>
-                                    <p className="text-sm font-bold text-[#1b4d3e] mb-1">{orderData?.customerName || orderData?.deliveryAddress?.fullName || 'Customer'}</p>
-                                    <p className="text-sm text-gray-500 font-light leading-relaxed">
-                                        {orderData?.deliveryAddress?.address || 'Address'} <br />
-                                        {orderData?.deliveryAddress?.city || 'City'}, {orderData?.deliveryAddress?.state || 'State'} {orderData?.deliveryAddress?.zipCode || ''}
-                                    </p>
-                                    <p className="text-sm text-gray-500 font-light font-bold mt-2">Ph: {orderData?.phone || 'Not Provided'}</p>
+                                    <p style={{ margin: '0 0 8px', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '2px', color: '#d4af37', fontWeight: '900' }}>Billed To</p>
+                                    <p style={{ margin: '0 0 3px', fontSize: '14px', fontWeight: 'bold', color: '#0b3d2e' }}>{orderData.customerName || 'Customer'}</p>
+                                    {orderData.deliveryAddress?.address && (
+                                        <p style={{ margin: '0 0 2px', fontSize: '13px', color: '#555' }}>{orderData.deliveryAddress.address}</p>
+                                    )}
+                                    {orderData.deliveryAddress?.city && (
+                                        <p style={{ margin: '0 0 2px', fontSize: '13px', color: '#555' }}>
+                                            {orderData.deliveryAddress.city}{orderData.deliveryAddress.state ? `, ${orderData.deliveryAddress.state}` : ''}
+                                            {orderData.deliveryAddress.zipCode ? ` - ${orderData.deliveryAddress.zipCode}` : ''}
+                                        </p>
+                                    )}
+                                    {orderData.phone && <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#555' }}>📞 {orderData.phone}</p>}
+                                    {orderData.customerEmail && <p style={{ margin: '2px 0 0', fontSize: '13px', color: '#555' }}>✉ {orderData.customerEmail}</p>}
                                 </div>
-                                <div className="text-left md:text-right">
-                                    <h4 className="text-[10px] uppercase tracking-[0.3em] font-black text-[#d4af37] mb-4">Financial Record</h4>
-                                    <p className="text-sm font-bold text-[#1b4d3e] mb-1">Harvest Date: {new Date(orderData?.createdAt).toLocaleDateString()}</p>
-                                    <p className="text-sm font-bold text-[#1b4d3e]">Payment Status: {orderData?.paymentMethod || 'Cash on Delivery'}</p>
-                                    <p className="text-sm text-gray-500 font-light mt-1">Order Status: {orderData?.status}</p>
+                                <div>
+                                    <p style={{ margin: '0 0 8px', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '2px', color: '#d4af37', fontWeight: '900' }}>Order Info</p>
+                                    <p style={{ margin: '0 0 4px', fontSize: '13px', color: '#555' }}>Date: <strong style={{ color: '#111' }}>{orderDate}</strong></p>
+                                    <p style={{ margin: '0 0 4px', fontSize: '13px', color: '#555' }}>Payment: <strong style={{ color: '#111' }}>{orderData.paymentMethod || 'Cash on Delivery'}</strong></p>
+                                    <p style={{ margin: '0 0 4px', fontSize: '13px', color: '#555' }}>
+                                        Status:&nbsp;
+                                        <span style={{
+                                            display: 'inline-block', padding: '2px 10px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold',
+                                            background: orderData.status === 'Delivered' ? '#dcfce7' : orderData.status === 'Cancelled' ? '#fee2e2' : orderData.status === 'Shipped' ? '#dbeafe' : '#fef9c3',
+                                            color: orderData.status === 'Delivered' ? '#166534' : orderData.status === 'Cancelled' ? '#991b1b' : orderData.status === 'Shipped' ? '#1e40af' : '#854d0e'
+                                        }}>
+                                            {orderData.status}
+                                        </span>
+                                    </p>
+                                    {orderData.couponUsed && (
+                                        <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#166534', fontWeight: 'bold' }}>Coupon: {orderData.couponUsed}</p>
+                                    )}
                                 </div>
                             </div>
 
-                            <div className="overflow-x-auto border-t-2 border-b-2 border-dashed border-gray-200 py-4 mb-8 md:mb-16">
-                                <table className="w-full min-w-[500px]">
+                            {/* ITEMS TABLE */}
+                            <div style={{ overflowX: 'auto', marginBottom: '24px' }}>
+                                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px', minWidth: '420px' }}>
                                     <thead>
-                                        <tr className="text-left text-[11px] uppercase tracking-widest text-[#1b4d3e] border-b border-gray-100 font-black">
-                                            <th className="pb-4 pt-2">Harvested Selection</th>
-                                            <th className="pb-4 pt-2 text-center">Variant</th>
-                                            <th className="pb-4 pt-2 text-center">Qty</th>
-                                            <th className="pb-4 pt-2 text-right">Price</th>
+                                        <tr style={{ borderBottom: '2px solid #0b3d2e', background: '#f5f1e8' }}>
+                                            <th style={{ padding: '10px 12px', textAlign: 'left', color: '#0b3d2e', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px' }}>Product</th>
+                                            <th style={{ padding: '10px 12px', textAlign: 'center', color: '#0b3d2e', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px' }}>Qty</th>
+                                            <th style={{ padding: '10px 12px', textAlign: 'right', color: '#0b3d2e', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px' }}>Unit Price</th>
+                                            <th style={{ padding: '10px 12px', textAlign: 'right', color: '#0b3d2e', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px' }}>Total</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="divide-y divide-gray-50">
+                                    <tbody>
                                         {orderData.items.map((item, idx) => (
-                                            <tr key={idx} className="text-sm">
-                                                <td className="py-5 font-bold text-[#1b4d3e]">{item.name}</td>
-                                                <td className="py-5 text-center text-gray-500">{item.variant || 'Standard'}</td>
-                                                <td className="py-5 text-center text-gray-500">x{item.quantity || 1}</td>
-                                                <td className="py-5 text-right font-black text-[#1b4d3e]">₹{((item.price || 0) * (item.quantity || 1)).toLocaleString()}</td>
+                                            <tr key={idx} style={{ borderBottom: '1px solid #f0f0f0', background: idx % 2 === 0 ? '#fff' : '#fafafa' }}>
+                                                <td style={{ padding: '12px', color: '#111', fontWeight: 'bold' }}>
+                                                    {item.name}
+                                                    {item.variant && item.variant !== 'Standard' && (
+                                                        <span style={{ display: 'block', fontSize: '12px', color: '#888', fontWeight: 'normal' }}>Size: {item.variant}</span>
+                                                    )}
+                                                </td>
+                                                <td style={{ padding: '12px', textAlign: 'center', color: '#555' }}>{item.quantity || 1}</td>
+                                                <td style={{ padding: '12px', textAlign: 'right', color: '#555' }}>₹{(item.price || 0).toLocaleString()}</td>
+                                                <td style={{ padding: '12px', textAlign: 'right', fontWeight: 'bold', color: '#0b3d2e' }}>₹{((item.price || 0) * (item.quantity || 1)).toLocaleString()}</td>
                                             </tr>
                                         ))}
                                     </tbody>
                                 </table>
                             </div>
 
-                            <div className="flex justify-end pt-4 border-[#1b4d3e]">
-                                <div className="w-full md:w-64 space-y-3">
-                                    <div className="flex justify-between text-sm text-gray-500">
+                            {/* TOTALS */}
+                            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '28px' }}>
+                                <div style={{ width: '100%', maxWidth: '280px' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #eee', fontSize: '14px', color: '#555' }}>
                                         <span>Subtotal:</span>
-                                        <span>₹{(orderData?.originalAmount || orderData?.totalAmount || orderData?.total || 0).toLocaleString()}</span>
+                                        <span>₹{subtotal.toLocaleString()}</span>
                                     </div>
-                                    <div className="flex justify-between text-sm text-[#B12704]">
-                                        <span>Discount:</span>
-                                        <span>- ₹{(orderData?.discountAmount || 0).toLocaleString()}</span>
-                                    </div>
-                                    <div className="flex justify-between text-xl font-black text-[#1b4d3e] pt-4 border-t border-gray-200">
+                                    {discount > 0 && (
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #eee', fontSize: '14px', color: '#166534', fontWeight: 'bold' }}>
+                                            <span>Discount {orderData.couponUsed ? `(${orderData.couponUsed})` : ''}:</span>
+                                            <span>- ₹{discount.toLocaleString()}</span>
+                                        </div>
+                                    )}
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 0 8px', fontSize: '18px', fontWeight: '900', color: '#0b3d2e', borderTop: '2px solid #0b3d2e' }}>
                                         <span>GRAND TOTAL:</span>
-                                        <span>₹{(orderData?.totalAmount || orderData?.total || 0).toLocaleString()}</span>
+                                        <span>₹{total.toLocaleString()}</span>
                                     </div>
+                                    <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#888', textAlign: 'right' }}>Payment: {orderData.paymentMethod || 'Cash on Delivery'}</p>
                                 </div>
                             </div>
 
-                            <div className="mt-12 md:mt-20 flex flex-col md:flex-row items-center justify-between gap-6">
-                                <div className="flex items-center gap-2 text-[#2d6b4a]">
-                                    <ShieldCheck size={20} />
-                                    <span className="text-[10px] font-bold uppercase tracking-widest text-center md:text-left">100% Certified Sovereign Authentic</span>
+                            {/* FOOTER */}
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '20px', borderTop: '1px dashed #ddd', flexWrap: 'wrap', gap: '12px' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#2d6b4a' }}>
+                                    <ShieldCheck size={18} />
+                                    <span style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '1px' }}>Verified Venthulir Order</span>
                                 </div>
-                                <div className="flex gap-4 w-full md:w-auto">
-                                    <button onClick={() => window.print()} className="flex-1 md:flex-none justify-center items-center gap-2 px-6 py-3 border border-gray-200 text-[#1b4d3e] font-bold text-xs tracking-widest uppercase hover:bg-gray-50 transition-all">
-                                        <Printer size={16} /> Print
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Seal Accent */}
-                        <div className="absolute top-1/2 right-12 transform -translate-y-1/2 opacity-10 rotate-12">
-                            <div className="w-32 h-32 border-4 border-[#d4af37] rounded-full flex flex-col items-center justify-center p-2">
-                                <span className="text-[10px] font-black uppercase tracking-tighter text-[#d4af37]">Venthulir Reserves</span>
-                                <div className="w-full h-px bg-[#d4af37] my-1" />
-                                <span className="text-2xl font-serif font-black text-[#d4af37]">V</span>
+                                <button
+                                    onClick={() => window.print()}
+                                    style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px', border: '1px solid #0b3d2e', background: '#fff', color: '#0b3d2e', fontWeight: 'bold', fontSize: '13px', cursor: 'pointer', borderRadius: '4px' }}
+                                >
+                                    <Printer size={16} /> Print Invoice
+                                </button>
                             </div>
                         </div>
 
-                        <button onClick={onClose} className="absolute top-8 right-8 p-2 text-gray-400 hover:text-black transition-colors"><X /></button>
+                        {/* Close button */}
+                        <button
+                            onClick={onClose}
+                            style={{ position: 'absolute', top: '16px', right: '16px', background: 'none', border: 'none', cursor: 'pointer', padding: '6px', color: '#888', lineHeight: 0 }}
+                        >
+                            <X size={22} />
+                        </button>
                     </motion.div>
-                </div>
+                </motion.div>
             )}
         </AnimatePresence>
     );

@@ -43,8 +43,9 @@
 
 .sidebar-nav {
     flex: 1;
-    padding: 20px 10px;
+    padding: 10px;
     overflow-y: auto;
+    min-height: 0; /* Critical: allows flex child to shrink below content size */
 }
 
 .nav-item {
@@ -90,6 +91,12 @@
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.logout-btn:hover {
+    background: #dc2626;
 }
 
 /* Main Content */
@@ -150,14 +157,14 @@
 
     .admin-main-content {
         margin-left: 0;
-        padding: 20px;
+        padding: 15px;
     }
 
     .admin-mobile-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 15px 20px;
+        padding: 12px 15px;
         background: #0b3d2e;
         color: #fff;
         position: sticky;
@@ -176,6 +183,7 @@
     .admin-brand {
         font-weight: 800;
         letter-spacing: 1px;
+        font-size: 14px;
     }
 
     .admin-user-bubble {
@@ -188,9 +196,38 @@
         align-items: center;
         justify-content: center;
         font-weight: 700;
+        flex-shrink: 0;
     }
 
     .admin-content-header {
+        display: none;
+    }
+
+    /* Make all tables on mobile horizontally scrollable */
+    .admin-inner-stage table,
+    .admin-inner-stage [style*='tableLayout'] {
+        min-width: 600px;
+    }
+}
+
+/* Table scroll wrapper — apply via a wrapper div in JSX or via this rule */
+.admin-inner-stage > div > table,
+.admin-inner-stage > div > div > table {
+    width: 100%;
+}
+
+@media (max-width: 640px) {
+    .admin-inner-stage {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Reduce form grid to single column on mobile */
+    .admin-form-panel {
+        grid-template-columns: 1fr !important;
+    }
+
+    .preview-sticky {
         display: none;
     }
 }

@@ -66,7 +66,7 @@ const Navbar = () => {
                 )}
               </div>
               <div className="at-action-label">
-                <span className="at-label-top">{isAuthenticated ? `Greetings, ${user?.name.split(' ')[0]}` : 'Hello, Guest'}</span>
+                <span className="at-label-top">{isAuthenticated ? user?.name.split(' ')[0] : 'Hello, Guest'}</span>
                 <span className="at-label-bot">Account <ChevronDown size={10} /></span>
               </div>
             </div>

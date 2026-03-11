@@ -5,9 +5,24 @@
 .cart-page-root {
     min-height: 100vh;
     background: linear-gradient(180deg, #f5f1e8 0%, #fff 50%, #f5f1e8 100%);
-    /* Changed from 140px to 20px to close the gap */
     padding: 40px 40px 60px;
     position: relative;
+}
+
+@media (max-width: 600px) {
+    .cart-page-root {
+        padding: 20px 15px 40px;
+    }
+
+    .cart-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .cart-header h1 {
+        font-size: 22px;
+    }
 }
 
 /* Container */

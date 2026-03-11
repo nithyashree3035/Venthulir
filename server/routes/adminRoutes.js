@@ -20,6 +20,10 @@ router.post('/products', adminController.addProduct);
 // Orders
 router.get('/orders', orderController.getOrders);
 router.put('/orders/:id/status', orderController.updateOrderStatus);
+router.delete('/orders/:id', adminController.deleteOrder);
+
+// Users
+router.delete('/users/:id', adminController.deleteUser);
 
 router.put('/products/:id', adminController.updateProduct);
 router.delete('/products/:id', adminController.deleteProduct);

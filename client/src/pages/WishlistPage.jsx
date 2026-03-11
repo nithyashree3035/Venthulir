@@ -2,13 +2,14 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useWishlist } from '../context/WishlistContext';
 import { useCart } from '../context/CartContext';
+import { useAppNavigation } from '../context/NavigationContext';
 import { Heart, Trash2, ShoppingCart, ArrowLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import './WishlistPage.css';
 
 const WishlistPage = () => {
     const { wishlist, toggleWishlist } = useWishlist();
     const { toggleCart, isInCart } = useCart();
+    const { appNavigate } = useAppNavigation();
 
     const handleAddToCart = (product) => {
         toggleCart(product);
@@ -34,10 +35,14 @@ const WishlistPage = () => {
                             <p>{wishlist.length} item{wishlist.length !== 1 ? 's' : ''} saved</p>
                         </div>
                     </div>
-                    <Link to="/" className="continue-shopping">
+                    <button
+                        className="continue-shopping"
+                        onClick={() => appNavigate('home')}
+                        style={{ background: 'none', border: 'none', cursor: 'pointer', outline: 'none' }}
+                    >
                         <ArrowLeft size={16} />
                         Continue Shopping
-                    </Link>
+                    </button>
                 </motion.div>
 
                 {wishlist.length === 0 ? (
@@ -49,16 +54,20 @@ const WishlistPage = () => {
                         <Heart size={80} />
                         <h2>Your wishlist is empty</h2>
                         <p>Save your favorite organic products here!</p>
-                        <Link to="/" className="shop-now-btn">
+                        <button
+                            className="shop-now-btn"
+                            onClick={() => appNavigate('home')}
+                            style={{ background: '#0b3d2e', color: '#fff', padding: '12px 24px', borderRadius: '8px', border: 'none', cursor: 'pointer', outline: 'none', fontWeight: '700', fontSize: '14px' }}
+                        >
                             Browse Products
-                        </Link>
+                        </button>
                     </motion.div>
                 ) : (
                     <div className="wishlist-grid">
                         <AnimatePresence>
                             {wishlist.map((item, index) => (
                                 <motion.div
-                                    key={item.id}
+                                    key={item.id || item._id}
                                     className="wishlist-item-card"
                                     layout
                                     initial={{ opacity: 0, y: 20 }}
@@ -68,7 +77,7 @@ const WishlistPage = () => {
                                 >
                                     {/* Image */}
                                     <div className="item-image">
-                                        <img src={item.image} alt={item.name} />
+                                        <img src={item.imageUrl || item.image} alt={item.name} />
                                         <motion.button
                                             className="remove-btn"
                                             onClick={() => handleRemove(item)}
@@ -82,19 +91,25 @@ const WishlistPage = () => {
                                     {/* Details */}
                                     <div className="item-details">
                                         <span className="item-category">{item.category}</span>
-                                        <h3 className="item-name">{item.name}</h3>
+                                        <h3
+                                            className="item-name"
+                                            onClick={() => appNavigate('product', { id: item._id || item.id })}
+                                            style={{ cursor: 'pointer' }}
+                                        >
+                                            {item.name}
+                                        </h3>
                                         <p className="item-price">₹{item.price}</p>
                                     </div>
 
-                                    {/* Add to Cart - Shows cart status */}
+                                    {/* Add to Cart */}
                                     <motion.button
-                                        className={`add-to-cart-btn ${isInCart(item.id) ? 'in-cart' : ''}`}
+                                        className={`add-to-cart-btn ${isInCart(item.id || item._id) ? 'in-cart' : ''}`}
                                         onClick={() => handleAddToCart(item)}
                                         whileHover={{ scale: 1.02 }}
                                         whileTap={{ scale: 0.98 }}
                                     >
                                         <ShoppingCart size={16} />
-                                        {isInCart(item.id) ? '✓ In Cart - Remove' : 'Add to Cart'}
+                                        {isInCart(item.id || item._id) ? '✓ In Cart - Remove' : 'Add to Cart'}
                                     </motion.button>
                                 </motion.div>
                             ))}

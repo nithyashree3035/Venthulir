@@ -3,6 +3,7 @@ import Hero from '../components/Hero';
 import ShopGrid from '../components/ShopGrid';
 import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet-async';
+import { API_BASE } from '../constants';
 import './Home.css';
 
 const Home = () => {
@@ -18,6 +19,11 @@ const Home = () => {
             rotation: Math.random() * 360,
         }));
     });
+
+    // Silently warm up the Render backend to prevent cold-start delays on first product click
+    useEffect(() => {
+        fetch(`${API_BASE}/products?limit=1`, { method: 'GET' }).catch(() => {});
+    }, []);
 
     return (
         <div className="home-unified-root">

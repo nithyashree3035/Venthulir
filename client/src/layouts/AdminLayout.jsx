@@ -32,7 +32,16 @@ const AdminLayout = ({ children, activeTab, setActiveTab, onLogout }) => {
                     <img src={logo} alt="Logo" style={{ height: '30px' }} />
                     <span className="admin-brand">Venthulir Admin</span>
                 </div>
-                <div className="admin-user-bubble">{adminName?.[0]}</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <button
+                        onClick={onLogout}
+                        title="Logout"
+                        style={{ background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.4)', borderRadius: '8px', padding: '6px 10px', color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', fontWeight: '700' }}
+                    >
+                        <LogOut size={16} /> Logout
+                    </button>
+                    <div className="admin-user-bubble">{adminName?.[0]}</div>
+                </div>
             </header>
 
             {/* Sidebar */}

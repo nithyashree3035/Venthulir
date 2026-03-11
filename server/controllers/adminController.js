@@ -45,6 +45,29 @@ exports.getUsers = async (req, res) => {
     }
 };
 
+exports.deleteUser = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) return res.status(404).json({ error: 'User not found' });
+        if (user.email === 'shreenithya111@gmail.com') return res.status(403).json({ error: 'Cannot delete admin account' });
+        await User.findByIdAndDelete(req.params.id);
+        res.json({ msg: 'Customer deleted successfully' });
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to delete customer' });
+    }
+};
+
+exports.deleteOrder = async (req, res) => {
+    try {
+        const order = await Order.findById(req.params.id);
+        if (!order) return res.status(404).json({ error: 'Order not found' });
+        await Order.findByIdAndDelete(req.params.id);
+        res.json({ msg: 'Order deleted successfully' });
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to delete order' });
+    }
+};
+
 exports.getAdminProducts = async (req, res) => {
     try {
         const products = await Product.find().sort({ createdAt: -1 });

@@ -5,6 +5,7 @@ import InvoiceModal from '../components/InvoiceModal';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag, ChevronRight, FileText, Settings, LogOut, Package, ShieldQuestion, Send, LayoutDashboard, ArrowLeft } from 'lucide-react';
 import { useAppNavigation } from '../context/NavigationContext';
+import { api } from '../services/api';
 import './CustomerPage.css';
 
 const CustomerPage = () => {
@@ -58,15 +59,8 @@ const CustomerPage = () => {
 
     const fetchGrievances = async () => {
         try {
-            const token = localStorage.getItem('venthulir_token');
-            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:7000/api';
-            const res = await fetch(`${API_URL}/messages`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            if (res.ok) {
-                const messages = await res.json();
-                setGrievances(messages); // Automatically filtered on the connected backend route
-            }
+            const data = await api.get('/messages');
+            setGrievances(Array.isArray(data) ? data : []);
         } catch (err) {
             console.error(err);
         }
@@ -74,15 +68,8 @@ const CustomerPage = () => {
 
     const fetchOrders = async () => {
         try {
-            const token = localStorage.getItem('venthulir_token');
-            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:7000/api';
-            const res = await fetch(`${API_URL}/orders/me`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            if (res.ok) {
-                const data = await res.json();
-                setOrders(data);
-            }
+            const data = await api.get('/orders/me');
+            setOrders(Array.isArray(data) ? data : []);
         } catch (err) {
             console.error('Failed to fetch orders', err);
         }
@@ -90,12 +77,8 @@ const CustomerPage = () => {
 
     const fetchProducts = async () => {
         try {
-            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:7000/api';
-            const res = await fetch(`${API_URL}/products`);
-            if (res.ok) {
-                const data = await res.json();
-                setProducts(data.products || (Array.isArray(data) ? data : []));
-            }
+            const data = await api.get('/products');
+            setProducts(data.products || (Array.isArray(data) ? data : []));
         } catch (err) {
             console.error('Failed to fetch products', err);
         }
@@ -104,22 +87,11 @@ const CustomerPage = () => {
     const handleCancelOrder = async (orderId) => {
         if (!window.confirm('Are you sure you want to cancel this order?')) return;
         try {
-            const token = localStorage.getItem('venthulir_token');
-            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:7000/api';
-            const res = await fetch(`${API_URL}/orders/${orderId}/cancel`, {
-                method: 'PUT',
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            if (res.ok) {
-                alert('Order was successfully cancelled.');
-                fetchOrders();
-            } else {
-                const errData = await res.json();
-                alert(errData.error || 'Could not cancel order.');
-            }
+            await api.put(`/orders/${orderId}/cancel`, {});
+            alert('Order was successfully cancelled.');
+            fetchOrders();
         } catch (err) {
-            console.error('Failed to cancel order', err);
-            alert('A network error occurred.');
+            alert(err.message || 'Could not cancel order.');
         }
     };
 
@@ -132,28 +104,17 @@ const CustomerPage = () => {
         if (!messageText.trim()) return;
         setIsSending(true);
         try {
-            const token = localStorage.getItem('venthulir_token');
-            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:7000/api';
-            const res = await fetch(`${API_URL}/messages`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    customerName: user?.name || 'Guest',
-                    customerEmail: user?.email || 'guest@example.com',
-                    message: messageText
-                })
+            await api.post('/messages', {
+                customerName: user?.name || 'Guest',
+                customerEmail: user?.email || '',
+                message: messageText
             });
-            if (res.ok) {
-                alert('Your message has been sent to Venthulir Support.');
-                setMessageText('');
-                setIsMessageModalOpen(false);
-                fetchGrievances();
-            } else {
-                alert('Failed to send message.');
-            }
+            alert('Your message has been sent to Venthulir Support.');
+            setMessageText('');
+            setIsMessageModalOpen(false);
+            fetchGrievances();
         } catch (err) {
-            console.error(err);
-            alert('Error sending message.');
+            alert(err.message || 'Error sending message.');
         } finally {
             setIsSending(false);
         }
@@ -163,26 +124,11 @@ const CustomerPage = () => {
         e.preventDefault();
         setIsUpdatingAddress(true);
         try {
-            const token = localStorage.getItem('venthulir_token');
-            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:7000/api';
-            const res = await fetch(`${API_URL}/auth/address`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(profileAddress)
-            });
-            if (res.ok) {
-                const data = await res.json();
-                updateUser({ ...user, deliveryAddress: data.deliveryAddress });
-                alert('Your delivery address has been successfully updated.');
-            } else {
-                alert('Failed to update address.');
-            }
+            const data = await api.put('/auth/address', profileAddress);
+            updateUser({ ...user, deliveryAddress: data.deliveryAddress });
+            alert('Your delivery address has been successfully updated.');
         } catch (err) {
-            console.error(err);
-            alert('Error updating address.');
+            alert(err.message || 'Failed to update address.');
         } finally {
             setIsUpdatingAddress(false);
         }
@@ -192,26 +138,11 @@ const CustomerPage = () => {
         e.preventDefault();
         setIsUpdatingProfile(true);
         try {
-            const token = localStorage.getItem('venthulir_token');
-            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:7000/api';
-            const res = await fetch(`${API_URL}/auth/profile`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(profileDetails)
-            });
-            if (res.ok) {
-                const data = await res.json();
-                updateUser(data.user);
-                alert('Your profile has been successfully updated.');
-            } else {
-                alert('Failed to update profile.');
-            }
+            const data = await api.put('/auth/profile', profileDetails);
+            updateUser(data.user);
+            alert('Your profile has been successfully updated.');
         } catch (err) {
-            console.error(err);
-            alert('Error updating profile.');
+            alert(err.message || 'Failed to update profile.');
         } finally {
             setIsUpdatingProfile(false);
         }
@@ -301,12 +232,18 @@ const CustomerPage = () => {
                             <h1 className="cp-title">Your Orders</h1>
                         </div>
 
-                        <div className="cp-order-list">
+                    <div className="cp-order-list">
                             {orders.length === 0 ? (
                                 <div style={{ textAlign: 'center', padding: '40px', background: '#fff', borderRadius: '8px', border: '1px solid #ddd' }}>
                                     <Package size={48} style={{ color: '#ccc', margin: '0 auto 15px' }} />
                                     <h3 style={{ fontSize: '18px', color: '#111', margin: '0 0 10px 0' }}>Looks like you haven't placed an order yet.</h3>
-                                    <p style={{ color: '#555', fontSize: '14px', margin: 0 }}>Start filling your basket with fresh organic goods.</p>
+                                    <p style={{ color: '#555', fontSize: '14px', margin: '0 0 20px 0' }}>Start filling your basket with fresh organic goods.</p>
+                                    <button
+                                        onClick={() => appNavigate('home')}
+                                        style={{ background: '#0b3d2e', color: '#d4af37', border: 'none', borderRadius: '8px', padding: '12px 24px', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}
+                                    >
+                                        Shop Now
+                                    </button>
                                 </div>
                             ) : (
                                 orders.map((order) => (
@@ -317,24 +254,29 @@ const CustomerPage = () => {
                                         viewport={{ once: true }}
                                         className="cp-order-card"
                                     >
+                                        {/* Order Header Bar */}
                                         <div className="cp-order-meta">
                                             <div className="cp-order-stats">
                                                 <div>
                                                     <p className="cp-meta-label">Order Placed</p>
-                                                    <p className="cp-meta-value">{new Date(order.createdAt).toLocaleDateString()}</p>
+                                                    <p className="cp-meta-value">{new Date(order.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
                                                 </div>
                                                 <div>
                                                     <p className="cp-meta-label">Total</p>
-                                                    <p className="cp-meta-value">₹{order.totalAmount || order.total}</p>
+                                                    <p className="cp-meta-value" style={{ fontWeight: 'bold' }}>₹{order.totalAmount || order.total}</p>
                                                 </div>
                                                 <div>
                                                     <p className="cp-meta-label">Order #</p>
-                                                    <p className="cp-meta-value">{order._id || order.id}</p>
+                                                    <p className="cp-meta-value cp-order-id">{String(order._id || order.id).slice(-8).toUpperCase()}</p>
+                                                </div>
+                                                <div>
+                                                    <p className="cp-meta-label">Payment</p>
+                                                    <p className="cp-meta-value">{order.paymentMethod || 'Cash on Delivery'}</p>
                                                 </div>
                                             </div>
-                                            <div style={{ display: 'flex', gap: '8px' }}>
+                                            <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
                                                 {(order.status === 'Pending' || order.status === 'Processing') && (
-                                                    <button onClick={() => handleCancelOrder(order._id || order.id)} className="cp-invoice-btn" style={{ background: '#fff0f0', color: '#B12704', borderColor: '#f5c6c6' }}>
+                                                    <button onClick={() => handleCancelOrder(order._id || order.id)} className="cp-invoice-btn cp-cancel-btn">
                                                         Cancel Order
                                                     </button>
                                                 )}
@@ -344,37 +286,71 @@ const CustomerPage = () => {
                                             </div>
                                         </div>
 
+                                        {/* Order Body */}
                                         <div className="cp-order-body">
                                             <div className="cp-order-status-header">
                                                 <div className="cp-status-title">
-                                                    Status: {order.status}
+                                                    <span style={{
+                                                        display: 'inline-block',
+                                                        padding: '4px 12px',
+                                                        borderRadius: '20px',
+                                                        fontSize: '14px',
+                                                        fontWeight: 'bold',
+                                                        background: order.status === 'Delivered' ? '#dcfce7' : order.status === 'Cancelled' ? '#fee2e2' : order.status === 'Shipped' ? '#dbeafe' : '#fef9c3',
+                                                        color: order.status === 'Delivered' ? '#166534' : order.status === 'Cancelled' ? '#991b1b' : order.status === 'Shipped' ? '#1e40af' : '#854d0e'
+                                                    }}>
+                                                        {order.status}
+                                                    </span>
                                                 </div>
                                                 <button onClick={() => setIsMessageModalOpen(true)} className="cp-assist-btn">Get Product Support</button>
                                             </div>
 
                                             <OrderTracking status={order.status} />
 
+                                            {/* Items */}
                                             <div className="cp-order-items">
                                                 {order.items.map((item, idx) => {
                                                     const itemProduct = products.find(p => String(p._id) === String(item.product) || String(p.id) === String(item.product));
                                                     const itemImage = item.imageUrl || itemProduct?.imageUrl || itemProduct?.images?.[0] || null;
                                                     return (
-                                                        <div key={idx} className="cp-item-row" style={{ display: 'flex', alignItems: 'center', gap: '20px', padding: '16px', border: '1px solid #e2e8f0', borderRadius: '12px', background: '#FAFAFA', marginBottom: '10px' }}>
-                                                            <div className="cp-item-icon" style={{ width: '80px', height: '80px', borderRadius: '8px', overflow: 'hidden', background: '#fff', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                                                        <div key={idx} className="cp-item-row">
+                                                            <div className="cp-item-icon">
                                                                 {itemImage ? (
-                                                                    <img src={itemImage} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                                    <img src={itemImage} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '4px' }} />
                                                                 ) : (
-                                                                    <ShoppingBag size={32} color="#cbd5e1" />
+                                                                    <ShoppingBag size={28} color="#cbd5e1" />
                                                                 )}
                                                             </div>
-                                                            <div className="cp-item-details" style={{ flex: 1 }}>
-                                                                <p className="cp-item-name" style={{ fontSize: '16px', fontWeight: 'bold', color: '#0b3d2e', margin: '0 0 4px 0', textDecoration: 'none' }}>{item.name}</p>
-                                                                <p className="cp-item-variant" style={{ fontSize: '13px', color: '#64748b', margin: '0 0 8px 0' }}>{item.variant || 'Standard'} &nbsp;•&nbsp; Qty: {item.quantity}</p>
-                                                                <p className="cp-item-price" style={{ fontSize: '15px', fontWeight: 'bold', color: '#B12704', margin: 0 }}>₹{(item.price * (item.quantity || 1)).toLocaleString()}</p>
+                                                            <div className="cp-item-details">
+                                                                <p className="cp-item-name">{item.name}</p>
+                                                                <p className="cp-item-variant">
+                                                                    {item.variant && item.variant !== 'Standard' ? `Size: ${item.variant} • ` : ''}Qty: {item.quantity}
+                                                                </p>
+                                                                <p className="cp-item-price">₹{(item.price * (item.quantity || 1)).toLocaleString()}</p>
                                                             </div>
                                                         </div>
                                                     );
                                                 })}
+                                            </div>
+
+                                            {/* Order total breakdown */}
+                                            <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px dashed #e2e8f0', display: 'flex', flexDirection: 'column', gap: '6px', maxWidth: '320px', marginLeft: 'auto' }}>
+                                                {order.discountAmount > 0 && (
+                                                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: '#555' }}>
+                                                        <span>Subtotal:</span>
+                                                        <span>₹{order.originalAmount || order.totalAmount}</span>
+                                                    </div>
+                                                )}
+                                                {order.discountAmount > 0 && (
+                                                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: '#166534', fontWeight: 'bold' }}>
+                                                        <span>Discount {order.couponUsed ? `(${order.couponUsed})` : ''}:</span>
+                                                        <span>- ₹{order.discountAmount}</span>
+                                                    </div>
+                                                )}
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '15px', fontWeight: 'bold', color: '#0b3d2e', paddingTop: '6px', borderTop: '1px solid #e2e8f0' }}>
+                                                    <span>Order Total:</span>
+                                                    <span>₹{order.totalAmount}</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </motion.div>

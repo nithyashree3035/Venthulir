@@ -179,7 +179,7 @@ const CheckoutPage = ({ viewParams = {} }) => {
                         <p>💰 Payment: Cash on Delivery</p>
                     </div>
                     <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap', marginTop: '20px' }}>
-                        <button className="primary-checkout-btn" onClick={() => appNavigate('orders')}>View My Orders</button>
+                        <button className="primary-checkout-btn" onClick={() => appNavigate('profile')}>View My Orders</button>
                         <button className="primary-checkout-btn" style={{ background: '#f8fafc', color: '#0b3d2e', border: '2px solid #0b3d2e' }} onClick={() => appNavigate('home')}>Continue Shopping</button>
                     </div>
                 </div>
@@ -284,7 +284,7 @@ const CheckoutPage = ({ viewParams = {} }) => {
                                         <div style={{ display: 'flex', gap: '10px' }}>
                                             <select value={couponInput} onChange={e => setCouponInput(e.target.value)} style={{ flex: 1, padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', background: '#fff', fontSize: '14px' }}>
                                                 <option value="">{availableCoupons.length > 0 ? '-- Select a Coupon --' : 'No Coupons Available'}</option>
-                                                {availableCoupons.map(c => <option key={c._id} value={c.code}>{c.code} ({c.discountPercentage}% OFF)</option>)}
+                                                {availableCoupons.map(c => <option key={c._id} value={c.couponCode}>{c.couponCode} ({c.discountPercentage}% OFF)</option>)}
                                             </select>
                                             <button onClick={handleApplyCoupon} disabled={isVerifyingCoupon || !couponInput.trim()} style={{ padding: '10px 20px', background: '#0b3d2e', color: '#d4af37', border: 'none', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer' }}>
                                                 {isVerifyingCoupon ? '...' : 'Apply'}

@@ -131,7 +131,7 @@
 .at-nav-actions {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
 }
 
 @media (min-width: 768px) {
@@ -148,8 +148,14 @@
 }
 
 .at-action-label {
-    display: flex;
+    display: none;
     flex-direction: column;
+}
+
+@media (min-width: 420px) {
+    .at-action-label {
+        display: flex;
+    }
 }
 
 .at-label-top {

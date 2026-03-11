@@ -2,8 +2,8 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const transporter = require('../utils/email');
+const OtpStore = require('../models/OtpStore');
 
-const otpCache = new Map();
 
 exports.sendRegisterOTP = async (req, res) => {
     try {
@@ -15,24 +15,29 @@ exports.sendRegisterOTP = async (req, res) => {
         const salt = await bcrypt.genSalt(6);
         const hashedOtp = await bcrypt.hash(otp, salt);
 
-        otpCache.set(email, { otpHash: hashedOtp, expires: Date.now() + 60000, type: 'register' }); // 1 minute expiration
+        // Store in MongoDB — survives Render restarts
+        await OtpStore.findOneAndUpdate(
+            { email, type: 'register' },
+            { otpHash: hashedOtp, verified: false, expiresAt: new Date(Date.now() + 90000) },
+            { upsert: true, new: true }
+        );
 
         const mailOptions = {
             from: `Venthulir Organic <${process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'}>`,
             to: email,
-            subject: 'Verify Your Royal Registry - Venthulir',
+            subject: 'Verify Your Account - Venthulir',
             html: `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 8px;">
                 <div style="text-align: center; margin-bottom: 20px;">
                     <h1 style="color: #0a2e1f; letter-spacing: 2px; margin: 0;">VENTHULIR</h1>
                     <p style="color: #64748b; font-size: 12px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase;">Organic Harvest</p>
                 </div>
-                <h3 style="color: #111;">Greetings,</h3>
-                <p style="color: #444; line-height: 1.6;">You have requested to open a new registry at Venthulir. Here is your verification code.</p>
+                <h3 style="color: #111;">Verify your email</h3>
+                <p style="color: #444; line-height: 1.6;">You have requested to create a new account at Venthulir. Use the code below to verify your email address.</p>
                 <div style="text-align: center; margin: 30px 0;">
                     <span style="font-size: 32px; font-weight: bold; letter-spacing: 5px; color: #0a2e1f; background: #f8f9f8; padding: 15px 30px; border-radius: 8px; border: 1px solid #e2e8f0;">${otp}</span>
                 </div>
-                <p style="color: #c40000; font-size: 13px; text-align: center; font-weight: bold;">This code is valid for 60 seconds.</p>
+                <p style="color: #c40000; font-size: 13px; text-align: center; font-weight: bold;">This code is valid for 90 seconds.</p>
             </div>
             `
         };
@@ -44,24 +49,26 @@ exports.sendRegisterOTP = async (req, res) => {
 
     } catch (err) {
         console.error('OTP Send Error:', err);
-        res.status(500).json({ msg: 'Failed to dispatch royal courier.' });
+        res.status(500).json({ msg: 'Failed to dispatch verification code.' });
     }
 };
 
 exports.verifyRegisterOTP = async (req, res) => {
     try {
         const { email, otp } = req.body;
-        const cached = otpCache.get(email);
+        const record = await OtpStore.findOne({ email, type: 'register' });
 
-        if (!cached || cached.type !== 'register' || Date.now() > cached.expires) {
+        if (!record || record.verified || new Date() > record.expiresAt) {
             return res.status(400).json({ msg: 'Verification code has expired. Please request a new one.' });
         }
 
-        const isMatch = await bcrypt.compare(otp, cached.otpHash);
+        const isMatch = await bcrypt.compare(otp, record.otpHash);
         if (!isMatch) return res.status(400).json({ msg: 'Invalid verification code.' });
 
-        // Mark as verified and extend expiration for 10 minutes to allow form completion
-        otpCache.set(email, { verified: true, type: 'register', expires: Date.now() + 600000 });
+        // Mark as verified and extend expiration for 10 minutes
+        record.verified = true;
+        record.expiresAt = new Date(Date.now() + 600000);
+        await record.save();
 
         res.json({ msg: 'Email successfully verified' });
     } catch (err) {
@@ -76,15 +83,15 @@ exports.register = async (req, res) => {
 
         if (!phone) return res.status(400).json({ message: 'Phone number is required.' });
 
-        const cached = otpCache.get(email);
-        if (!cached || cached.type !== 'register' || !cached.verified || Date.now() > cached.expires) {
+        const record = await OtpStore.findOne({ email, type: 'register', verified: true });
+        if (!record || new Date() > record.expiresAt) {
             return res.status(400).json({ msg: 'Email not verified or session expired. Please verify your email again.' });
         }
 
         let user = await User.findOne({ email });
         if (user) return res.status(400).json({ msg: 'Identity already exists' });
 
-        otpCache.delete(email);
+        await OtpStore.deleteOne({ email, type: 'register' });
 
         const salt = await bcrypt.genSalt(6);
         const hashedPassword = await bcrypt.hash(password, salt);
@@ -325,7 +332,12 @@ exports.forgotPassword = async (req, res) => {
         const salt = await bcrypt.genSalt(6);
         const hashedOtp = await bcrypt.hash(otp, salt);
 
-        otpCache.set(email, { otpHash: hashedOtp, expires: Date.now() + 60000, type: 'reset' }); // 1 minute expiration
+        // Store in MongoDB — survives Render restarts
+        await OtpStore.findOneAndUpdate(
+            { email, type: 'reset' },
+            { otpHash: hashedOtp, verified: false, expiresAt: new Date(Date.now() + 90000) },
+            { upsert: true, new: true }
+        );
 
         const mailOptions = {
             from: `Venthulir Support <${process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'}>`,
@@ -356,17 +368,19 @@ exports.forgotPassword = async (req, res) => {
 exports.verifyResetOTP = async (req, res) => {
     try {
         const { email, otp } = req.body;
-        const cached = otpCache.get(email);
+        const record = await OtpStore.findOne({ email, type: 'reset' });
 
-        if (!cached || cached.type !== 'reset' || Date.now() > cached.expires) {
+        if (!record || new Date() > record.expiresAt) {
             return res.status(400).json({ msg: 'Reset code expired or invalid.' });
         }
 
-        const isMatch = await bcrypt.compare(otp, cached.otpHash);
+        const isMatch = await bcrypt.compare(otp, record.otpHash);
         if (!isMatch) return res.status(400).json({ msg: 'Invalid reset code.' });
 
         // Mark as verified and extend for password entry
-        otpCache.set(email, { verified: true, type: 'reset', expires: Date.now() + 600000 });
+        record.verified = true;
+        record.expiresAt = new Date(Date.now() + 600000);
+        await record.save();
 
         res.json({ msg: 'Code verified. You may now reset your password.' });
     } catch (err) {
@@ -377,9 +391,9 @@ exports.verifyResetOTP = async (req, res) => {
 exports.resetPassword = async (req, res) => {
     try {
         const { email, newPassword } = req.body;
-        const cached = otpCache.get(email);
+        const record = await OtpStore.findOne({ email, type: 'reset', verified: true });
 
-        if (!cached || cached.type !== 'reset' || !cached.verified || Date.now() > cached.expires) {
+        if (!record || new Date() > record.expiresAt) {
             return res.status(400).json({ msg: 'Session expired or invalid. Please verify again.' });
         }
 
@@ -390,7 +404,7 @@ exports.resetPassword = async (req, res) => {
         user.password = await bcrypt.hash(newPassword, salt);
         await user.save();
 
-        otpCache.delete(email);
+        await OtpStore.deleteOne({ email, type: 'reset' });
         res.json({ msg: 'Password reset successful. You can now sign in.' });
     } catch (err) {
         console.error(err);

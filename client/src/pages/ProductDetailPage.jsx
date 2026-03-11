@@ -95,7 +95,14 @@ const ProductDetailPage = ({ id }) => {
         fetchProductData();
     }, [id, appNavigate]);
 
-    if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}>Loading...</div>;
+    if (loading) return (
+        <div style={{ padding: '80px 40px', textAlign: 'center', minHeight: '60vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '16px' }}>
+            <div style={{ width: '48px', height: '48px', border: '4px solid #f0ede0', borderTopColor: '#0b3d2e', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }}></div>
+            <p style={{ color: '#0b3d2e', fontWeight: '700', fontSize: '16px', margin: 0 }}>Loading product...</p>
+            <p style={{ color: '#888', fontSize: '13px', margin: 0 }}>This may take a moment on first load.</p>
+            <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+        </div>
+    );
     if (!product) return null;
 
     const productId = product._id || product.id;

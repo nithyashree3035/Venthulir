@@ -293,6 +293,28 @@ function AdminPage({ onLogout }) {
         }
     };
 
+    const handleDeleteUser = async (id) => {
+        if (!window.confirm('Are you sure you want to delete this customer?')) return;
+        try {
+            await api.delete(`/admin/users/${id}`);
+            fetchData();
+        } catch (err) {
+            console.error(err);
+            alert('Failed to delete user.');
+        }
+    };
+
+    const handleDeleteOrder = async (id) => {
+        if (!window.confirm('Are you sure you want to delete this order?')) return;
+        try {
+            await api.delete(`/admin/orders/${id}`);
+            fetchData();
+        } catch (err) {
+            console.error(err);
+            alert('Failed to delete order.');
+        }
+    };
+
     const handleResolveMessage = async (id) => {
         const reply = replyTexts[id];
         if (!reply) return alert('Please enter a response for the customer.');
@@ -574,6 +596,7 @@ function AdminPage({ onLogout }) {
             case 'Users':
                 return (
                     <div style={cardStyle}>
+                        <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
                         <table style={tableStyle}>
                             <thead>
                                 <tr>
@@ -581,6 +604,7 @@ function AdminPage({ onLogout }) {
                                     <th style={thStyle}>Contact</th>
                                     <th style={thStyle}>Delivery Address</th>
                                     <th style={thStyle}>Joined</th>
+                                    <th style={thStyle}>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -594,10 +618,16 @@ function AdminPage({ onLogout }) {
                                             </span>
                                         </td>
                                         <td style={tdStyle}>{new Date(u.createdAt).toLocaleDateString()}</td>
+                                        <td style={tdStyle}>
+                                            <button onClick={() => handleDeleteUser(u._id)} style={{ color: '#ef4444', background: 'none', border: 'none', cursor: 'pointer' }} title="Delete Customer">
+                                                <Trash2 size={16} />
+                                            </button>
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 );
             case 'Inventory':
@@ -710,6 +740,7 @@ function AdminPage({ onLogout }) {
                                 Download Excel (CSV)
                             </button>
                         </div>
+                        <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
                         <table style={tableStyle}>
                             <thead>
                                 <tr>
@@ -718,6 +749,7 @@ function AdminPage({ onLogout }) {
                                     <th style={thStyle}>Delivery Details</th>
                                     <th style={thStyle}>Order Summary</th>
                                     <th style={thStyle}>Status</th>
+                                    <th style={thStyle}>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -784,10 +816,16 @@ function AdminPage({ onLogout }) {
                                                 ))}
                                             </select>
                                         </td>
+                                        <td style={tdStyle}>
+                                            <button onClick={() => handleDeleteOrder(o._id)} style={{ color: '#ef4444', background: 'none', border: 'none', cursor: 'pointer' }} title="Delete Order">
+                                                <Trash2 size={16} />
+                                            </button>
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 );
             case 'Coupons':

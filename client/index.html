@@ -3,39 +3,138 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+
+  <!-- Favicon - multiple formats for all browsers -->
+  <link rel="icon" type="image/png" href="/organic.png" />
+  <link rel="shortcut icon" href="/organic.png" />
+  <link rel="apple-touch-icon" href="/organic.png" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
   <meta name="theme-color" content="#0b3d2e" />
 
-  <title>Venthulir | Buy Wood-Pressed Oils, Honey & Organic Spices Online — Salem</title>
+  <!-- Primary SEO -->
+  <title>Venthulir | Buy Wood-Pressed Oils, Honey &amp; Organic Spices Online — Salem</title>
   <meta name="description"
     content="Buy 100% natural wood-pressed oils, raw forest honey, and pure handpicked spices from Venthulir — Salem's most trusted organic store. Chemical-free, traditionally made, delivered across India." />
   <meta name="keywords"
-    content="wood pressed oil Salem, cold pressed coconut oil, organic honey Salem, buy pure spices online, venthulir organic, natural groundnut oil, organic products Salem Tamil Nadu, wood pressed sesame oil, chemical free oils India, வேண்தூலிர், organic store Salem" />
+    content="wood pressed oil Salem, cold pressed coconut oil Salem, organic honey Salem, buy pure spices online India, venthulir organic harvest, natural groundnut oil, organic products Salem Tamil Nadu, wood pressed sesame oil, chemical free oils India, வேண்தூலிர், organic store Salem, buy organic oil online" />
   <meta name="author" content="Venthulir Organic Harvest" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+  <!-- Geo targeting -->
   <meta name="geo.region" content="IN-TN" />
-  <meta name="geo.placename" content="Salem, Tamil Nadu" />
+  <meta name="geo.placename" content="Salem, Tamil Nadu, India" />
+  <meta name="geo.position" content="11.6643;78.1460" />
+  <meta name="ICBM" content="11.6643, 78.1460" />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://venthulir.com/" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://venthulir.com/" />
-  <meta property="og:title" content="Venthulir Organic Harvest | Pure Wood Pressed Oils" />
+  <meta property="og:site_name" content="Venthulir Organic Harvest" />
+  <meta property="og:title" content="Venthulir | Buy Wood-Pressed Oils, Honey &amp; Organic Spices — Salem" />
   <meta property="og:description"
-    content="Experience the royal taste of pure organic products straight from the fertile lands of Salem." />
+    content="Shop 100% natural wood-pressed oils, raw forest honey &amp; pure spices at Venthulir, Salem's most trusted organic harvest store. Chemical-free, traditionally made, delivered across India." />
   <meta property="og:image" content="https://venthulir.com/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_IN" />
 
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://venthulir.com/" />
-  <meta property="twitter:title" content="Venthulir Organic Harvest | Pure Wood Pressed Oils" />
-  <meta property="twitter:description"
-    content="Experience the royal taste of pure organic products straight from the fertile lands of Salem." />
-  <meta property="twitter:image" content="https://venthulir.com/og-image.jpg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://venthulir.com/" />
+  <meta name="twitter:title" content="Venthulir | Wood-Pressed Oils &amp; Organic Spices — Salem" />
+  <meta name="twitter:description"
+    content="Shop 100% natural wood-pressed oils, raw forest honey &amp; pure spices at Venthulir. Salem's most trusted organic store." />
+  <meta name="twitter:image" content="https://venthulir.com/og-image.jpg" />
 
-  <!-- Preconnect and Performance -->
+  <!-- Structured Data: Local Business + E-commerce -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://venthulir.com/#organization",
+        "name": "Venthulir Organic Harvest",
+        "url": "https://venthulir.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://venthulir.com/organic.png",
+          "width": 200,
+          "height": 200
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+91-8778476414",
+          "contactType": "Customer Service",
+          "areaServed": "IN",
+          "availableLanguage": ["en", "ta"]
+        },
+        "sameAs": [
+          "https://www.facebook.com/venthulir",
+          "https://www.instagram.com/venthulir"
+        ]
+      },
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://venthulir.com/#localbusiness",
+        "name": "Venthulir Organic Harvest",
+        "description": "Salem's most trusted organic store selling wood-pressed oils, raw forest honey, and pure handpicked spices.",
+        "url": "https://venthulir.com/",
+        "telephone": "+91-8778476414",
+        "email": "theventhulir@gmail.com",
+        "priceRange": "₹₹",
+        "image": "https://venthulir.com/organic.png",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Salem",
+          "addressRegion": "Tamil Nadu",
+          "addressCountry": "IN"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 11.6643,
+          "longitude": 78.1460
+        },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+          "opens": "09:00",
+          "closes": "20:00"
+        },
+        "hasMap": "https://maps.google.com/?q=Salem,Tamil+Nadu,India",
+        "areaServed": {
+          "@type": "Country",
+          "name": "India"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://venthulir.com/#website",
+        "url": "https://venthulir.com/",
+        "name": "Venthulir Organic Harvest",
+        "description": "Buy wood-pressed oils, raw honey and organic spices online from Salem, Tamil Nadu.",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://venthulir.com/all-products?search={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Performance: Preconnect to critical origins -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="canonical" href="https://venthulir.com/" />
+  <link rel="preconnect" href="https://venthulir.onrender.com" />
+  <link rel="dns-prefetch" href="https://i.ibb.co" />
 
 </head>
 
