@@ -143,6 +143,12 @@ const InvoiceModal = ({ isOpen, onClose, orderData }) => {
                                         <span>Subtotal:</span>
                                         <span>₹{subtotal.toLocaleString()}</span>
                                     </div>
+                                    {(orderData.shippingCharge || 0) > 0 && (
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #eee', fontSize: '14px', color: '#555' }}>
+                                            <span>Shipping:</span>
+                                            <span>+ ₹{(orderData.shippingCharge || 0).toLocaleString()}</span>
+                                        </div>
+                                    )}
                                     {discount > 0 && (
                                         <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #eee', fontSize: '14px', color: '#166534', fontWeight: 'bold' }}>
                                             <span>Discount {orderData.couponUsed ? `(${orderData.couponUsed})` : ''}:</span>

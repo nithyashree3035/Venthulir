@@ -8,10 +8,12 @@ const OrderSchema = new mongoose.Schema({
     items: { type: Array, default: [] },
     originalAmount: { type: Number, required: true },
     discountAmount: { type: Number, default: 0 },
+    shippingCharge: { type: Number, default: 0 },
     couponUsed: { type: String, default: null },
     totalAmount: { type: Number, required: true },
     paymentMethod: { type: String, default: 'Cash on Delivery' },
     status: { type: String, default: 'Pending' },
+    statusUpdatedAt: { type: Date },
     createdAt: { type: Date, default: Date.now },
 });
 

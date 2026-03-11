@@ -1,7 +1,25 @@
 import React from 'react';
 import { CheckCircle2, Circle, Truck, Package, ShoppingBag, MapPin } from 'lucide-react';
 
-const OrderTracking = ({ status = 'Shipped' }) => {
+const OrderTracking = ({ status = 'Shipped', order = null }) => {
+    const getDeliveryDate = () => {
+        if (!order) return 'TBD';
+        if (order.status === 'Delivered' && order.statusUpdatedAt) {
+            return new Date(order.statusUpdatedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+        }
+        if (order.createdAt) {
+            const target = new Date(order.createdAt);
+            target.setDate(target.getDate() + 3); // 3 days for Salem delivery
+            return target.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+        }
+        return 'TBD';
+    };
+
+    const getHub = () => {
+        if (order?.status === 'Delivered') return 'Delivered to Customer';
+        if (order?.status === 'Cancelled') return 'Order Cancelled';
+        return 'Salem Venthulir Reserve';
+    };
     const steps = [
         { name: 'Ordered', icon: <ShoppingBag size={18} />, desc: 'Registry created and confirmed.' },
         { name: 'Shipped', icon: <Package size={18} />, desc: 'Harvest packaged at royal reserves.' },
@@ -63,12 +81,12 @@ const OrderTracking = ({ status = 'Shipped' }) => {
                 })}
             </div>
 
-            <div className="mt-12 pt-8 border-t border-gray-50 flex items-center justify-between text-xs text-gray-400 font-bold uppercase tracking-widest">
+            <div className="mt-12 pt-8 border-t border-gray-50 flex flex-col md:flex-row gap-4 items-start md:items-center justify-between text-xs text-gray-400 font-bold uppercase tracking-widest">
                 <div className="flex items-center gap-2">
                     <MapPin size={14} className="text-[#d4af37]" />
-                    <span>Current Hub: Bengaluru Venthulir Reserve</span>
+                    <span>Current Hub: {getHub()}</span>
                 </div>
-                <span>Est. Delivery: 24 Oct 2026</span>
+                <span>{order?.status === 'Delivered' ? 'Delivered On:' : 'Est. Delivery:'} {getDeliveryDate()}</span>
             </div>
         </div>
     );

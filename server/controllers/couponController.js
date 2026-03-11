@@ -39,7 +39,7 @@ exports.validateCoupon = async (req, res) => {
 // Checkout endpoint with coupon application
 exports.applyCheckout = async (req, res) => {
     try {
-        const { customerName, customerEmail, items, totalAmount, couponCode, phone, deliveryAddress, originalAmount, discountAmount, couponUsed } = req.body;
+        const { customerName, customerEmail, items, totalAmount, couponCode, phone, deliveryAddress, originalAmount, shippingCharge, discountAmount, couponUsed } = req.body;
 
         let finalAmount = totalAmount;
 
@@ -70,6 +70,7 @@ exports.applyCheckout = async (req, res) => {
             deliveryAddress,
             items,
             originalAmount: originalAmount || totalAmount,
+            shippingCharge: shippingCharge || 0,
             discountAmount: discountAmount || 0,
             couponUsed: couponUsed || null,
             totalAmount: finalAmount,
@@ -118,18 +119,23 @@ exports.applyCheckout = async (req, res) => {
                             </tbody>
                         </table>
                         <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #f0ede0;">
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
                                 <span>Subtotal:</span>
                                 <strong>₹${originalAmount || finalAmount}</strong>
                             </div>
+                            ${(shippingCharge) ? `
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px; color: #555;">
+                                <span>Shipping:</span>
+                                <strong>+ ₹${shippingCharge}</strong>
+                            </div>` : ''}
                             ${discountAmount > 0 ? `
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; color: #166534;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px; color: #166534;">
                                 <span>Discount (${couponUsed}):</span>
                                 <strong>- ₹${discountAmount}</strong>
                             </div>` : ''}
-                            <div style="display: flex; justify-content: space-between; font-size: 18px; color: #0b3d2e; margin-top: 10px; border-top: 2px solid #d4af37; padding-top: 10px;">
-                                <strong>Total Amount:</strong>
-                                <strong>₹${finalAmount}</strong>
+                            <div style="display: flex; justify-content: space-between; padding-top: 8px; margin-top: 8px; border-top: 1px dotted #ccc; font-weight: bold; color: #d4af37;">
+                                <span>Total Paid (COD):</span>
+                                <span>₹${finalAmount}</span>
                             </div>
                         </div>
                     </div>

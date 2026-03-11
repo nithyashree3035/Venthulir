@@ -103,6 +103,7 @@ exports.updateOrderStatus = async (req, res) => {
         }
 
         order.status = status;
+        order.statusUpdatedAt = new Date();
         await order.save();
 
         res.json({ msg: 'Order status updated', order });

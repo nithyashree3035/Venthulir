@@ -123,7 +123,8 @@ const CheckoutPage = ({ viewParams = {} }) => {
                     state: shippingData.state, zipCode: shippingData.zipCode
                 },
                 items: getOrderItems(),
-                originalAmount: subtotal + shipping,
+                originalAmount: subtotal,
+                shippingCharge: shipping,
                 discountAmount,
                 couponUsed: appliedCoupon?.code || null,
                 totalAmount: total,

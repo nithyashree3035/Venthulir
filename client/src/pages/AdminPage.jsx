@@ -800,6 +800,12 @@ function AdminPage({ onLogout }) {
                                                     <span>Subtotal:</span>
                                                     <span>₹{o.originalAmount ? o.originalAmount : o.totalAmount}</span>
                                                 </div>
+                                                {(o.shippingCharge || 0) > 0 && (
+                                                    <div style={{ display: 'flex', justifyContent: 'space-between', color: '#475569', marginTop: '2px' }}>
+                                                        <span>Shipping:</span>
+                                                        <span>+ ₹{o.shippingCharge}</span>
+                                                    </div>
+                                                )}
                                                 {o.discountAmount > 0 && (
                                                     <div style={{ display: 'flex', justifyContent: 'space-between', color: '#166534', marginTop: '2px' }}>
                                                         <span>Discount ({o.couponUsed}):</span>

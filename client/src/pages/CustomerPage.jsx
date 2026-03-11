@@ -305,7 +305,7 @@ const CustomerPage = () => {
                                                 <button onClick={() => setIsMessageModalOpen(true)} className="cp-assist-btn">Get Product Support</button>
                                             </div>
 
-                                            <OrderTracking status={order.status} />
+                                            <OrderTracking status={order.status} order={order} />
 
                                             {/* Items */}
                                             <div className="cp-order-items">
@@ -339,6 +339,12 @@ const CustomerPage = () => {
                                                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: '#555' }}>
                                                         <span>Subtotal:</span>
                                                         <span>₹{order.originalAmount || order.totalAmount}</span>
+                                                    </div>
+                                                )}
+                                                {order.shippingCharge > 0 && (
+                                                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: '#555' }}>
+                                                        <span>Shipping:</span>
+                                                        <span>+ ₹{order.shippingCharge}</span>
                                                     </div>
                                                 )}
                                                 {order.discountAmount > 0 && (
