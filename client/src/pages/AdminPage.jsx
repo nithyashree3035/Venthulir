@@ -159,10 +159,25 @@ function AdminPage({ onLogout }) {
     const handleFileChange = (e) => {
         const files = Array.from(e.target.files);
         if (files.length > 0) {
-            const remainingSlots = 5 - previewUrls.length;
-            const filesToAdd = files.slice(0, remainingSlots);
+            // Validate file sizes first (10MB limit)
+            const MAX_SIZE = 10 * 1024 * 1024;
+            const validFiles = files.filter(file => {
+                if (file.size > MAX_SIZE) {
+                    alert(`File ${file.name} is too large. Maximum size is 10MB.`);
+                    return false;
+                }
+                return true;
+            });
 
-            if (filesToAdd.length < files.length) {
+            if (validFiles.length === 0) {
+                e.target.value = '';
+                return;
+            }
+
+            const remainingSlots = 5 - previewUrls.length;
+            const filesToAdd = validFiles.slice(0, remainingSlots);
+
+            if (filesToAdd.length < validFiles.length) {
                 alert('Only 5 images total allowed per product.');
             }
 
@@ -214,7 +229,7 @@ function AdminPage({ onLogout }) {
                 } else {
                     const errorMsg = await uploadRes.text();
                     console.error("Upload error response:", errorMsg);
-                    throw new Error("Failed to upload image. Please try again.");
+                    throw new Error(`Upload Failed: ${errorMsg}`);
                 }
             }
 
