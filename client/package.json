@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "build-admin": "vite build --mode admin",
+    "build:all": "npm run build && npm run build-admin && if exist dist\\admin rmdir /s /q dist\\admin && move dist-admin dist\\admin",
     "lint": "eslint .",
     "preview": "vite preview"
   },
