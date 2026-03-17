@@ -69,16 +69,16 @@ const MotionLayer = () => {
                     animate="visible"
                 >
                     <motion.div className="brand-eyebrow" variants={fadeUpVariants}>
-                        <span className="organic-dot"></span> AUTHENTIC WOOD-PRESSED EXCELLENCE
+                        <span className="organic-dot"></span> 100% PURE & TRADITIONAL
                     </motion.div>
 
-                    <motion.h1 className="hero-monumental-title" variants={fadeUpVariants}>
-                        Rooted in <br />
-                        <span className="text-highlight">Nature.</span>
+                    <motion.h1 className="hero-monumental-title" variants={fadeUpVariants} style={{ fontSize: '54px', lineHeight: '1.1' }}>
+                        100% Natural Herbal<br />
+                        <span className="text-highlight">Products</span> for Healthy<br />Everyday Living 🌿
                     </motion.h1>
 
                     <motion.p className="hero-sophisticated-desc" variants={fadeUpVariants}>
-                        Discover the pure, unadulterated essence of native soils. From our cold-ground spices to pure essential oils, experience the Royal Venthulir standard.
+                        Chemical-free powders & wellness products made with traditional ingredients.
                     </motion.p>
 
                     <motion.div className="hero-action-row" variants={fadeUpVariants}>
@@ -87,8 +87,9 @@ const MotionLayer = () => {
                             onClick={() => {
                                 document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
                             }}
+                            style={{ backgroundColor: '#2e7d32' }}
                         >
-                            Explore Harvest
+                            Shop Now
                         </button>
                         <button
                             className="premium-secondary-btn"
@@ -96,8 +97,9 @@ const MotionLayer = () => {
                                 window.scrollTo(0, 0);
                                 appNavigate('all-products')
                             }}
+                            style={{ color: '#f57f17', borderBottom: '2px solid #f57f17', paddingBottom: '4px' }}
                         >
-                            View All Products
+                            View Best Sellers
                         </button>
                     </motion.div>
                 </motion.div>

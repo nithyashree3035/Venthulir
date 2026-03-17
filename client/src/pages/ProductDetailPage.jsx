@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 // Removed useParams
-import { ArrowLeft, ShoppingCart, Heart, Share2, Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Heart, Share2, Star, ChevronLeft, ChevronRight, ShieldCheck, Truck, RefreshCcw, Leaf, CheckCircle2, HelpCircle } from 'lucide-react';
 import { api } from '../services/api';
 import { products } from '../utils/products';
 import { useCart } from '../context/CartContext';
@@ -364,6 +364,73 @@ const ProductDetailPage = ({ id }) => {
                         </div>
 
                         <p className="p-description">{product.description}</p>
+
+                        {/* TRUST BADGES SECTION */}
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '15px', padding: '20px', background: '#fdfcf7', borderRadius: '12px', marginBottom: '30px', border: '1px solid #f0ede0' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                <ShieldCheck size={20} color="#0b3d2e" />
+                                <span style={{ fontSize: '13px', fontWeight: 'bold', color: '#333' }}>Secure Payment</span>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                <Truck size={20} color="#0b3d2e" />
+                                <span style={{ fontSize: '13px', fontWeight: 'bold', color: '#333' }}>Fast Shipping</span>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                <RefreshCcw size={20} color="#0b3d2e" />
+                                <span style={{ fontSize: '13px', fontWeight: 'bold', color: '#333' }}>Easy Return</span>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                <Leaf size={20} color="#0b3d2e" />
+                                <span style={{ fontSize: '13px', fontWeight: 'bold', color: '#333' }}>Natural Ingredients</span>
+                            </div>
+                        </div>
+
+                        {/* PRODUCT RICH DETAILS (SEO) */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', marginBottom: '30px' }}>
+                            <details style={{ background: '#fff', border: '1px solid #eee', borderRadius: '8px', padding: '15px' }}>
+                                <summary style={{ fontWeight: 'bold', color: '#0b3d2e', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><CheckCircle2 size={16}/> Ingredients & Net Weight</span>
+                                </summary>
+                                <div style={{ padding: '15px 0 0', fontSize: '14px', lineHeight: '1.6', color: '#555' }}>
+                                    <p><strong>Ingredients:</strong> Made from 100% natural and traditional sources. No preservatives, artificial colors, or chemicals added.</p>
+                                    <p><strong>Net Weight:</strong> {selectedVariant ? selectedVariant.label : 'Standard Pack'}</p>
+                                </div>
+                            </details>
+
+                            <details style={{ background: '#fff', border: '1px solid #eee', borderRadius: '8px', padding: '15px' }}>
+                                <summary style={{ fontWeight: 'bold', color: '#0b3d2e', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><Leaf size={16}/> Benefits</span>
+                                </summary>
+                                <div style={{ padding: '15px 0 0', fontSize: '14px', lineHeight: '1.6', color: '#555' }}>
+                                    <ul style={{ paddingLeft: '20px', margin: 0 }}>
+                                        <li>Retains natural essential oils and nutrients</li>
+                                        <li>Boosts everyday immunity and well-being</li>
+                                        <li>100% pure authentic taste</li>
+                                    </ul>
+                                </div>
+                            </details>
+
+                            <details style={{ background: '#fff', border: '1px solid #eee', borderRadius: '8px', padding: '15px' }}>
+                                <summary style={{ fontWeight: 'bold', color: '#0b3d2e', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><CheckCircle2 size={16}/> How to Use & Storage</span>
+                                </summary>
+                                <div style={{ padding: '15px 0 0', fontSize: '14px', lineHeight: '1.6', color: '#555' }}>
+                                    <p><strong>How to Use:</strong> Use as directed for cooking, wellness, or skincare.</p>
+                                    <p><strong>Who can use:</strong> Suitable for all ages (unless specified for allergies).</p>
+                                    <p><strong>Storage:</strong> Store in a cool, dry place. Keep away from direct sunlight.</p>
+                                </div>
+                            </details>
+
+                            <details style={{ background: '#fff', border: '1px solid #eee', borderRadius: '8px', padding: '15px' }}>
+                                <summary style={{ fontWeight: 'bold', color: '#0b3d2e', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><HelpCircle size={16}/> FAQ</span>
+                                </summary>
+                                <div style={{ padding: '15px 0 0', fontSize: '14px', lineHeight: '1.6', color: '#555' }}>
+                                    <p><strong>Is this product organic?</strong> Yes, our products are made from naturally sourced ingredients.</p>
+                                    <p><strong>What is the shelf life?</strong> Typically 6-12 months from the date of packing. Please refer to the label.</p>
+                                </div>
+                            </details>
+                        </div>
 
                         <div className="product-actions-row">
                             <div className="quantity-selector">

@@ -36,7 +36,7 @@ const Navbar = () => {
         <div className="at-ticker-wrap">
           <div className="at-ticker-move">
             {[...Array(8)].map((_, i) => (
-              <span key={i}>🌿 From Sacred Soil to Royal Tables — Venthulir Organic Harvest 👑 &nbsp; • &nbsp; </span>
+              <span key={i}>🔥 Limited Time Offer – 10% OFF on First Order &nbsp; • &nbsp; 🎁 Free Shipping Above ₹499 &nbsp; • &nbsp; 🌿 Venthulir Organic Harvest 👑 &nbsp; • &nbsp; </span>
             ))}
           </div>
         </div>

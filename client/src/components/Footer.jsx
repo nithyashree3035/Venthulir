@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronUp, Send } from 'lucide-react';
+import { ChevronUp, Send, MapPin, Phone, Mail, Instagram, Facebook, Twitter, CreditCard } from 'lucide-react';
 import './Footer.css';
 
 const Footer = () => {
@@ -49,12 +49,37 @@ const Footer = () => {
             <div className="footer-main-wrapper">
                 <div className="footer-grid-layout">
 
-                    {/* LEFT: OUR ROOTS */}
+                    {/* LEFT: OUR ROOTS & CONTACT */}
                     <div className="footer-column" id="roots">
                         <h3 className="royal-green-title">OUR ROOTS</h3>
-                        <p className="footer-p">
+                        <p className="footer-p" style={{ marginBottom: '20px' }}>
                             Deeply embedded in the heritage of Salem's fertile lands, Venthulir is a preservation of ancestral wisdom. We bypass industrial processing to bring you wood-pressed oils and forest-fresh harvests.
                         </p>
+                        <h3 className="royal-green-title" style={{ marginTop: '20px', marginBottom: '15px' }}>REACH US</h3>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', color: '#1a1a1a', fontSize: '13px' }}>
+                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}><MapPin size={16} style={{ color: '#0a2e1f', marginTop: '2px' }}/> 123 Heritage Street, Salem, Tamil Nadu - 636001</div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><Phone size={16} style={{ color: '#0a2e1f' }}/> +91-8778476414</div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><Mail size={16} style={{ color: '#0a2e1f' }}/> support@venthulir.com</div>
+                        </div>
+                    </div>
+
+                    {/* MIDDLE: QUICK LINKS */}
+                    <div className="footer-column" id="links">
+                        <h3 className="royal-green-title">QUICK LINKS</h3>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                            <a href="#" style={{ color: '#1a1a1a', textDecoration: 'none', fontSize: '14px' }}>Shop Best Sellers</a>
+                            <a href="#" style={{ color: '#1a1a1a', textDecoration: 'none', fontSize: '14px' }}>Our Story</a>
+                            <a href="#" style={{ color: '#1a1a1a', textDecoration: 'none', fontSize: '14px' }}>Health Benefits</a>
+                            <a href="#" style={{ color: '#1a1a1a', textDecoration: 'none', fontSize: '14px' }}>Track Order</a>
+                        </div>
+                        
+                        <h3 className="royal-green-title" style={{ marginTop: '30px', marginBottom: '15px' }}>POLICIES</h3>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                            <a href="#" style={{ color: '#1a1a1a', textDecoration: 'none', fontSize: '14px' }}>Privacy Policy</a>
+                            <a href="#" style={{ color: '#1a1a1a', textDecoration: 'none', fontSize: '14px' }}>Terms of Service</a>
+                            <a href="#" style={{ color: '#1a1a1a', textDecoration: 'none', fontSize: '14px' }}>Shipping & Returns</a>
+                            <a href="#" style={{ color: '#1a1a1a', textDecoration: 'none', fontSize: '14px' }}>Refund Policy</a>
+                        </div>
                     </div>
 
                     {/* RIGHT: GRIEVANCE FORM */}
@@ -114,8 +139,17 @@ const Footer = () => {
                     </div>
                 </div>
 
-                <div className="footer-bottom-info">
-                    <p>© 2026 VENTHULIR ORGANIC HARVEST. ROYALTY REFINED.</p>
+                <div className="footer-bottom-info" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px' }}>
+                    <div style={{ display: 'flex', gap: '15px' }}>
+                        <a href="#" style={{ color: '#0a2e1f' }}><Facebook size={20} /></a>
+                        <a href="#" style={{ color: '#0a2e1f' }}><Instagram size={20} /></a>
+                        <a href="#" style={{ color: '#0a2e1f' }}><Twitter size={20} /></a>
+                    </div>
+                    <p style={{ margin: 0 }}>© 2026 VENTHULIR ORGANIC HARVEST. ROYALTY REFINED.</p>
+                    <div style={{ display: 'flex', gap: '15px', color: '#0a2e1f' }}>
+                        <span style={{ fontSize: '12px', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '5px' }}><ShieldCheck size={16}/> 100% SECURE CHECKOUT</span>
+                        <CreditCard size={20} />
+                    </div>
                 </div>
             </div>
         </footer>
