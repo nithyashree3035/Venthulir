@@ -79,7 +79,7 @@ const Home = () => {
                     <div className="founder-grid">
                         <div className="founder-left-col">
                             <img 
-                                src="/products/sankarganesh.png" 
+                                src="/sankarganesh.png" 
                                 alt="Sankarganesh R" 
                                 className="founder-photo-img" 
                                 onError={(e) => { 
