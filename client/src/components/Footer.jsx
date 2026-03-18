@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronUp, Send, MapPin, Phone, Mail, Instagram, Facebook, Twitter, CreditCard } from 'lucide-react';
+import { ChevronUp, Send, MapPin, Phone, Mail, Instagram, Facebook, Twitter, CreditCard, ShieldCheck } from 'lucide-react';
 import './Footer.css';
 
 const Footer = () => {
@@ -57,9 +57,9 @@ const Footer = () => {
                         </p>
                         <h3 className="royal-green-title" style={{ marginTop: '20px', marginBottom: '15px' }}>REACH US</h3>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', color: '#1a1a1a', fontSize: '13px' }}>
-                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}><MapPin size={16} style={{ color: '#0a2e1f', marginTop: '2px' }}/> 123 Heritage Street, Salem, Tamil Nadu - 636001</div>
+                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}><MapPin size={16} style={{ color: '#0a2e1f', marginTop: '2px', flexShrink: 0 }}/> <span>IInd Floor, OM Shiva Towers, 259-B, Advaitha Ashram Rd, Fairlands, Salem, Tamil Nadu 636004</span></div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><Phone size={16} style={{ color: '#0a2e1f' }}/> +91-8778476414</div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><Mail size={16} style={{ color: '#0a2e1f' }}/> support@venthulir.com</div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><Mail size={16} style={{ color: '#0a2e1f' }}/> theventhulir@gmail.com</div>
                         </div>
                     </div>
 

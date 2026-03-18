@@ -4,10 +4,13 @@ import ShopGrid from '../components/ShopGrid';
 import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet-async';
 import { API_BASE } from '../constants';
-import { ShieldCheck, Truck, RefreshCcw, Leaf } from 'lucide-react';
+import { ShieldCheck, Truck, RefreshCcw, Leaf, ChevronRight, BookOpen } from 'lucide-react';
+import { useAppNavigation } from '../context/NavigationContext';
 import './Home.css';
 
 const Home = () => {
+    const { navigate } = useAppNavigation();
+    
     // Silently warm up the Render backend to prevent cold-start delays on first product click
     useEffect(() => {
         fetch(`${API_BASE}/products?limit=1`, { method: 'GET' }).catch(() => {});
@@ -47,25 +50,48 @@ const Home = () => {
             <Hero />
 
             {/* THE STORY OF VENTHULIR */}
-            <section style={{ padding: '80px 20px', background: '#fff' }}>
-                <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-                    <h2 style={{ fontSize: '32px', color: '#0b3d2e', fontWeight: '900', marginBottom: '30px', fontFamily: '"Playfair Display", serif', textAlign: 'center' }}>
-                        Venthulir – A Journey from Childhood Dream to Organic Revolution 🌱
-                    </h2>
-                    <div className="story-text-container" style={{ fontSize: '16px', lineHeight: '2', color: '#444' }}>
-                        <p>
-                            The story of Venthulir begins with a young boy who grew up watching people around him consume inorganic and chemically processed food products every day. He noticed how these unhealthy choices slowly affected their fitness, lifestyle, and overall well-being. This early realization planted a strong purpose in his heart — a mission to create a healthier world by bringing people back to nature.
-                        </p>
-                        <p>
-                            Driven by this vision, he founded Venthulir, a brand built on the powerful belief that "Pure Food Creates a Pure Life." Unlike many brands that depend on external sourcing, Venthulir stands unique by owning and cultivating its own organic farms and fertile fields. Every ingredient used in Venthulir products is carefully grown, harvested, and processed using completely natural and traditional farming practices — free from harmful chemicals, pesticides, and artificial enhancers.
-                        </p>
-                        <p>
-                            Venthulir is not just a brand; it is a movement towards conscious living. From organic food products to wellness essentials, every product is crafted with deep care to ensure people stay healthy, fit, and energetic in their daily lives. By reconnecting consumers with authentic organic nutrition, Venthulir aims to transform lifestyles, support sustainable agriculture, and build a future where health and nature go hand in hand.
-                        </p>
-                        <p>
-                            Today, Venthulir proudly stands as a symbol of trust, purity, and sustainability — continuing its journey to inspire families to choose organic, live naturally, and embrace a healthier tomorrow.
-                        </p>
+            <section style={{ padding: '80px 20px', background: 'linear-gradient(135deg, #f9fbe7 0%, #fff 100%)', position: 'relative', overflow: 'hidden' }}>
+                <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '40px' }}>
+                    
+                    <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+                        <div style={{ display: 'inline-block', padding: '8px 20px', background: '#e8f5e9', color: '#2e7d32', borderRadius: '30px', fontWeight: 'bold', fontSize: '14px', marginBottom: '20px' }}>
+                            <Leaf size={16} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '5px' }} />
+                            OUR ORIGIN STORY
+                        </div>
+                        <h2 style={{ fontSize: '38px', color: '#0b3d2e', fontWeight: '900', fontFamily: '"Playfair Display", serif', lineHeight: '1.2' }}>
+                            A Journey from Childhood Dream to <br /> Organic Revolution 🌱
+                        </h2>
                     </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
+                        <div className="story-card interactable-card">
+                            <h3 style={{ fontSize: '20px', color: '#0b3d2e', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                <span style={{ color: '#d4af37' }}>01.</span> The Realization
+                            </h3>
+                            <p style={{ fontSize: '15px', lineHeight: '1.8', color: '#555', textAlign: 'justify' }}>
+                                The story begins with a young boy watching people consume chemically processed foods daily. Noticing how these unhealthy choices deteriorated their fitness and lifestyle planted a strong purpose in his heart — a mission to reconnect humanity with the purity of nature.
+                            </p>
+                        </div>
+
+                        <div className="story-card interactable-card">
+                            <h3 style={{ fontSize: '20px', color: '#0b3d2e', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                <span style={{ color: '#d4af37' }}>02.</span> The Foundation
+                            </h3>
+                            <p style={{ fontSize: '15px', lineHeight: '1.8', color: '#555', textAlign: 'justify' }}>
+                                Driven by the belief that <strong>"Pure Food Creates a Pure Life,"</strong> he founded Venthulir. Unlike brands that rely on external sourcing, Venthulir stands independent by directly owning and cultivating fertile, chemical-free organic farms across Tamil Nadu.
+                            </p>
+                        </div>
+
+                        <div className="story-card interactable-card">
+                            <h3 style={{ fontSize: '20px', color: '#0b3d2e', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                <span style={{ color: '#d4af37' }}>03.</span> The Movement
+                            </h3>
+                            <p style={{ fontSize: '15px', lineHeight: '1.8', color: '#555', textAlign: 'justify' }}>
+                                Today, Venthulir is more than a brand; it’s a conscious movement. Every product is organically crafted to ensure people stay fit and energetic. We proudly stand as a symbol of trust and sustainability, inspiring families to embrace a healthier tomorrow.
+                            </p>
+                        </div>
+                    </div>
+                    
                 </div>
             </section>
 
@@ -201,17 +227,27 @@ const Home = () => {
                     <h2 style={{ fontSize: '36px', color: '#0b3d2e', fontWeight: '900', marginBottom: '40px', textAlign: 'center', fontFamily: '"Playfair Display", serif' }}>Wellness Journal</h2>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px' }}>
                         {[
-                            { title: 'Benefits of Turmeric Powder', snippet: 'Discover why this golden spice is essential for your daily immunity...', img: 'https://images.unsplash.com/photo-1615486161483-e028bceb03dc?w=400&h=300&fit=crop' },
-                            { title: 'Herbal Remedies for Immunity', snippet: 'Traditional concoctions you can make at home to stay strong and healthy...', img: 'https://images.unsplash.com/photo-1514733670139-4d87a1941d55?w=400&h=300&fit=crop' },
-                            { title: 'Natural vs Chemical Spices', snippet: 'A deep dive into why pure organic spices matter for your diet...', img: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&h=300&fit=crop' },
-                            { title: 'How to Choose Pure Masala', snippet: 'Tips and tricks to identify unadulterated spice blends in the market...', img: 'https://images.unsplash.com/photo-1509358271058-acd26ccaf9ea?w=400&h=300&fit=crop' }
+                            { title: 'Benefits of Turmeric Powder', snippet: 'Discover why this golden spice is essential for your daily immunity and overall well-being...', icon: <BookOpen size={48} color="#0b3d2e" /> },
+                            { title: 'Herbal Remedies for Immunity', snippet: 'Traditional concoctions you can make at home to stay strong and healthy during weather changes...', icon: <Leaf size={48} color="#0b3d2e" /> },
+                            { title: 'Natural vs Chemical Spices', snippet: 'A deep dive into why pure organic spices matter for your diet and long-term vitality...', icon: <ShieldCheck size={48} color="#0b3d2e" /> },
+                            { title: 'How to Choose Pure Masala', snippet: 'Tips and tricks to identify unadulterated spice blends in the market without being fooled...', icon: <RefreshCcw size={48} color="#0b3d2e" /> }
                         ].map((post, idx) => (
-                            <div key={idx} style={{ background: '#fdfcf7', borderRadius: '12px', overflow: 'hidden', border: '1px solid #eee', cursor: 'pointer', transition: 'transform 0.3s' }} onMouseEnter={e => e.currentTarget.style.transform='translateY(-5px)'} onMouseLeave={e => e.currentTarget.style.transform='translateY(0)'}>
-                                <img src={post.img} alt={post.title} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
-                                <div style={{ padding: '20px' }}>
-                                    <h3 style={{ fontSize: '18px', color: '#0b3d2e', fontWeight: 'bold', marginBottom: '10px' }}>{post.title}</h3>
-                                    <p style={{ fontSize: '14px', color: '#555', lineHeight: '1.5' }}>{post.snippet}</p>
-                                    <div style={{ marginTop: '15px', color: '#4a7c59', fontWeight: 'bold', fontSize: '14px' }}>Read More &rarr;</div>
+                            <div 
+                                key={idx} 
+                                onClick={() => navigate('journal', { post })}
+                                style={{ background: '#fdfcf7', borderRadius: '12px', overflow: 'hidden', border: '1px solid #eee', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', flexDirection: 'column' }} 
+                                onMouseEnter={e => { e.currentTarget.style.transform='translateY(-8px)'; e.currentTarget.style.boxShadow='0 15px 30px rgba(0,0,0,0.1)'; }} 
+                                onMouseLeave={e => { e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='none'; }}
+                            >
+                                <div style={{ width: '100%', height: '180px', background: 'linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    {post.icon}
+                                </div>
+                                <div style={{ padding: '25px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                                    <h3 style={{ fontSize: '18px', color: '#0b3d2e', fontWeight: 'bold', marginBottom: '12px', lineHeight: '1.3' }}>{post.title}</h3>
+                                    <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6', flexGrow: 1 }}>{post.snippet}</p>
+                                    <div style={{ marginTop: '20px', color: '#4a7c59', fontWeight: 'bold', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                                        Read Journal <ChevronRight size={16} />
+                                    </div>
                                 </div>
                             </div>
                         ))}

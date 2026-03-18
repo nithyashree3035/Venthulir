@@ -7,6 +7,7 @@ import CustomerPage from './CustomerPage';
 import WishlistPage from './WishlistPage';
 import EntryAuthPage from './EntryAuthPage';
 import ShopGrid from '../components/ShopGrid';
+import JournalPage from './JournalPage';
 import { useAppNavigation } from '../context/NavigationContext';
 import { Helmet } from 'react-helmet-async';
 
@@ -42,6 +43,9 @@ const CustomerApp = () => {
                     <ShopGrid isHomePage={false} title="Our Full Collection" />
                 </div>
             );
+            break;
+        case 'journal':
+            content = <JournalPage post={viewParams.post} />;
             break;
         case 'new-arrivals':
             content = (
