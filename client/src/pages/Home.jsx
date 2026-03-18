@@ -106,12 +106,17 @@ const Home = () => {
                         <div className="founder-left-col">
                             <img 
                                 src="/sankarganesh.png" 
-                                alt="Sankarganesh R" 
-                                className="founder-photo-img" 
+                                alt="Sankarganesh R — CEO & Founder of Venthulir Organic Harvest" 
+                                className="founder-photo-img"
+                                width="280"
+                                height="280"
+                                loading="eager"
+                                fetchpriority="high"
                                 onError={(e) => { 
                                     e.target.onerror = null; 
                                     e.target.style.display = 'none'; 
-                                    document.getElementById('founder-fallback').style.display = 'flex'; 
+                                    const fb = document.getElementById('founder-fallback');
+                                    if (fb) fb.style.display = 'flex'; 
                                 }} 
                             />
                             <div id="founder-fallback" className="founder-avatar" style={{ display: 'none' }}>SR</div>

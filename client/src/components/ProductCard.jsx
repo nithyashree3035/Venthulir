@@ -105,6 +105,12 @@ const ProductCard = ({ product }) => {
                             className="product-img"
                             loading="lazy"
                             decoding="async"
+                            width="240"
+                            height="240"
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = '/organic.png';
+                            }}
                             style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }}
                         />
                     ) : (

@@ -20,6 +20,7 @@ export default defineConfig(({ mode }) => {
         outDir: 'dist-admin',
       }
       : {
+        sourcemap: true,
         rollupOptions: {
           input: path.resolve(__dirname, 'index.html'),
         },
