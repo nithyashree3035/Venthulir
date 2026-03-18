@@ -49,49 +49,58 @@ const Home = () => {
 
             <Hero />
 
-            {/* THE STORY OF VENTHULIR */}
-            <section style={{ padding: '80px 20px', background: 'linear-gradient(135deg, #f9fbe7 0%, #fff 100%)', position: 'relative', overflow: 'hidden' }}>
-                <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '40px' }}>
-                    
-                    <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-                        <div style={{ display: 'inline-block', padding: '8px 20px', background: '#e8f5e9', color: '#2e7d32', borderRadius: '30px', fontWeight: 'bold', fontSize: '14px', marginBottom: '20px' }}>
-                            <Leaf size={16} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '5px' }} />
-                            OUR ORIGIN STORY
-                        </div>
-                        <h2 style={{ fontSize: '38px', color: '#0b3d2e', fontWeight: '900', fontFamily: '"Playfair Display", serif', lineHeight: '1.2' }}>
-                            A Journey from Childhood Dream to <br /> Organic Revolution 🌱
-                        </h2>
-                    </div>
+            {/* THE STORY OF VENTHULIR WITH VIDEO BACKGROUND */}
+            <section style={{ position: 'relative', overflow: 'hidden', minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '100px 20px' }}>
+                <video 
+                    autoPlay 
+                    loop 
+                    muted 
+                    playsInline 
+                    style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        transform: 'translate(-50%, -50%)',
+                        zIndex: 0
+                    }}
+                >
+                    <source src="/videos/nature.mp4" type="video/mp4" />
+                </video>
+                <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(135deg, rgba(11, 61, 46, 0.8) 0%, rgba(26, 92, 67, 0.7) 100%)', zIndex: 1 }}></div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
-                        <div className="story-card interactable-card fade-in-up delay-1" style={{ opacity: 0 }}>
-                            <h3 style={{ fontSize: '20px', color: '#0b3d2e', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                <span style={{ color: '#d4af37' }}>01.</span> The Realization
-                            </h3>
-                            <p style={{ fontSize: '15px', lineHeight: '1.8', color: '#555', textAlign: 'justify' }}>
-                                The story begins with a young boy watching people consume chemically processed foods daily. Noticing how these unhealthy choices deteriorated their fitness and lifestyle planted a strong purpose in his heart — a mission to reconnect humanity with the purity of nature.
-                            </p>
-                        </div>
-
-                        <div className="story-card interactable-card fade-in-up delay-2" style={{ opacity: 0 }}>
-                            <h3 style={{ fontSize: '20px', color: '#0b3d2e', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                <span style={{ color: '#d4af37' }}>02.</span> The Foundation
-                            </h3>
-                            <p style={{ fontSize: '15px', lineHeight: '1.8', color: '#555', textAlign: 'justify' }}>
-                                Driven by the belief that <strong>"Pure Food Creates a Pure Life,"</strong> he founded Venthulir. Unlike brands that rely on external sourcing, Venthulir stands independent by directly owning and cultivating fertile, chemical-free organic farms across Tamil Nadu.
-                            </p>
-                        </div>
-
-                        <div className="story-card interactable-card fade-in-up delay-3" style={{ opacity: 0 }}>
-                            <h3 style={{ fontSize: '20px', color: '#0b3d2e', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                <span style={{ color: '#d4af37' }}>03.</span> The Movement
-                            </h3>
-                            <p style={{ fontSize: '15px', lineHeight: '1.8', color: '#555', textAlign: 'justify' }}>
-                                Today, Venthulir is more than a brand; it’s a conscious movement. Every product is organically crafted to ensure people stay fit and energetic. We proudly stand as a symbol of trust and sustainability, inspiring families to embrace a healthier tomorrow.
-                            </p>
-                        </div>
+                <div style={{ position: 'relative', zIndex: 2, maxWidth: '900px', margin: '0 auto', padding: '50px', background: 'rgba(255, 255, 255, 0.1)', backdropFilter: 'blur(10px)', borderRadius: '20px', border: '1px solid rgba(255, 255, 255, 0.2)', textAlign: 'center', color: '#fff', boxShadow: '0 30px 60px rgba(0,0,0,0.3)' }} className="fade-in-up">
+                    <div style={{ display: 'inline-block', padding: '8px 20px', background: 'rgba(255, 255, 255, 0.2)', color: '#fff', borderRadius: '30px', fontWeight: 'bold', fontSize: '14px', marginBottom: '30px', backdropFilter: 'blur(5px)' }}>
+                        <Leaf size={16} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '5px' }} />
+                        OUR ORIGIN STORY
                     </div>
                     
+                    <h2 style={{ fontSize: '42px', fontWeight: '900', fontFamily: '"Playfair Display", serif', lineHeight: '1.2', marginBottom: '30px', textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
+                        A Journey from Childhood Dream <br /> to Organic Revolution 🌱
+                    </h2>
+
+                    <div style={{ fontSize: '18px', lineHeight: '1.8', fontWeight: '300', textShadow: '0 1px 5px rgba(0,0,0,0.2)', opacity: 0.95 }}>
+                        <p style={{ marginBottom: '20px' }}>
+                            The story begins with a young boy watching people consume chemically processed foods daily. Noticing how these unhealthy choices deteriorated their fitness and lifestyle planted a strong purpose in his heart — a mission to reconnect humanity with the purity of nature.
+                        </p>
+                        <p style={{ marginBottom: '20px' }}>
+                            Driven by the belief that <strong style={{color: '#d4af37'}}>"Pure Food Creates a Pure Life,"</strong> he founded Venthulir. Unlike brands that rely on external sourcing, Venthulir stands independent by directly owning and cultivating fertile, chemical-free organic farms across Tamil Nadu.
+                        </p>
+                        <p>
+                            Today, Venthulir is more than a brand; it’s a conscious movement. Every product is organically crafted to ensure people stay fit and energetic. We proudly stand as a symbol of trust and sustainability, inspiring families to embrace a healthier tomorrow.
+                        </p>
+                    </div>
+
+                    <button 
+                        onClick={() => { document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' }); }}
+                        style={{ marginTop: '40px', background: '#d4af37', color: '#111', padding: '15px 40px', fontSize: '18px', fontWeight: 'bold', border: 'none', borderRadius: '50px', cursor: 'pointer', boxShadow: '0 10px 20px rgba(0,0,0,0.2)', transition: 'all 0.3s ease' }}
+                        onMouseEnter={e => { e.currentTarget.style.transform='translateY(-3px)'; e.currentTarget.style.boxShadow='0 15px 25px rgba(0,0,0,0.3)'; }}
+                        onMouseLeave={e => { e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='0 10px 20px rgba(0,0,0,0.2)'; }}
+                    >
+                        Experience Purity
+                    </button>
                 </div>
             </section>
 

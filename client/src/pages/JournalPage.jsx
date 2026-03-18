@@ -3,7 +3,7 @@ import { useAppNavigation } from '../context/NavigationContext';
 import { ArrowLeft } from 'lucide-react';
 
 const JournalPage = ({ post }) => {
-    const { navigate } = useAppNavigation();
+    const { appNavigate } = useAppNavigation();
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -13,7 +13,7 @@ const JournalPage = ({ post }) => {
         return (
             <div style={{ padding: '100px 20px', textAlign: 'center', background: '#fdfcf7', minHeight: '80vh' }}>
                 <h1 style={{ fontSize: '32px', color: '#0b3d2e' }}>Journal Article Not Found</h1>
-                <button onClick={() => navigate('home')} style={{ marginTop: '20px', padding: '10px 20px', background: '#d4af37', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Return Home</button>
+                <button onClick={() => appNavigate('home')} style={{ marginTop: '20px', padding: '10px 20px', background: '#d4af37', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Return Home</button>
             </div>
         );
     }
@@ -22,7 +22,7 @@ const JournalPage = ({ post }) => {
         <div style={{ background: '#fdfcf7', minHeight: '100vh', padding: '40px 20px' }}>
             <div style={{ maxWidth: '800px', margin: '0 auto' }}>
                 <button 
-                    onClick={() => navigate('home')} 
+                    onClick={() => appNavigate('home')} 
                     style={{ background: 'transparent', border: 'none', color: '#0b3d2e', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', marginBottom: '30px', fontWeight: 'bold' }}
                 >
                     <ArrowLeft size={20} /> Back to Home
@@ -48,7 +48,7 @@ const JournalPage = ({ post }) => {
                         </div>
 
                         <button 
-                            onClick={() => navigate('all-products')}
+                            onClick={() => appNavigate('all-products')}
                             style={{ display: 'block', width: '100%', padding: '15px', background: '#0b3d2e', color: '#fff', textAlign: 'center', borderRadius: '8px', fontSize: '18px', fontWeight: 'bold', border: 'none', cursor: 'pointer', marginTop: '20px' }}
                         >
                             Explore Our Organic Products
