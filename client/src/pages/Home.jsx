@@ -219,17 +219,26 @@ const Home = () => {
             </section>
 
             {/* OFFER BANNER */}
-            <section style={{ padding: 'clamp(40px, 6vw, 60px) clamp(15px, 5vw, 20px)', background: '#cc0c39', color: '#fff', textAlign: 'center' }} className="fade-in-up">
-                <h2 style={{ fontSize: 'clamp(28px, 5vw, 36px)', fontWeight: '900', margin: '0 0 15px', textTransform: 'uppercase' }}>🔥 Limited Time Offer</h2>
-                <p style={{ fontSize: 'clamp(18px, 4vw, 24px)', margin: '0 0 30px', lineHeight: '1.4' }}>Get <span style={{ fontWeight: 'bold', color: '#ffea00' }}>10% OFF</span> on your First Order + 🎁 <br className="mobile-break" /> <span style={{ fontWeight: 'bold', color: '#ffea00' }}>Free Shipping</span> Above ₹499!</p>
-                <button 
-                    onClick={() => { document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' }); }}
-                    style={{ background: '#ffcd00', color: '#111', padding: '16px 40px', fontSize: '18px', fontWeight: 'bold', border: 'none', borderRadius: '50px', cursor: 'pointer', boxShadow: '0 10px 20px rgba(0,0,0,0.2)', transition: 'all 0.3s ease' }}
-                    onMouseEnter={e => { e.currentTarget.style.transform='scale(1.05)'; e.currentTarget.style.boxShadow='0 15px 25px rgba(0,0,0,0.3)'; }}
-                    onMouseLeave={e => { e.currentTarget.style.transform='scale(1)'; e.currentTarget.style.boxShadow='0 10px 20px rgba(0,0,0,0.2)'; }}
-                >
-                    Claim Offer Now
-                </button>
+            <section style={{ padding: 'clamp(20px, 4vw, 30px) 20px', background: '#cc0c39', color: '#fff' }} className="fade-in-up">
+                <div className="offer-flex-banner" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <span style={{ fontSize: '28px' }}>🔥</span>
+                        <h2 style={{ fontSize: 'clamp(20px, 3vw, 24px)', fontWeight: '900', margin: 0, textTransform: 'uppercase' }}>Limited Time Offer</h2>
+                    </div>
+                    
+                    <p style={{ fontSize: 'clamp(16px, 2.5vw, 18px)', margin: 0, fontWeight: '500', flexGrow: 1, textAlign: 'center' }}>
+                        Get <span style={{ fontWeight: 'bold', color: '#ffea00' }}>10% OFF</span> on your First Order + 🎁 <span style={{ fontWeight: 'bold', color: '#ffea00' }}>Free Shipping</span> Above ₹499!
+                    </p>
+                    
+                    <button 
+                        onClick={() => { document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' }); }}
+                        style={{ background: '#ffcd00', color: '#111', padding: '12px 30px', fontSize: '16px', fontWeight: 'bold', border: 'none', borderRadius: '50px', cursor: 'pointer', boxShadow: '0 5px 15px rgba(0,0,0,0.2)', transition: 'all 0.3s ease', whiteSpace: 'nowrap' }}
+                        onMouseEnter={e => { e.currentTarget.style.transform='scale(1.05)'; e.currentTarget.style.boxShadow='0 8px 20px rgba(0,0,0,0.3)'; }}
+                        onMouseLeave={e => { e.currentTarget.style.transform='scale(1)'; e.currentTarget.style.boxShadow='0 5px 15px rgba(0,0,0,0.2)'; }}
+                    >
+                        Claim Offer Now
+                    </button>
+                </div>
             </section>
 
             {/* BLOG PREVIEW */}
@@ -245,7 +254,7 @@ const Home = () => {
                             { 
                                 title: 'Benefits of Turmeric Powder', 
                                 snippet: 'Discover why this golden spice is essential for your daily immunity and overall well-being...', 
-                                image: 'https://images.unsplash.com/photo-1615486171448-4fb6d4351652?auto=format&fit=crop&q=80&w=600',
+                                image: 'https://images.unsplash.com/photo-1621236170669-e02ff3d23b37?auto=format&fit=crop&q=80&w=600',
                                 delay: 'delay-1'
                             },
                             { 
