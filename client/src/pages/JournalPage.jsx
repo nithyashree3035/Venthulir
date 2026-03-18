@@ -22,25 +22,39 @@ const JournalPage = ({ post }) => {
         <div style={{ background: '#fdfcf7', minHeight: '100vh', paddingBottom: '80px' }}>
             {/* CINEMATIC HERO SECTION */}
             <div style={{ position: 'relative', height: '60vh', minHeight: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-                <video 
-                    autoPlay 
-                    loop 
-                    muted 
-                    playsInline 
-                    style={{
+                {post.image ? (
+                    <div style={{
                         position: 'absolute',
-                        top: '50%',
-                        left: '50%',
+                        top: 0,
+                        left: 0,
                         width: '100%',
                         height: '100%',
-                        objectFit: 'cover',
-                        transform: 'translate(-50%, -50%)',
+                        backgroundImage: `url(${post.image})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
                         zIndex: 0
-                    }}
-                >
-                    <source src="https://assets.mixkit.co/videos/preview/mixkit-wind-blowing-a-field-of-tall-grass-4328-large.mp4" type="video/mp4" />
-                </video>
-                <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(180deg, rgba(11, 61, 46, 0.7) 0%, rgba(11, 61, 46, 0.9) 100%)', zIndex: 1 }}></div>
+                    }}></div>
+                ) : (
+                    <video 
+                        autoPlay 
+                        loop 
+                        muted 
+                        playsInline 
+                        style={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            transform: 'translate(-50%, -50%)',
+                            zIndex: 0
+                        }}
+                    >
+                        <source src="https://assets.mixkit.co/videos/preview/mixkit-wind-blowing-a-field-of-tall-grass-4328-large.mp4" type="video/mp4" />
+                    </video>
+                )}
+                <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(180deg, rgba(11, 61, 46, 0.6) 0%, rgba(11, 61, 46, 0.95) 100%)', zIndex: 1 }}></div>
                 
                 <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 20px', maxWidth: '800px' }} className="fade-in-up">
                     <div style={{ display: 'inline-block', padding: '5px 15px', background: 'rgba(255, 255, 255, 0.2)', color: '#fff', borderRadius: '20px', fontSize: '14px', fontWeight: 'bold', marginBottom: '20px', backdropFilter: 'blur(5px)' }}>Wellness & Health</div>
@@ -59,13 +73,27 @@ const JournalPage = ({ post }) => {
                     <ArrowLeft size={18} /> Back to Home
                 </button>
 
-                <div className="story-card fade-in-up delay-2" style={{ padding: 'clamp(20px, 5vw, 50px)', lineHeight: '1.9', fontSize: '17px', color: '#444', textAlign: 'justify' }}>
-                    <p style={{ marginBottom: '25px', fontSize: '20px', color: '#0b3d2e', fontWeight: 'bold', lineHeight: '1.6' }}>
+                <div className="story-card fade-in-up delay-2" style={{ padding: 'clamp(20px, 5vw, 50px)', lineHeight: '2', fontSize: '18px', color: '#333', textAlign: 'justify' }}>
+                    <p style={{ marginBottom: '25px', fontSize: 'clamp(18px, 4vw, 22px)', color: '#0b3d2e', fontWeight: 'bold', lineHeight: '1.6', borderBottom: '2px solid #e8f5e9', paddingBottom: '20px' }}>
                         At Venthulir, we believe that pure food leads to a pure life. In today's fast-paced world, returning to our roots and embracing organic, chemical-free alternatives is no longer a luxury—it's a necessity.
                     </p>
+                    
+                    <div style={{ display: 'flex', gap: '15px', alignItems: 'center', marginBottom: '30px', borderBottom: '1px solid #eee', paddingBottom: '15px' }}>
+                        <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: '#0b3d2e', color: '#d4af37', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '20px' }}>SR</div>
+                        <div>
+                            <div style={{ fontWeight: 'bold', color: '#0b3d2e', fontSize: '16px' }}>Sankarganesh R</div>
+                            <div style={{ color: '#666', fontSize: '14px' }}>CEO & Founder</div>
+                        </div>
+                    </div>
+
                     <p style={{ marginBottom: '25px' }}>
-                        When you choose authentically processed items, like our wood-pressed oils or raw forest honey, you aren't just eating better; you're actively preserving the ancient agricultural wisdom that has sustained generations. The profound impact that simple, unadulterated ingredients can have on our daily fitness, mental clarity, and immune response is remarkable.
+                        <span style={{ float: 'left', fontSize: '60px', lineHeight: '50px', paddingTop: '8px', paddingRight: '8px', color: '#d4af37', fontFamily: '"Playfair Display", serif', fontWeight: 'bold' }}>W</span>hen you choose authentically processed items, like our wood-pressed oils or raw forest honey, you aren't just eating better; you're actively preserving the ancient agricultural wisdom that has sustained generations. The profound impact that simple, unadulterated ingredients can have on our daily fitness, mental clarity, and immune response is remarkable.
                     </p>
+                    
+                    {post.image && (
+                        <div style={{ width: '100%', height: 'clamp(200px, 40vw, 400px)', borderRadius: '15px', backgroundImage: `url(${post.image})`, backgroundSize: 'cover', backgroundPosition: 'center', margin: '40px 0', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}></div>
+                    )}
+
                     <p style={{ marginBottom: '30px' }}>
                         Our deep commitment to organic harvesting ensures that every product reaching your table is cultivated without synthetic pesticides or harsh chemical processing. This journey from our self-owned farms straight to your kitchen guarantees a complete preservation of vital nutrients.
                     </p>
