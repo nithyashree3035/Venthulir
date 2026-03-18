@@ -254,19 +254,19 @@ const Home = () => {
                             { 
                                 title: 'Benefits of Turmeric Powder', 
                                 snippet: 'Discover why this golden spice is essential for your daily immunity and overall well-being...', 
-                                image: 'https://images.unsplash.com/photo-1621236170669-e02ff3d23b37?auto=format&fit=crop&q=80&w=600',
+                                image: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=600&auto=format&fit=crop&q=80',
                                 delay: 'delay-1'
                             },
                             { 
                                 title: 'Herbal Remedies for Immunity', 
                                 snippet: 'Traditional concoctions you can make at home to stay strong and healthy during weather changes...', 
-                                image: 'https://images.unsplash.com/photo-1564834724105-918b73d1b9e0?auto=format&fit=crop&q=80&w=600',
+                                image: 'https://images.unsplash.com/photo-1471943038886-6f9bdc485655?w=600&auto=format&fit=crop&q=80',
                                 delay: 'delay-2'
                             },
                             { 
                                 title: 'Natural vs Chemical Spices', 
                                 snippet: 'A deep dive into why pure organic spices matter for your diet and long-term vitality...', 
-                                image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=600',
+                                image: 'https://images.unsplash.com/photo-1599789197514-47270cd526b4?w=600&auto=format&fit=crop&q=80',
                                 delay: 'delay-3'
                             }
                         ].map((post, idx) => (
