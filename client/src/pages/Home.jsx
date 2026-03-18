@@ -67,7 +67,7 @@ const Home = () => {
                         zIndex: 0
                     }}
                 >
-                    <source src="/videos/nature.mp4" type="video/mp4" />
+                    <source src="https://ak.picdn.net/shutterstock/videos/1027168898/preview/stock-video-wind-blowing-through-tall-green-grass-close-up-of-grass-swaying-in-the-breeze.mp4" type="video/mp4" />
                 </video>
                 <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(135deg, rgba(11, 61, 46, 0.8) 0%, rgba(26, 92, 67, 0.7) 100%)', zIndex: 1 }}></div>
 
