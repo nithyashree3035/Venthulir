@@ -48,56 +48,47 @@ const Home = () => {
             </Helmet>
 
             <Hero />
+            {/* THE STORY OF VENTHULIR - LOCAL IMAGE BACKGROUND */}
+            <section style={{ position: 'relative', overflow: 'hidden', minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'clamp(60px, 10vw, 120px) 20px' }}>
+                {/* BG image from public/story.jpg */}
+                <div style={{
+                    position: 'absolute',
+                    top: 0, left: 0, width: '100%', height: '100%',
+                    backgroundImage: 'url(/story.jpg)',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    zIndex: 0
+                }}></div>
+                {/* Dark overlay so text stays readable */}
+                <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(5, 30, 18, 0.75)', zIndex: 1 }}></div>
 
-            {/* THE STORY OF VENTHULIR WITH VIDEO BACKGROUND */}
-            <section style={{ position: 'relative', overflow: 'hidden', minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '100px 20px' }}>
-                <video 
-                    autoPlay 
-                    loop 
-                    muted 
-                    playsInline 
-                    style={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        transform: 'translate(-50%, -50%)',
-                        zIndex: 0
-                    }}
-                >
-                    <source src="https://assets.mixkit.co/videos/preview/mixkit-wind-blowing-a-field-of-tall-grass-4328-large.mp4" type="video/mp4" />
-                </video>
-                <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(135deg, rgba(11, 61, 46, 0.8) 0%, rgba(26, 92, 67, 0.7) 100%)', zIndex: 1 }}></div>
-
-                <div style={{ position: 'relative', zIndex: 2, maxWidth: '900px', margin: '0 auto', padding: '5vw', background: 'rgba(255, 255, 255, 0.1)', backdropFilter: 'blur(10px)', borderRadius: '20px', border: '1px solid rgba(255, 255, 255, 0.2)', textAlign: 'center', color: '#fff', boxShadow: '0 30px 60px rgba(0,0,0,0.3)' }} className="fade-in-up">
-                    <div style={{ display: 'inline-block', padding: '8px 20px', background: 'rgba(255, 255, 255, 0.2)', color: '#fff', borderRadius: '30px', fontWeight: 'bold', fontSize: '14px', marginBottom: '30px', backdropFilter: 'blur(5px)' }}>
-                        <Leaf size={16} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '5px' }} />
-                        OUR ORIGIN STORY
+                <div style={{ position: 'relative', zIndex: 2, maxWidth: '860px', margin: '0 auto', padding: 'clamp(25px, 5vw, 50px)', background: 'rgba(255, 255, 255, 0.07)', backdropFilter: 'blur(12px)', borderRadius: '20px', border: '1px solid rgba(255, 255, 255, 0.15)', textAlign: 'center', color: '#fff', boxShadow: '0 30px 60px rgba(0,0,0,0.4)', width: '100%', boxSizing: 'border-box' }} className="fade-in-up">
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 20px', background: 'rgba(212,175,55,0.25)', color: '#d4af37', borderRadius: '30px', fontWeight: 'bold', fontSize: '13px', marginBottom: '25px', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                        <Leaf size={14} />
+                        Our Origin Story
                     </div>
-                    
-                    <h2 style={{ fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: '900', fontFamily: '"Playfair Display", serif', lineHeight: '1.2', marginBottom: '30px', textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
-                        A Journey from Childhood Dream <br /> to Organic Revolution 🌱
+
+                    <h2 style={{ fontSize: 'clamp(26px, 4.5vw, 42px)', fontWeight: '900', fontFamily: '"Playfair Display", serif', lineHeight: '1.25', marginBottom: '25px', color: '#fff', textShadow: '0 2px 12px rgba(0,0,0,0.5)' }}>
+                        A Journey from Childhood Dream<br />to Organic Revolution 🌱
                     </h2>
 
-                    <div style={{ fontSize: '18px', lineHeight: '1.8', fontWeight: '300', textShadow: '0 1px 5px rgba(0,0,0,0.2)', opacity: 0.95 }}>
-                        <p style={{ marginBottom: '20px' }}>
+                    <div style={{ fontSize: 'clamp(15px, 2.5vw, 18px)', lineHeight: '1.85', color: '#f0f0f0', textShadow: '0 1px 4px rgba(0,0,0,0.4)' }}>
+                        <p style={{ marginBottom: '18px' }}>
                             The story begins with a young boy watching people consume chemically processed foods daily. Noticing how these unhealthy choices deteriorated their fitness and lifestyle planted a strong purpose in his heart — a mission to reconnect humanity with the purity of nature.
                         </p>
-                        <p style={{ marginBottom: '20px' }}>
-                            Driven by the belief that <strong style={{color: '#d4af37'}}>"Pure Food Creates a Pure Life,"</strong> he founded Venthulir. Unlike brands that rely on external sourcing, Venthulir stands independent by directly owning and cultivating fertile, chemical-free organic farms across Tamil Nadu.
+                        <p style={{ marginBottom: '18px' }}>
+                            Driven by the belief that <strong style={{ color: '#d4af37' }}>&ldquo;Pure Food Creates a Pure Life,&rdquo;</strong> he founded Venthulir — owning and cultivating fertile, chemical-free organic farms across Tamil Nadu, with zero reliance on external sourcing.
                         </p>
                         <p>
-                            Today, Venthulir is more than a brand; it’s a conscious movement. Every product is organically crafted to ensure people stay fit and energetic. We proudly stand as a symbol of trust and sustainability, inspiring families to embrace a healthier tomorrow.
+                            Today, Venthulir is more than a brand; it's a conscious movement. Every product is organically crafted to ensure people stay fit and energetic—a symbol of trust, sustainability, and a healthier tomorrow.
                         </p>
                     </div>
 
-                    <button 
+                    <button
                         onClick={() => { document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' }); }}
-                        style={{ marginTop: '40px', background: '#d4af37', color: '#111', padding: '15px 40px', fontSize: '18px', fontWeight: 'bold', border: 'none', borderRadius: '50px', cursor: 'pointer', boxShadow: '0 10px 20px rgba(0,0,0,0.2)', transition: 'all 0.3s ease' }}
-                        onMouseEnter={e => { e.currentTarget.style.transform='translateY(-3px)'; e.currentTarget.style.boxShadow='0 15px 25px rgba(0,0,0,0.3)'; }}
-                        onMouseLeave={e => { e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='0 10px 20px rgba(0,0,0,0.2)'; }}
+                        style={{ marginTop: '35px', background: '#d4af37', color: '#111', padding: '14px 38px', fontSize: 'clamp(15px, 2.5vw, 18px)', fontWeight: 'bold', border: 'none', borderRadius: '50px', cursor: 'pointer', boxShadow: '0 8px 20px rgba(0,0,0,0.25)', transition: 'all 0.3s ease' }}
+                        onMouseEnter={e => { e.currentTarget.style.transform='translateY(-3px)'; e.currentTarget.style.boxShadow='0 14px 28px rgba(0,0,0,0.35)'; }}
+                        onMouseLeave={e => { e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='0 8px 20px rgba(0,0,0,0.25)'; }}
                     >
                         Experience Purity
                     </button>
@@ -254,19 +245,19 @@ const Home = () => {
                             { 
                                 title: 'Benefits of Turmeric Powder', 
                                 snippet: 'Discover why this golden spice is essential for your daily immunity and overall well-being...', 
-                                image: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=600&auto=format&fit=crop&q=80',
+                                image: '/journal-turmeric.jpg',
                                 delay: 'delay-1'
                             },
                             { 
                                 title: 'Herbal Remedies for Immunity', 
                                 snippet: 'Traditional concoctions you can make at home to stay strong and healthy during weather changes...', 
-                                image: 'https://images.unsplash.com/photo-1471943038886-6f9bdc485655?w=600&auto=format&fit=crop&q=80',
+                                image: '/journal-herbs.jpg',
                                 delay: 'delay-2'
                             },
                             { 
                                 title: 'Natural vs Chemical Spices', 
                                 snippet: 'A deep dive into why pure organic spices matter for your diet and long-term vitality...', 
-                                image: 'https://images.unsplash.com/photo-1599789197514-47270cd526b4?w=600&auto=format&fit=crop&q=80',
+                                image: '/journal-spices.jpg',
                                 delay: 'delay-3'
                             }
                         ].map((post, idx) => (
