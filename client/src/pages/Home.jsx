@@ -9,7 +9,7 @@ import { useAppNavigation } from '../context/NavigationContext';
 import './Home.css';
 
 const Home = () => {
-    const { navigate } = useAppNavigation();
+    const { appNavigate } = useAppNavigation();
     
     // Silently warm up the Render backend to prevent cold-start delays on first product click
     useEffect(() => {
@@ -64,7 +64,7 @@ const Home = () => {
                     </div>
 
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
-                        <div className="story-card interactable-card">
+                        <div className="story-card interactable-card fade-in-up delay-1" style={{ opacity: 0 }}>
                             <h3 style={{ fontSize: '20px', color: '#0b3d2e', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                                 <span style={{ color: '#d4af37' }}>01.</span> The Realization
                             </h3>
@@ -73,7 +73,7 @@ const Home = () => {
                             </p>
                         </div>
 
-                        <div className="story-card interactable-card">
+                        <div className="story-card interactable-card fade-in-up delay-2" style={{ opacity: 0 }}>
                             <h3 style={{ fontSize: '20px', color: '#0b3d2e', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                                 <span style={{ color: '#d4af37' }}>02.</span> The Foundation
                             </h3>
@@ -82,7 +82,7 @@ const Home = () => {
                             </p>
                         </div>
 
-                        <div className="story-card interactable-card">
+                        <div className="story-card interactable-card fade-in-up delay-3" style={{ opacity: 0 }}>
                             <h3 style={{ fontSize: '20px', color: '#0b3d2e', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                                 <span style={{ color: '#d4af37' }}>03.</span> The Movement
                             </h3>
@@ -116,16 +116,16 @@ const Home = () => {
                             />
                             <div id="founder-fallback" className="founder-avatar" style={{ display: 'none' }}>SR</div>
                             
-                            <h3 style={{ fontSize: '28px', fontWeight: '800', marginBottom: '5px' }}>Sankarganesh R</h3>
+                            <h3 style={{ fontSize: '28px', color: '#fff', fontWeight: '800', marginBottom: '5px' }}>Sankarganesh R</h3>
                             <h4 style={{ fontSize: '16px', color: '#d4af37', fontWeight: 'bold', marginBottom: '15px' }}>CEO & Founder</h4>
-                            <p style={{ fontSize: '13px', color: '#aaa', marginBottom: '30px' }}>B.E (Mechanical), M.Tech (Energy Technology)</p>
+                            <p style={{ fontSize: '14px', color: '#fff', marginBottom: '30px', fontWeight: 'bold' }}>B.E (Mechanical), M.Tech (Energy Technology)</p>
                             
                             <ul className="founder-roles-list">
-                                <li><div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#666' }}></div> Designer</li>
-                                <li><div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#666' }}></div> Trainer</li>
-                                <li><div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#666' }}></div> Team Coordinator</li>
-                                <li><div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#666' }}></div> Team Leader</li>
-                                <li><div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#666' }}></div> Project Head</li>
+                                <li style={{ color: '#fff', fontWeight: '500' }}><div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#d4af37' }}></div> Designer</li>
+                                <li style={{ color: '#fff', fontWeight: '500' }}><div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#d4af37' }}></div> Trainer</li>
+                                <li style={{ color: '#fff', fontWeight: '500' }}><div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#d4af37' }}></div> Team Coordinator</li>
+                                <li style={{ color: '#fff', fontWeight: '500' }}><div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#d4af37' }}></div> Team Leader</li>
+                                <li style={{ color: '#fff', fontWeight: '500' }}><div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#d4af37' }}></div> Project Head</li>
                                 <li style={{ fontSize: '15px', color: '#d4af37', fontWeight: 'bold', marginTop: '10px' }}><div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#d4af37' }}></div> CEO & Founder</li>
                             </ul>
                         </div>
@@ -229,12 +229,11 @@ const Home = () => {
                         {[
                             { title: 'Benefits of Turmeric Powder', snippet: 'Discover why this golden spice is essential for your daily immunity and overall well-being...', icon: <BookOpen size={48} color="#0b3d2e" /> },
                             { title: 'Herbal Remedies for Immunity', snippet: 'Traditional concoctions you can make at home to stay strong and healthy during weather changes...', icon: <Leaf size={48} color="#0b3d2e" /> },
-                            { title: 'Natural vs Chemical Spices', snippet: 'A deep dive into why pure organic spices matter for your diet and long-term vitality...', icon: <ShieldCheck size={48} color="#0b3d2e" /> },
-                            { title: 'How to Choose Pure Masala', snippet: 'Tips and tricks to identify unadulterated spice blends in the market without being fooled...', icon: <RefreshCcw size={48} color="#0b3d2e" /> }
+                            { title: 'Natural vs Chemical Spices', snippet: 'A deep dive into why pure organic spices matter for your diet and long-term vitality...', icon: <ShieldCheck size={48} color="#0b3d2e" /> }
                         ].map((post, idx) => (
                             <div 
                                 key={idx} 
-                                onClick={() => navigate('journal', { post })}
+                                onClick={() => appNavigate('journal', { post })}
                                 style={{ background: '#fdfcf7', borderRadius: '12px', overflow: 'hidden', border: '1px solid #eee', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', flexDirection: 'column' }} 
                                 onMouseEnter={e => { e.currentTarget.style.transform='translateY(-8px)'; e.currentTarget.style.boxShadow='0 15px 30px rgba(0,0,0,0.1)'; }} 
                                 onMouseLeave={e => { e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='none'; }}
