@@ -67,17 +67,17 @@ const Home = () => {
                         zIndex: 0
                     }}
                 >
-                    <source src="https://ak.picdn.net/shutterstock/videos/1027168898/preview/stock-video-wind-blowing-through-tall-green-grass-close-up-of-grass-swaying-in-the-breeze.mp4" type="video/mp4" />
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-wind-blowing-a-field-of-tall-grass-4328-large.mp4" type="video/mp4" />
                 </video>
                 <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(135deg, rgba(11, 61, 46, 0.8) 0%, rgba(26, 92, 67, 0.7) 100%)', zIndex: 1 }}></div>
 
-                <div style={{ position: 'relative', zIndex: 2, maxWidth: '900px', margin: '0 auto', padding: '50px', background: 'rgba(255, 255, 255, 0.1)', backdropFilter: 'blur(10px)', borderRadius: '20px', border: '1px solid rgba(255, 255, 255, 0.2)', textAlign: 'center', color: '#fff', boxShadow: '0 30px 60px rgba(0,0,0,0.3)' }} className="fade-in-up">
+                <div style={{ position: 'relative', zIndex: 2, maxWidth: '900px', margin: '0 auto', padding: '5vw', background: 'rgba(255, 255, 255, 0.1)', backdropFilter: 'blur(10px)', borderRadius: '20px', border: '1px solid rgba(255, 255, 255, 0.2)', textAlign: 'center', color: '#fff', boxShadow: '0 30px 60px rgba(0,0,0,0.3)' }} className="fade-in-up">
                     <div style={{ display: 'inline-block', padding: '8px 20px', background: 'rgba(255, 255, 255, 0.2)', color: '#fff', borderRadius: '30px', fontWeight: 'bold', fontSize: '14px', marginBottom: '30px', backdropFilter: 'blur(5px)' }}>
                         <Leaf size={16} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '5px' }} />
                         OUR ORIGIN STORY
                     </div>
                     
-                    <h2 style={{ fontSize: '42px', fontWeight: '900', fontFamily: '"Playfair Display", serif', lineHeight: '1.2', marginBottom: '30px', textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
+                    <h2 style={{ fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: '900', fontFamily: '"Playfair Display", serif', lineHeight: '1.2', marginBottom: '30px', textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
                         A Journey from Childhood Dream <br /> to Organic Revolution 🌱
                     </h2>
 
@@ -140,15 +140,15 @@ const Home = () => {
                         </div>
                         
                         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                            <h3 style={{ fontSize: '24px', fontWeight: '800', marginBottom: '20px' }}>About <span style={{ color: '#d4af37' }}>Sankarganesh R</span></h3>
-                            <p style={{ fontSize: '15px', color: '#ddd', lineHeight: '1.7', marginBottom: '15px', textAlign: 'justify' }}>
+                            <h3 style={{ fontSize: 'clamp(20px, 4vw, 24px)', color: '#fff', fontWeight: '800', marginBottom: '20px' }}>About <span style={{ color: '#d4af37' }}>Sankarganesh R</span></h3>
+                            <p style={{ fontSize: '15px', color: '#fff', lineHeight: '1.7', marginBottom: '15px', textAlign: 'justify' }}>
                                 An accomplished mechanical engineer and entrepreneur, Sankarganesh R leads <span style={{ color: '#d4af37', fontWeight: 'bold' }}>Venthulir Organic Harvest</span> with a deep vision to bring authentic organic wellness and purity back to everyday life.
                             </p>
-                            <p style={{ fontSize: '15px', color: '#ddd', lineHeight: '1.7', marginBottom: '35px', textAlign: 'justify' }}>
+                            <p style={{ fontSize: '15px', color: '#fff', lineHeight: '1.7', marginBottom: '35px', textAlign: 'justify' }}>
                                 Holding a B.E in Mechanical Engineering and an M.Tech in Energy Technology, he brings a unique blend of engineering rigor and entrepreneurial drive to every process. This powerful background has enabled him to design state-of-the-art extraction methods that perfectly preserve traditional, chemical-free agricultural wisdom.
                             </p>
                             
-                            <h4 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '20px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '10px' }}>Key Environmental & Brand Milestones</h4>
+                            <h4 style={{ fontSize: '18px', color: '#d4af37', fontWeight: 'bold', marginBottom: '20px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '10px' }}>Key Environmental & Brand Milestones</h4>
                             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                                 {[
                                     'Transformed 10+ years of engineering rigor into precision cold-press extraction',
@@ -157,7 +157,7 @@ const Home = () => {
                                     'Developed precision processing for zero-adulteration wood-pressed oils',
                                     'Empowering local farmers through direct sourcing and fair-trade practices'
                                 ].map((achievement, idx) => (
-                                    <li key={idx} style={{ fontSize: '15px', color: '#eee', marginBottom: '15px', display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+                                    <li key={idx} style={{ fontSize: '15px', color: '#fff', fontWeight: '500', marginBottom: '15px', display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
                                         <div style={{ marginTop: '2px', color: '#d4af37' }}>
                                             <ShieldCheck size={18} />
                                         </div>

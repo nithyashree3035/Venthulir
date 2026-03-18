@@ -38,18 +38,18 @@ const JournalPage = ({ post }) => {
                         zIndex: 0
                     }}
                 >
-                    <source src="https://ak.picdn.net/shutterstock/videos/1027168898/preview/stock-video-wind-blowing-through-tall-green-grass-close-up-of-grass-swaying-in-the-breeze.mp4" type="video/mp4" />
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-wind-blowing-a-field-of-tall-grass-4328-large.mp4" type="video/mp4" />
                 </video>
                 <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(180deg, rgba(11, 61, 46, 0.7) 0%, rgba(11, 61, 46, 0.9) 100%)', zIndex: 1 }}></div>
                 
                 <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 20px', maxWidth: '800px' }} className="fade-in-up">
                     <div style={{ display: 'inline-block', padding: '5px 15px', background: 'rgba(255, 255, 255, 0.2)', color: '#fff', borderRadius: '20px', fontSize: '14px', fontWeight: 'bold', marginBottom: '20px', backdropFilter: 'blur(5px)' }}>Wellness & Health</div>
-                    <h1 style={{ fontSize: '48px', color: '#fff', fontFamily: '"Playfair Display", serif', lineHeight: '1.2', textShadow: '0 4px 15px rgba(0,0,0,0.3)', marginBottom: '20px' }}>{post.title}</h1>
-                    <p style={{ fontSize: '18px', color: '#e0e0e0', fontWeight: '300', maxWidth: '600px', margin: '0 auto' }}>{post.snippet}</p>
+                    <h1 style={{ fontSize: 'clamp(32px, 5vw, 48px)', color: '#fff', fontFamily: '"Playfair Display", serif', lineHeight: '1.2', textShadow: '0 4px 15px rgba(0,0,0,0.3)', marginBottom: '20px' }}>{post.title}</h1>
+                    <p style={{ fontSize: 'clamp(15px, 3vw, 18px)', color: '#e0e0e0', fontWeight: '300', maxWidth: '600px', margin: '0 auto' }}>{post.snippet}</p>
                 </div>
             </div>
 
-            <div style={{ maxWidth: '800px', margin: '-50px auto 0', position: 'relative', zIndex: 3, padding: '0 20px' }}>
+            <div style={{ maxWidth: '800px', margin: '-50px auto 0', position: 'relative', zIndex: 3, padding: '0 5vw' }}>
                 <button 
                     onClick={() => appNavigate('home')} 
                     style={{ background: '#fff', border: 'none', color: '#0b3d2e', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', marginBottom: '30px', fontWeight: 'bold', padding: '10px 20px', borderRadius: '30px', boxShadow: '0 5px 15px rgba(0,0,0,0.1)', transition: 'transform 0.3s ease' }}
@@ -59,7 +59,7 @@ const JournalPage = ({ post }) => {
                     <ArrowLeft size={18} /> Back to Home
                 </button>
 
-                <div className="story-card fade-in-up delay-2" style={{ padding: '50px', lineHeight: '1.9', fontSize: '17px', color: '#444', textAlign: 'justify' }}>
+                <div className="story-card fade-in-up delay-2" style={{ padding: 'clamp(20px, 5vw, 50px)', lineHeight: '1.9', fontSize: '17px', color: '#444', textAlign: 'justify' }}>
                     <p style={{ marginBottom: '25px', fontSize: '20px', color: '#0b3d2e', fontWeight: 'bold', lineHeight: '1.6' }}>
                         At Venthulir, we believe that pure food leads to a pure life. In today's fast-paced world, returning to our roots and embracing organic, chemical-free alternatives is no longer a luxury—it's a necessity.
                     </p>
