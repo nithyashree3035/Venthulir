@@ -1,5 +1,4 @@
-/* --- 1. MODERN TECH FONT IMPORT (INTER) --- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+/* Fonts loaded asynchronously via index.html preload — no @import here */
 
 /* ROYAL COLOR COMBO */
 :root {

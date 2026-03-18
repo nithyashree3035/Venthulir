@@ -104,7 +104,9 @@ const Footer = () => {
                                     style={{ width: '100%', padding: '12px', borderRadius: '4px', border: '1px solid #ddd', marginBottom: '10px' }}
                                     value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })}
                                 />
+                                <label htmlFor="concern-select" style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', borderWidth: 0 }}>Nature of Concern</label>
                                 <select
+                                    id="concern-select"
                                     required
                                     value={formData.concern} onChange={e => setFormData({ ...formData, concern: e.target.value })}
                                     style={{ marginBottom: '10px' }}
@@ -141,9 +143,9 @@ const Footer = () => {
 
                 <div className="footer-bottom-info" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px' }}>
                     <div style={{ display: 'flex', gap: '15px' }}>
-                        <a href="#" style={{ color: '#0a2e1f' }}><Facebook size={20} /></a>
-                        <a href="#" style={{ color: '#0a2e1f' }}><Instagram size={20} /></a>
-                        <a href="#" style={{ color: '#0a2e1f' }}><Twitter size={20} /></a>
+                        <a href="https://www.facebook.com/venthulir" target="_blank" rel="noopener noreferrer" aria-label="Follow Venthulir on Facebook" style={{ color: '#0a2e1f' }}><Facebook size={20} /></a>
+                        <a href="https://www.instagram.com/venthulir" target="_blank" rel="noopener noreferrer" aria-label="Follow Venthulir on Instagram" style={{ color: '#0a2e1f' }}><Instagram size={20} /></a>
+                        <a href="https://www.twitter.com/venthulir" target="_blank" rel="noopener noreferrer" aria-label="Follow Venthulir on Twitter" style={{ color: '#0a2e1f' }}><Twitter size={20} /></a>
                     </div>
                     <p style={{ margin: 0 }}>© 2026 VENTHULIR ORGANIC HARVEST. ROYALTY REFINED.</p>
                     <div style={{ display: 'flex', gap: '15px', color: '#0a2e1f' }}>

@@ -45,7 +45,13 @@ const Navbar = () => {
       <nav className="at-navbar-main">
         <div className="at-nav-container">
           <div className="at-nav-left">
-            <button className="mobile-menu-toggle" onClick={toggleMobileMenu}>
+            <button 
+              className="mobile-menu-toggle" 
+              onClick={toggleMobileMenu}
+              aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-nav-menu"
+            >
               {isMobileMenuOpen ? <CloseIcon size={24} /> : <Menu size={24} />}
             </button>
             <div className="at-brand-logo-wrap" style={{ cursor: 'pointer' }} onClick={() => { setIsMobileMenuOpen(false); appNavigate('home'); }}>

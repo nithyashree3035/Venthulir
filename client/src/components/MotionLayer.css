@@ -230,12 +230,12 @@
     filter: drop-shadow(0 25px 40px rgba(0, 0, 0, 0.15));
 }
 
-/* Overall texture overlay */
+/* Overall texture overlay — pure CSS, no external fetch */
 .luxury-noise-overlay {
     position: absolute;
     inset: 0;
-    background: url('https://www.transparenttextures.com/patterns/soft-wallpaper.png');
-    opacity: 0.15;
+    background-image: none;
+    opacity: 0.08;
     z-index: 30;
     pointer-events: none;
     mix-blend-mode: multiply;

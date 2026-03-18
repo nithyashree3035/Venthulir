@@ -120,10 +120,14 @@ const ProductCard = ({ product }) => {
                 )}
 
                 <div className="hover-actions">
-                    <button className="icon-btn" title="Quick View"><Eye size={18} /></button>
+                    <button className="icon-btn" title="Quick View" aria-label="Quick view product">
+                        <Eye size={18} />
+                    </button>
                     <button
                         className={`icon-btn ${isWishlisted ? 'active-red' : ''}`}
                         onClick={handleWishlist}
+                        aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+                        title={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
                     >
                         <Heart size={18} fill={isWishlisted ? "currentColor" : "none"} />
                     </button>
