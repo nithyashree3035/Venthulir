@@ -183,7 +183,19 @@
 @media (max-width: 768px) {
     .offer-flex-banner {
         flex-direction: column;
-        gap: 15px;
+        gap: 8px;
         text-align: center;
+        padding: 5px 0;
+    }
+    .offer-flex-banner h2 {
+        font-size: 16px !important;
+    }
+    .offer-flex-banner p {
+        font-size: 13px !important;
+        margin-bottom: 5px !important;
+    }
+    .offer-flex-banner button {
+        padding: 8px 16px !important;
+        font-size: 12px !important;
     }
 }

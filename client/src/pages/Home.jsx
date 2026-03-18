@@ -215,7 +215,7 @@ const Home = () => {
             </section>
 
             {/* OFFER BANNER */}
-            <section style={{ padding: 'clamp(20px, 4vw, 30px) 20px', background: '#cc0c39', color: '#fff' }} className="fade-in-up">
+            <section style={{ padding: '10px 20px', background: '#cc0c39', color: '#fff' }} className="fade-in-up">
                 <div className="offer-flex-banner" style={{ maxWidth: '1200px', margin: '0 auto' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                         <span style={{ fontSize: '28px' }}>🔥</span>
