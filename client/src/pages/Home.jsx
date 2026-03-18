@@ -208,53 +208,84 @@ const Home = () => {
             <ShopGrid title="Our Best Sellers" isHomePage={true} id="products" />
 
             {/* TESTIMONIALS */}
-            <section style={{ padding: '60px 20px', background: '#0b3d2e', color: '#fff', textAlign: 'center' }}>
-                <h2 style={{ fontSize: '32px', marginBottom: '40px', fontFamily: '"Playfair Display", serif', color: '#d4af37' }}>What Our Customers Say</h2>
+            <section style={{ padding: 'clamp(40px, 8vw, 80px) clamp(15px, 5vw, 20px)', background: '#0b3d2e', color: '#fff', textAlign: 'center' }}>
+                <h2 style={{ fontSize: 'clamp(28px, 5vw, 36px)', marginBottom: '40px', fontFamily: '"Playfair Display", serif', color: '#d4af37' }}>What Our Customers Say</h2>
                 <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-                    <p style={{ fontSize: '20px', fontStyle: 'italic', lineHeight: '1.6', marginBottom: '20px' }}>
+                    <p style={{ fontSize: 'clamp(18px, 4vw, 22px)', fontStyle: 'italic', lineHeight: '1.8', marginBottom: '30px' }}>
                         "The purity and aroma of Venthulir spices are unmatched. It feels like returning to the food our grandparents used to make. Absolutely loving it!"
                     </p>
-                    <div style={{ fontSize: '16px', fontWeight: 'bold' }}>— Kavitha R., Salem</div>
+                    <div style={{ fontSize: '16px', fontWeight: 'bold', letterSpacing: '1px', textTransform: 'uppercase' }}>— Kavitha R., Salem</div>
                 </div>
             </section>
 
             {/* OFFER BANNER */}
-            <section style={{ padding: '50px 20px', background: '#cc0c39', color: '#fff', textAlign: 'center' }}>
-                <h2 style={{ fontSize: '36px', fontWeight: '900', margin: '0 0 15px', textTransform: 'uppercase' }}>🔥 Limited Time Offer</h2>
-                <p style={{ fontSize: '22px', margin: '0 0 25px' }}>Get <span style={{ fontWeight: 'bold', color: '#ffea00' }}>10% OFF</span> on your First Order + 🎁 <span style={{ fontWeight: 'bold', color: '#ffea00' }}>Free Shipping</span> Above ₹499!</p>
+            <section style={{ padding: 'clamp(40px, 6vw, 60px) clamp(15px, 5vw, 20px)', background: '#cc0c39', color: '#fff', textAlign: 'center' }} className="fade-in-up">
+                <h2 style={{ fontSize: 'clamp(28px, 5vw, 36px)', fontWeight: '900', margin: '0 0 15px', textTransform: 'uppercase' }}>🔥 Limited Time Offer</h2>
+                <p style={{ fontSize: 'clamp(18px, 4vw, 24px)', margin: '0 0 30px', lineHeight: '1.4' }}>Get <span style={{ fontWeight: 'bold', color: '#ffea00' }}>10% OFF</span> on your First Order + 🎁 <br className="mobile-break" /> <span style={{ fontWeight: 'bold', color: '#ffea00' }}>Free Shipping</span> Above ₹499!</p>
                 <button 
                     onClick={() => { document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' }); }}
-                    style={{ background: '#ffcd00', color: '#111', padding: '15px 40px', fontSize: '18px', fontWeight: 'bold', border: 'none', borderRadius: '50px', cursor: 'pointer', boxShadow: '0 10px 20px rgba(0,0,0,0.2)' }}
+                    style={{ background: '#ffcd00', color: '#111', padding: '16px 40px', fontSize: '18px', fontWeight: 'bold', border: 'none', borderRadius: '50px', cursor: 'pointer', boxShadow: '0 10px 20px rgba(0,0,0,0.2)', transition: 'all 0.3s ease' }}
+                    onMouseEnter={e => { e.currentTarget.style.transform='scale(1.05)'; e.currentTarget.style.boxShadow='0 15px 25px rgba(0,0,0,0.3)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform='scale(1)'; e.currentTarget.style.boxShadow='0 10px 20px rgba(0,0,0,0.2)'; }}
                 >
                     Claim Offer Now
                 </button>
             </section>
 
             {/* BLOG PREVIEW */}
-            <section style={{ padding: '80px 20px', background: '#fff' }}>
+            <section style={{ padding: 'clamp(40px, 8vw, 80px) clamp(15px, 5vw, 20px)', background: '#fff' }}>
                 <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-                    <h2 style={{ fontSize: '36px', color: '#0b3d2e', fontWeight: '900', marginBottom: '40px', textAlign: 'center', fontFamily: '"Playfair Display", serif' }}>Wellness Journal</h2>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px' }}>
+                    <div style={{ textAlign: 'center', marginBottom: '40px' }} className="fade-in-up">
+                        <h2 style={{ fontSize: 'clamp(28px, 5vw, 36px)', color: '#0b3d2e', fontWeight: '900', fontFamily: '"Playfair Display", serif', marginBottom: '10px' }}>Wellness Journal</h2>
+                        <div style={{ width: '60px', height: '4px', background: '#d4af37', margin: '0 auto', borderRadius: '2px' }}></div>
+                    </div>
+                    
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '40px' }}>
                         {[
-                            { title: 'Benefits of Turmeric Powder', snippet: 'Discover why this golden spice is essential for your daily immunity and overall well-being...', icon: <BookOpen size={48} color="#0b3d2e" /> },
-                            { title: 'Herbal Remedies for Immunity', snippet: 'Traditional concoctions you can make at home to stay strong and healthy during weather changes...', icon: <Leaf size={48} color="#0b3d2e" /> },
-                            { title: 'Natural vs Chemical Spices', snippet: 'A deep dive into why pure organic spices matter for your diet and long-term vitality...', icon: <ShieldCheck size={48} color="#0b3d2e" /> }
+                            { 
+                                title: 'Benefits of Turmeric Powder', 
+                                snippet: 'Discover why this golden spice is essential for your daily immunity and overall well-being...', 
+                                image: 'https://images.unsplash.com/photo-1615486171448-4fb6d4351652?auto=format&fit=crop&q=80&w=600',
+                                delay: 'delay-1'
+                            },
+                            { 
+                                title: 'Herbal Remedies for Immunity', 
+                                snippet: 'Traditional concoctions you can make at home to stay strong and healthy during weather changes...', 
+                                image: 'https://images.unsplash.com/photo-1564834724105-918b73d1b9e0?auto=format&fit=crop&q=80&w=600',
+                                delay: 'delay-2'
+                            },
+                            { 
+                                title: 'Natural vs Chemical Spices', 
+                                snippet: 'A deep dive into why pure organic spices matter for your diet and long-term vitality...', 
+                                image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=600',
+                                delay: 'delay-3'
+                            }
                         ].map((post, idx) => (
                             <div 
                                 key={idx} 
+                                className={`fade-in-up ${post.delay}`}
                                 onClick={() => appNavigate('journal', { post })}
-                                style={{ background: '#fdfcf7', borderRadius: '12px', overflow: 'hidden', border: '1px solid #eee', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', flexDirection: 'column' }} 
-                                onMouseEnter={e => { e.currentTarget.style.transform='translateY(-8px)'; e.currentTarget.style.boxShadow='0 15px 30px rgba(0,0,0,0.1)'; }} 
-                                onMouseLeave={e => { e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='none'; }}
+                                style={{ background: '#fdfcf7', borderRadius: '16px', overflow: 'hidden', border: '1px solid #f0f0f0', cursor: 'pointer', transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)', display: 'flex', flexDirection: 'column', position: 'relative' }} 
+                                onMouseEnter={e => { 
+                                    e.currentTarget.style.transform='translateY(-12px)'; 
+                                    e.currentTarget.style.boxShadow='0 25px 50px rgba(11, 61, 46, 0.15)'; 
+                                    e.currentTarget.querySelector('.journal-img').style.transform='scale(1.1)';
+                                }} 
+                                onMouseLeave={e => { 
+                                    e.currentTarget.style.transform='translateY(0)'; 
+                                    e.currentTarget.style.boxShadow='0 10px 20px rgba(0,0,0,0.05)'; 
+                                    e.currentTarget.querySelector('.journal-img').style.transform='scale(1)';
+                                }}
                             >
-                                <div style={{ width: '100%', height: '180px', background: 'linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    {post.icon}
+                                <div style={{ width: '100%', height: '220px', overflow: 'hidden', position: 'relative' }}>
+                                    <div className="journal-img" style={{ width: '100%', height: '100%', backgroundImage: `url(${post.image})`, backgroundSize: 'cover', backgroundPosition: 'center', transition: 'transform 0.6s ease' }}></div>
+                                    <div style={{ position: 'absolute', top: '15px', right: '15px', background: 'rgba(255,255,255,0.9)', padding: '5px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: 'bold', color: '#0b3d2e', backdropFilter: 'blur(5px)' }}>Read</div>
                                 </div>
-                                <div style={{ padding: '25px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-                                    <h3 style={{ fontSize: '18px', color: '#0b3d2e', fontWeight: 'bold', marginBottom: '12px', lineHeight: '1.3' }}>{post.title}</h3>
-                                    <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6', flexGrow: 1 }}>{post.snippet}</p>
-                                    <div style={{ marginTop: '20px', color: '#4a7c59', fontWeight: 'bold', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                                        Read Journal <ChevronRight size={16} />
+                                <div style={{ padding: '30px', display: 'flex', flexDirection: 'column', flexGrow: 1, position: 'relative', zIndex: 2, background: '#fff' }}>
+                                    <h3 style={{ fontSize: 'clamp(18px, 3vw, 22px)', color: '#0b3d2e', fontWeight: '900', fontFamily: '"Playfair Display", serif', marginBottom: '15px', lineHeight: '1.3' }}>{post.title}</h3>
+                                    <p style={{ fontSize: '15px', color: '#555', lineHeight: '1.7', flexGrow: 1, marginBottom: '20px' }}>{post.snippet}</p>
+                                    <div style={{ color: '#d4af37', fontWeight: 'bold', fontSize: '15px', display: 'flex', alignItems: 'center', gap: '8px', borderTop: '1px solid #eee', paddingTop: '20px' }}>
+                                        Explore Article <ChevronRight size={18} />
                                     </div>
                                 </div>
                             </div>
