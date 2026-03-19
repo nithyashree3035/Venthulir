@@ -51,7 +51,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
                                 <ShoppingBag />
                                 <h2 className="text-xl font-black italic font-serif">Venthulir Registry</h2>
                             </div>
-                            <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-full transition-colors"><X /></button>
+                            <button aria-label="Close cart menu" onClick={onClose} className="p-2 hover:bg-white/10 rounded-full transition-colors"><X /></button>
                         </div>
 
                         {/* Items */}
@@ -77,6 +77,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
                                                     )}
                                                 </div>
                                                 <button
+                                                    aria-label={`Remove ${item.name} from cart`}
                                                     onClick={() => removeFromCart(item._id || item.id, item.selectedVariant)}
                                                     className="text-gray-400 hover:text-red-500 transition-colors"
                                                 ><Trash2 size={16} /></button>

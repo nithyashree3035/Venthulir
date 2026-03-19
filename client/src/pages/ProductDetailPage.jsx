@@ -159,14 +159,14 @@ const ProductDetailPage = ({ id }) => {
 
             {/* Minimal Header */}
             <div className="detail-header">
-                <button className="back-btn" onClick={() => appNavigate('home')}>
+                <button className="back-btn" onClick={() => appNavigate('home')} aria-label="Back to home">
                     <ArrowLeft size={20} />
                 </button>
                 <div className="detail-logo" onClick={() => appNavigate('home')} style={{ cursor: 'pointer' }}>
                     <img src={logo} alt="Venthulir Logo" style={{ height: '40px', objectFit: 'contain' }} />
                 </div>
                 <div className="header-actions">
-                    <button className="h-action" onClick={() => appNavigate('cart')}>
+                    <button className="h-action" onClick={() => appNavigate('cart')} aria-label="View cart">
                         <ShoppingCart size={20} />
                     </button>
                 </div>
@@ -190,12 +190,14 @@ const ProductDetailPage = ({ id }) => {
                                 <>
                                     <button
                                         onClick={handlePrev}
+                                        aria-label="Previous image"
                                         style={{ position: 'absolute', left: '10px', background: 'rgba(255,255,255,0.8)', border: 'none', borderRadius: '50%', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 2px 5px rgba(0,0,0,0.1)' }}
                                     >
                                         <ChevronLeft size={24} color="#0b3d2e" />
                                     </button>
                                     <button
                                         onClick={handleNext}
+                                        aria-label="Next image"
                                         style={{ position: 'absolute', right: '10px', background: 'rgba(255,255,255,0.8)', border: 'none', borderRadius: '50%', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 2px 5px rgba(0,0,0,0.1)' }}
                                     >
                                         <ChevronRight size={24} color="#0b3d2e" />

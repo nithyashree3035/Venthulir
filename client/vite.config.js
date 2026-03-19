@@ -20,11 +20,16 @@ export default defineConfig(({ mode }) => {
         outDir: 'dist-admin',
       }
       : {
-        sourcemap: true,
-        rollupOptions: {
-          input: path.resolve(__dirname, 'index.html'),
-        },
-        outDir: 'dist',
+       sourcemap: true,
+      rollupOptions: {
+        input: path.resolve(__dirname, 'index.html'),
+        output: {
+          manualChunks: {
+            vendor: ['react', 'react-dom', 'react-router-dom', 'framer-motion', 'lucide-react', 'axios']
+          }
+        }
+      },
+      outDir: 'dist',
       },
     server: {
       port: isAdmin ? 5175 : 5173,
