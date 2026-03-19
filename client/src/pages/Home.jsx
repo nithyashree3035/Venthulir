@@ -111,7 +111,7 @@ const Home = () => {
                                 width="280"
                                 height="280"
                                 loading="eager"
-                                fetchpriority="high"
+                                fetchPriority="high"
                                 onError={(e) => { 
                                     e.target.onerror = null; 
                                     e.target.style.display = 'none'; 
