@@ -160,7 +160,19 @@ const Home = () => {
                         >
                             {/* Avatar (initials) */}
                             <div style={{ position: 'relative', marginBottom: '20px' }}>
-                                <div style={{ width: '130px', height: '130px', borderRadius: '50%', border: '4px solid #d4af37', background: 'linear-gradient(135deg, #082f23, #0f5c3a)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '48px', fontWeight: '900', color: '#d4af37', boxShadow: '0 0 30px rgba(212,175,55,0.25)' }}>G</div>
+                                <img
+                                    src="/ganga.jpg"
+                                    alt="Ganga — Managing Director of Venthulir Organic Harvest"
+                                    style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', border: '4px solid #d4af37', boxShadow: '0 0 30px rgba(212,175,55,0.25)' }}
+                                    loading="lazy"
+                                    onError={(e) => {
+                                        e.target.onerror = null;
+                                        e.target.style.display = 'none';
+                                        const fb = document.getElementById('ganga-fallback');
+                                        if (fb) fb.style.display = 'flex';
+                                    }}
+                                />
+                                <div id="ganga-fallback" style={{ display: 'none', width: '130px', height: '130px', borderRadius: '50%', border: '4px solid #d4af37', background: 'linear-gradient(135deg, #082f23, #0f5c3a)', alignItems: 'center', justifyContent: 'center', fontSize: '48px', fontWeight: '900', color: '#d4af37', boxShadow: '0 0 30px rgba(212,175,55,0.25)' }}>G</div>
                                 {/* Role badge */}
                                 <div style={{ position: 'absolute', bottom: '-8px', left: '50%', transform: 'translateX(-50%)', background: '#d4af37', color: '#0b3d2e', fontSize: '11px', fontWeight: '900', padding: '3px 12px', borderRadius: '20px', whiteSpace: 'nowrap', letterSpacing: '0.5px' }}>MANAGING DIRECTOR</div>
                             </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronUp, Send, MapPin, Phone, Mail, Instagram, Facebook, Twitter, CreditCard, ShieldCheck } from 'lucide-react';
+import { ChevronUp, Send, MapPin, Phone, Mail, Instagram, Linkedin, CreditCard, ShieldCheck } from 'lucide-react';
 import './Footer.css';
 
 const Footer = () => {
@@ -143,9 +143,8 @@ const Footer = () => {
 
                 <div className="footer-bottom-info" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px' }}>
                     <div style={{ display: 'flex', gap: '15px' }}>
-                        <a href="https://www.facebook.com/venthulir" target="_blank" rel="noopener noreferrer" aria-label="Follow Venthulir on Facebook" style={{ color: '#0a2e1f' }}><Facebook size={20} /></a>
-                        <a href="https://www.instagram.com/venthulir" target="_blank" rel="noopener noreferrer" aria-label="Follow Venthulir on Instagram" style={{ color: '#0a2e1f' }}><Instagram size={20} /></a>
-                        <a href="https://www.twitter.com/venthulir" target="_blank" rel="noopener noreferrer" aria-label="Follow Venthulir on Twitter" style={{ color: '#0a2e1f' }}><Twitter size={20} /></a>
+                        <a href="https://www.instagram.com/theventhulir22?igsh=ODdyazhjc3NiNTh0" target="_blank" rel="noopener noreferrer" aria-label="Follow Venthulir on Instagram" style={{ color: '#0a2e1f' }}><Instagram size={20} /></a>
+                        <a href="https://www.linkedin.com/in/the-venthulir-2144333b4/" target="_blank" rel="noopener noreferrer" aria-label="Follow Venthulir on LinkedIn" style={{ color: '#0a2e1f' }}><Linkedin size={20} /></a>
                     </div>
                     <p style={{ margin: 0 }}>© 2026 VENTHULIR ORGANIC HARVEST. ROYALTY REFINED.</p>
                     <div style={{ display: 'flex', gap: '15px', color: '#0a2e1f' }}>
