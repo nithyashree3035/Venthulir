@@ -62,26 +62,21 @@ const MotionLayer = () => {
 
             <div className="premium-hero-content">
                 {/* Left Side: Dramatic Typography */}
-                <motion.div
-                    className="hero-text-column"
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate="visible"
-                >
-                    <motion.div className="brand-eyebrow" variants={fadeUpVariants}>
+                <div className="hero-text-column" style={{ animation: 'fadeUp 0.8s ease-out forwards' }}>
+                    <div className="brand-eyebrow">
                         <span className="organic-dot"></span> 100% PURE & TRADITIONAL
-                    </motion.div>
+                    </div>
 
-                    <motion.h1 className="hero-monumental-title" variants={fadeUpVariants} style={{ fontSize: '54px', lineHeight: '1.1' }}>
+                    <h1 className="hero-monumental-title" style={{ fontSize: '54px', lineHeight: '1.1' }}>
                         100% Natural Herbal<br />
                         <span className="text-highlight">Products</span> for Healthy<br />Everyday Living 🌿
-                    </motion.h1>
+                    </h1>
 
-                    <motion.p className="hero-sophisticated-desc" variants={fadeUpVariants}>
+                    <p className="hero-sophisticated-desc">
                         Chemical-free powders & wellness products made with traditional ingredients.
-                    </motion.p>
+                    </p>
 
-                    <motion.div className="hero-action-row" variants={fadeUpVariants}>
+                    <div className="hero-action-row">
                         <button
                             className="premium-primary-btn"
                             onClick={() => {
@@ -101,8 +96,8 @@ const MotionLayer = () => {
                         >
                             View Best Sellers
                         </button>
-                    </motion.div>
-                </motion.div>
+                    </div>
+                </div>
 
                 {/* Right Side: The Student Line Queue */}
                 <div className="hero-visual-column">

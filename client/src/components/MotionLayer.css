@@ -65,6 +65,11 @@
     /* Perfect optic balance */
 }
 
+@keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(40px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
 .brand-eyebrow {
     font-size: 12px;
     font-weight: 700;
