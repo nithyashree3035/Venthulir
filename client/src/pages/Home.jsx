@@ -95,73 +95,96 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* MEET THE FOUNDER SECTION */}
+            {/* MEET THE LEADERSHIP SECTION */}
             <section style={{ padding: '80px 20px', background: '#0b3d2e', color: '#fff' }}>
-                <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-                    <h2 style={{ fontSize: '36px', color: '#d4af37', fontWeight: '900', marginBottom: '50px', fontFamily: '"Playfair Display", serif', textAlign: 'center' }}>
-                        Meet The Founder
+                <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+                    <h2 style={{ fontSize: 'clamp(28px, 5vw, 36px)', color: '#d4af37', fontWeight: '900', marginBottom: '10px', fontFamily: '"Playfair Display", serif', textAlign: 'center' }}>
+                        Meet Our Leadership
                     </h2>
-                    
-                    <div className="founder-grid">
-                        <div className="founder-left-col">
-                            <img 
-                                src="/sankarganesh.png" 
-                                alt="Sankarganesh R — CEO & Founder of Venthulir Organic Harvest" 
-                                className="founder-photo-img"
-                                width="280"
-                                height="280"
-                                loading="eager"
-                                fetchPriority="high"
-                                onError={(e) => { 
-                                    e.target.onerror = null; 
-                                    e.target.style.display = 'none'; 
-                                    const fb = document.getElementById('founder-fallback');
-                                    if (fb) fb.style.display = 'flex'; 
-                                }} 
-                            />
-                            <div id="founder-fallback" className="founder-avatar" style={{ display: 'none' }}>SR</div>
-                            
-                            <h3 style={{ fontSize: '28px', color: '#fff', fontWeight: '800', marginBottom: '5px' }}>Sankarganesh R</h3>
-                            <h4 style={{ fontSize: '16px', color: '#d4af37', fontWeight: 'bold', marginBottom: '15px' }}>CEO & Founder</h4>
-                            <p style={{ fontSize: '14px', color: '#fff', marginBottom: '30px', fontWeight: 'bold' }}>B.E (Mechanical), M.Tech (Energy Technology)</p>
-                            
-                            <ul className="founder-roles-list">
-                                <li style={{ color: '#fff', fontWeight: '500' }}><div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#d4af37' }}></div> Designer</li>
-                                <li style={{ color: '#fff', fontWeight: '500' }}><div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#d4af37' }}></div> Trainer</li>
-                                <li style={{ color: '#fff', fontWeight: '500' }}><div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#d4af37' }}></div> Team Coordinator</li>
-                                <li style={{ color: '#fff', fontWeight: '500' }}><div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#d4af37' }}></div> Team Leader</li>
-                                <li style={{ color: '#fff', fontWeight: '500' }}><div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#d4af37' }}></div> Project Head</li>
-                                <li style={{ fontSize: '15px', color: '#d4af37', fontWeight: 'bold', marginTop: '10px' }}><div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#d4af37' }}></div> CEO & Founder</li>
-                            </ul>
-                        </div>
-                        
-                        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                            <h3 style={{ fontSize: 'clamp(20px, 4vw, 24px)', color: '#fff', fontWeight: '800', marginBottom: '20px' }}>About <span style={{ color: '#d4af37' }}>Sankarganesh R</span></h3>
-                            <p style={{ fontSize: '15px', color: '#fff', lineHeight: '1.7', marginBottom: '15px', textAlign: 'justify' }}>
-                                An accomplished mechanical engineer and entrepreneur, Sankarganesh R leads <span style={{ color: '#d4af37', fontWeight: 'bold' }}>Venthulir Organic Harvest</span> with a deep vision to bring authentic organic wellness and purity back to everyday life.
+                    <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.65)', fontSize: '15px', marginBottom: '55px', letterSpacing: '0.5px' }}>
+                        The people behind Venthulir's vision of purity
+                    </p>
+
+                    {/* Leadership Cards Grid */}
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
+
+                        {/* --- CEO Card --- */}
+                        <div style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '20px', padding: 'clamp(25px, 5vw, 40px)', backdropFilter: 'blur(8px)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', transition: 'all 0.3s ease', boxShadow: '0 10px 40px rgba(0,0,0,0.2)' }}
+                            onMouseEnter={e => { e.currentTarget.style.transform='translateY(-8px)'; e.currentTarget.style.boxShadow='0 20px 50px rgba(0,0,0,0.35)'; e.currentTarget.style.borderColor='rgba(212,175,55,0.4)'; }}
+                            onMouseLeave={e => { e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='0 10px 40px rgba(0,0,0,0.2)'; e.currentTarget.style.borderColor='rgba(255,255,255,0.12)'; }}
+                        >
+                            {/* Photo */}
+                            <div style={{ position: 'relative', marginBottom: '20px' }}>
+                                <img
+                                    src="/sankarganesh.png"
+                                    alt="Sankarganesh R — CEO & Founder of Venthulir Organic Harvest"
+                                    style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', border: '4px solid #d4af37', boxShadow: '0 0 30px rgba(212,175,55,0.25)' }}
+                                    loading="eager"
+                                    fetchPriority="high"
+                                    onError={(e) => {
+                                        e.target.onerror = null;
+                                        e.target.style.display = 'none';
+                                        const fb = document.getElementById('founder-fallback');
+                                        if (fb) fb.style.display = 'flex';
+                                    }}
+                                />
+                                <div id="founder-fallback" style={{ display: 'none', width: '130px', height: '130px', borderRadius: '50%', border: '4px solid #d4af37', background: '#062017', alignItems: 'center', justifyContent: 'center', fontSize: '48px', fontWeight: '900', color: '#d4af37', boxShadow: '0 0 30px rgba(212,175,55,0.25)' }}>SR</div>
+                                {/* Role badge */}
+                                <div style={{ position: 'absolute', bottom: '-8px', left: '50%', transform: 'translateX(-50%)', background: '#d4af37', color: '#0b3d2e', fontSize: '11px', fontWeight: '900', padding: '3px 12px', borderRadius: '20px', whiteSpace: 'nowrap', letterSpacing: '0.5px' }}>CEO & FOUNDER</div>
+                            </div>
+
+                            {/* Name & Title */}
+                            <h3 style={{ fontSize: '22px', color: '#fff', fontWeight: '800', marginBottom: '4px', marginTop: '12px' }}>Sankarganesh R</h3>
+                            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.6)', marginBottom: '18px', letterSpacing: '0.3px' }}>B.E (Mechanical) · M.Tech (Energy Technology)</p>
+
+                            {/* Divider */}
+                            <div style={{ width: '50px', height: '3px', background: '#d4af37', borderRadius: '2px', marginBottom: '20px' }}></div>
+
+                            {/* Bio */}
+                            <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.8)', lineHeight: '1.75', marginBottom: '22px', textAlign: 'center' }}>
+                                An accomplished mechanical engineer and entrepreneur who leads Venthulir with a deep vision to bring authentic organic wellness back to everyday life.
                             </p>
-                            <p style={{ fontSize: '15px', color: '#fff', lineHeight: '1.7', marginBottom: '35px', textAlign: 'justify' }}>
-                                Holding a B.E in Mechanical Engineering and an M.Tech in Energy Technology, he brings a unique blend of engineering rigor and entrepreneurial drive to every process. This powerful background has enabled him to design state-of-the-art extraction methods that perfectly preserve traditional, chemical-free agricultural wisdom.
-                            </p>
-                            
-                            <h4 style={{ fontSize: '18px', color: '#d4af37', fontWeight: 'bold', marginBottom: '20px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '10px' }}>Key Environmental & Brand Milestones</h4>
-                            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                                {[
-                                    'Transformed 10+ years of engineering rigor into precision cold-press extraction',
-                                    'Established self-owned, 100% chemical-free organic farms in Tamil Nadu',
-                                    'Pioneer in merging sustainable tech with traditional agricultural wisdom',
-                                    'Developed precision processing for zero-adulteration wood-pressed oils',
-                                    'Empowering local farmers through direct sourcing and fair-trade practices'
-                                ].map((achievement, idx) => (
-                                    <li key={idx} style={{ fontSize: '15px', color: '#fff', fontWeight: '500', marginBottom: '15px', display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
-                                        <div style={{ marginTop: '2px', color: '#d4af37' }}>
-                                            <ShieldCheck size={18} />
-                                        </div>
-                                        {achievement}
-                                    </li>
+
+                            {/* Roles */}
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center', marginTop: 'auto' }}>
+                                {['Designer', 'Trainer', 'Team Leader', 'Project Head', 'CEO & Founder'].map((role) => (
+                                    <span key={role} style={{ fontSize: '12px', fontWeight: '600', color: '#d4af37', background: 'rgba(212,175,55,0.1)', border: '1px solid rgba(212,175,55,0.3)', padding: '4px 12px', borderRadius: '20px' }}>{role}</span>
                                 ))}
-                            </ul>
+                            </div>
                         </div>
+
+                        {/* --- Managing Director Card --- */}
+                        <div style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '20px', padding: 'clamp(25px, 5vw, 40px)', backdropFilter: 'blur(8px)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', transition: 'all 0.3s ease', boxShadow: '0 10px 40px rgba(0,0,0,0.2)' }}
+                            onMouseEnter={e => { e.currentTarget.style.transform='translateY(-8px)'; e.currentTarget.style.boxShadow='0 20px 50px rgba(0,0,0,0.35)'; e.currentTarget.style.borderColor='rgba(212,175,55,0.4)'; }}
+                            onMouseLeave={e => { e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='0 10px 40px rgba(0,0,0,0.2)'; e.currentTarget.style.borderColor='rgba(255,255,255,0.12)'; }}
+                        >
+                            {/* Avatar (initials) */}
+                            <div style={{ position: 'relative', marginBottom: '20px' }}>
+                                <div style={{ width: '130px', height: '130px', borderRadius: '50%', border: '4px solid #d4af37', background: 'linear-gradient(135deg, #082f23, #0f5c3a)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '48px', fontWeight: '900', color: '#d4af37', boxShadow: '0 0 30px rgba(212,175,55,0.25)' }}>G</div>
+                                {/* Role badge */}
+                                <div style={{ position: 'absolute', bottom: '-8px', left: '50%', transform: 'translateX(-50%)', background: '#d4af37', color: '#0b3d2e', fontSize: '11px', fontWeight: '900', padding: '3px 12px', borderRadius: '20px', whiteSpace: 'nowrap', letterSpacing: '0.5px' }}>MANAGING DIRECTOR</div>
+                            </div>
+
+                            {/* Name & Title */}
+                            <h3 style={{ fontSize: '22px', color: '#fff', fontWeight: '800', marginBottom: '4px', marginTop: '12px' }}>Ganga</h3>
+                            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.6)', marginBottom: '18px', letterSpacing: '0.3px' }}>B.Com (Completed) · M.Com (Pursuing)</p>
+
+                            {/* Divider */}
+                            <div style={{ width: '50px', height: '3px', background: '#d4af37', borderRadius: '2px', marginBottom: '20px' }}></div>
+
+                            {/* Bio */}
+                            <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.8)', lineHeight: '1.75', marginBottom: '22px', textAlign: 'center' }}>
+                                A commerce-driven visionary pursuing M.Com, Ganga oversees Venthulir's business operations and strategic direction, ensuring every decision reflects the brand's commitment to purity and excellence.
+                            </p>
+
+                            {/* Roles */}
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center', marginTop: 'auto' }}>
+                                {['Business Strategy', 'Operations', 'Brand Management', 'Managing Director'].map((role) => (
+                                    <span key={role} style={{ fontSize: '12px', fontWeight: '600', color: '#d4af37', background: 'rgba(212,175,55,0.1)', border: '1px solid rgba(212,175,55,0.3)', padding: '4px 12px', borderRadius: '20px' }}>{role}</span>
+                                ))}
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </section>
