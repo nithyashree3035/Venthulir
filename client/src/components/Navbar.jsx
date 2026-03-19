@@ -55,7 +55,7 @@ const Navbar = () => {
               {isMobileMenuOpen ? <CloseIcon size={24} /> : <Menu size={24} />}
             </button>
             <div className="at-brand-logo-wrap" style={{ cursor: 'pointer' }} onClick={() => { setIsMobileMenuOpen(false); appNavigate('home'); }}>
-              <img src={logo} alt="Venthulir Logo" style={{ height: '55px', objectFit: 'contain' }} />
+              <img src={logo} alt="Venthulir Logo" width="98" height="55" style={{ height: '55px', objectFit: 'contain' }} />
             </div>
           </div>
 

@@ -179,7 +179,7 @@ const ProductDetailPage = ({ id }) => {
                         {/* Main Image Viewport */}
                         <div className="main-image-viewport">
                             {activeImage ? (
-                                <img src={activeImage} alt={product.name} style={{ maxWidth: '90%', maxHeight: '90%', objectFit: 'contain', transition: '0.3s' }} />
+                                <img src={activeImage} alt={product.name} width="500" height="500" style={{ maxWidth: '90%', maxHeight: '90%', objectFit: 'contain', transition: '0.3s' }} fetchPriority="high" />
                             ) : (
                                 <div style={{ color: '#aaa', fontSize: '24px', fontWeight: 'bold' }}>VENTHULIR</div>
                             )}
@@ -392,7 +392,17 @@ const ProductDetailPage = ({ id }) => {
                                     <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><CheckCircle2 size={16}/> Ingredients & Net Weight</span>
                                 </summary>
                                 <div style={{ padding: '15px 0 0', fontSize: '14px', lineHeight: '1.6', color: '#555' }}>
-                                    <p><strong>Ingredients:</strong> Made from 100% natural and traditional sources. No preservatives, artificial colors, or chemicals added.</p>
+                                    <p style={{ whiteSpace: 'pre-line' }}><strong>Ingredients:</strong><br/>
+                                        {(() => {
+                                            const name = product.name.toLowerCase();
+                                            if (name.includes('chilli')) return '100% Dried Red Chillies';
+                                            if (name.includes('garam masala')) return 'Coriander Seeds\nCumin Seeds\nBlack Pepper\nCloves\nCinnamon\nCardamom\nBay Leaf\nNutmeg';
+                                            if (name.includes('coriander')) return '100% Coriander Seeds';
+                                            if (name.includes('turmeric')) return '100% Dried Turmeric';
+                                            if (name.includes('sambar')) return 'Coriander Seeds\nDried Red Chillies\nCumin Seeds\nBlack Pepper\nFenugreek Seeds\nTurmeric\nCurry Leaves\nAsafoetida';
+                                            return 'Made from 100% natural and traditional sources. No preservatives, artificial colors, or chemicals added.';
+                                        })()}
+                                    </p>
                                     <p><strong>Net Weight:</strong> {selectedVariant ? selectedVariant.label : 'Standard Pack'}</p>
                                 </div>
                             </details>

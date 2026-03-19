@@ -57,6 +57,11 @@
         align-items: start;
         gap: 50px;
     }
+    
+    .image-showcase {
+        position: sticky;
+        top: 100px;
+    }
 }
 
 .main-image-viewport {

@@ -145,8 +145,13 @@
   <noscript><link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" /></noscript>
 
-  <!-- Preload LCP resource -->
-  <link rel="preload" as="image" href="/story.jpg" fetchpriority="high" importance="high" />
+  <!-- DNS prefetch for faster API resolution -->
+  <link rel="dns-prefetch" href="https://venthulir.onrender.com" />
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+
+  <!-- Preload LCP resources -->
+  <link rel="preload" as="image" href="/story.jpg" fetchPriority="high" />
+  <link rel="preload" as="image" href="/organic.png" fetchPriority="high" />
 
 </head>
 

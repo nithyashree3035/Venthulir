@@ -118,6 +118,7 @@ const Home = () => {
                                 <img
                                     src="/sankarganesh.png"
                                     alt="Sankarganesh R — CEO & Founder of Venthulir Organic Harvest"
+                                    width="130" height="130"
                                     style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', border: '4px solid #d4af37', boxShadow: '0 0 30px rgba(212,175,55,0.25)' }}
                                     loading="eager"
                                     fetchPriority="high"
@@ -163,6 +164,7 @@ const Home = () => {
                                 <img
                                     src="/ganga.jpg"
                                     alt="Ganga — Managing Director of Venthulir Organic Harvest"
+                                    width="130" height="130"
                                     style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', border: '4px solid #d4af37', boxShadow: '0 0 30px rgba(212,175,55,0.25)' }}
                                     loading="lazy"
                                     onError={(e) => {
@@ -179,14 +181,14 @@ const Home = () => {
 
                             {/* Name & Title */}
                             <h3 style={{ fontSize: '22px', color: '#fff', fontWeight: '800', marginBottom: '4px', marginTop: '12px' }}>Ganga</h3>
-                            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.6)', marginBottom: '18px', letterSpacing: '0.3px' }}>B.Com (Completed) · M.Com (Pursuing)</p>
+                            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.6)', marginBottom: '18px', letterSpacing: '0.3px' }}>B.Com · M.Com</p>
 
                             {/* Divider */}
                             <div style={{ width: '50px', height: '3px', background: '#d4af37', borderRadius: '2px', marginBottom: '20px' }}></div>
 
                             {/* Bio */}
                             <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.8)', lineHeight: '1.75', marginBottom: '22px', textAlign: 'center' }}>
-                                A commerce-driven visionary pursuing M.Com, Ganga oversees Venthulir's business operations and strategic direction, ensuring every decision reflects the brand's commitment to purity and excellence.
+                                A commerce-driven visionary, Ganga oversees Venthulir's business operations and strategic direction, ensuring every decision reflects the brand's commitment to purity and excellence.
                             </p>
 
                             {/* Roles */}
