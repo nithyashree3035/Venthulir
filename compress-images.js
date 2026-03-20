@@ -1,56 +1,52 @@
 const sharp = require('sharp');
-const path = require('path');
 const fs = require('fs');
+const path = require('path');
 
-const publicDir = path.join(__dirname, 'client', 'public');
+const compressAndResize = async () => {
+  const publicDir = path.join(__dirname, 'client', 'public');
+  const productsDir = path.join(publicDir, 'products');
 
-const tasks = [
-  { src: 'sankarganesh.png', width: 300, height: 300, format: 'png',  quality: 80 },
-  { src: 'ganga.jpg',        width: 300, height: 300, format: 'jpeg', quality: 82 },
-  { src: 'story.jpg',        width: 1200,             format: 'jpeg', quality: 75 },
-  { src: 'products/sambar.png',    width: 600, format: 'png',  quality: 80 },
-  { src: 'products/coriander.png', width: 600, format: 'png',  quality: 80 },
-  { src: 'products/chilli.png',    width: 600, format: 'png',  quality: 80 },
-  { src: 'journal-herbs.jpg',    width: 800, format: 'jpeg', quality: 75 },
-  { src: 'journal-spices.jpg',   width: 800, format: 'jpeg', quality: 75 },
-  { src: 'journal-turmeric.jpg', width: 800, format: 'jpeg', quality: 75 },
-  { src: 'og-image.jpg',         width: 1200, format: 'jpeg', quality: 80 },
-];
+  const filesToProcess = [
+    { file: path.join(publicDir, 'story.jpg'), width: 800, type: 'jpeg' },
+    { file: path.join(publicDir, 'journal-herbs.jpg'), width: 800, type: 'jpeg' },
+    { file: path.join(publicDir, 'organic.png'), width: 200, type: 'png' }
+  ];
 
-(async () => {
-  for (const t of tasks) {
-    const input  = path.join(publicDir, t.src);
-    // Write to a separate _compressed name to avoid file locks
-    const ext = path.extname(t.src);
-    const base = path.basename(t.src, ext);
-    const dir  = path.dirname(t.src);
-    const tmpName = path.join(publicDir, dir, base + '_c' + ext);
+  // Add all PNGs in the products directory
+  if (fs.existsSync(productsDir)) {
+    const productFiles = fs.readdirSync(productsDir).filter(f => f.endsWith('.png'));
+    productFiles.forEach(f => {
+      filesToProcess.push({
+        file: path.join(productsDir, f),
+        width: 300, // as per Lighthouse displayed size ~200px, so 300px is safe
+        type: 'png'
+      });
+    });
+  }
 
-    if (!fs.existsSync(input)) { console.warn('SKIP (missing):', t.src); continue; }
-
-    const beforeBytes = fs.statSync(input).size;
-
-    try {
-      let pipeline = sharp(input).resize({ width: t.width, height: t.height, fit: 'inside', withoutEnlargement: true });
-      if (t.format === 'jpeg') pipeline = pipeline.jpeg({ quality: t.quality, mozjpeg: true });
-      if (t.format === 'png')  pipeline = pipeline.png({ quality: t.quality, compressionLevel: 9 });
-      await pipeline.toFile(tmpName);
-
-      const afterBytes = fs.statSync(tmpName).size;
-      if (afterBytes < beforeBytes) {
-        // Replace original
-        fs.copyFileSync(tmpName, input);
-        fs.unlinkSync(tmpName);
-        console.log(`✅ ${t.src}: ${(beforeBytes/1024).toFixed(1)}KB → ${(afterBytes/1024).toFixed(1)}KB  (saved ${((1-afterBytes/beforeBytes)*100).toFixed(0)}%)`);
-      } else {
-        fs.unlinkSync(tmpName);
-        console.log(`⚠️  ${t.src}: already optimal, keeping (${(beforeBytes/1024).toFixed(1)}KB)`);
+  for (const { file, width, type } of filesToProcess) {
+    if (fs.existsSync(file)) {
+      const tempFile = file + '.tmp.' + type;
+      try {
+        let pipeline = sharp(file).resize(width);
+        
+        if (type === 'jpeg') {
+          pipeline = pipeline.jpeg({ quality: 60, progressive: true, mozjpeg: true });
+        } else if (type === 'png') {
+          pipeline = pipeline.png({ quality: 50, compressionLevel: 9, adaptiveFiltering: true, palette: true });
+        }
+        
+        await pipeline.toFile(tempFile);
+        
+        fs.renameSync(tempFile, file);
+        console.log(`Successfully compressed and resized: ${file}`);
+      } catch (err) {
+        console.error(`Error processing ${file}:`, err);
       }
-    } catch (e) {
-      // Clean up tmp if exists
-      if (fs.existsSync(tmpName)) { try { fs.unlinkSync(tmpName); } catch(_){} }
-      console.error(`❌ ${t.src}: ${e.message}`);
+    } else {
+      console.log(`File not found: ${file}`);
     }
   }
-  console.log('\n🎉 Done!');
-})();
+};
+
+compressAndResize().then(() => console.log('Done'));

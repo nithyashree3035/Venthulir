@@ -1,13 +1,14 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const isAdmin = mode === 'admin';
 
   return {
-    plugins: [react()],
+    plugins: [react(), !isAdmin && cssInjectedByJsPlugin()].filter(Boolean),
     // If admin mode, set base to /admin/ so assets load correctly from subdirectory
     base: isAdmin ? '/admin/' : '/',
     // Separate entry point for customer vs admin

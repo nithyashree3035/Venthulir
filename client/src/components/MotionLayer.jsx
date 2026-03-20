@@ -62,7 +62,7 @@ const MotionLayer = () => {
 
             <div className="premium-hero-content">
                 {/* Left Side: Dramatic Typography */}
-                <div className="hero-text-column" style={{ animation: 'fadeUp 0.8s ease-out forwards' }}>
+                <div className="hero-text-column">
                     <div className="brand-eyebrow">
                         <span className="organic-dot"></span> 100% PURE & TRADITIONAL
                     </div>
