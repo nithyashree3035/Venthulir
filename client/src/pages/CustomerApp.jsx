@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Home from './Home';
-import ProductDetailPage from './ProductDetailPage';
-import CartPage from './CartPage';
-import CheckoutPage from './CheckoutPage';
-import CustomerPage from './CustomerPage';
-import WishlistPage from './WishlistPage';
-import EntryAuthPage from './EntryAuthPage';
-import ShopGrid from '../components/ShopGrid';
-import JournalPage from './JournalPage';
+const ProductDetailPage = React.lazy(() => import('./ProductDetailPage'));
+const CartPage = React.lazy(() => import('./CartPage'));
+const CheckoutPage = React.lazy(() => import('./CheckoutPage'));
+const CustomerPage = React.lazy(() => import('./CustomerPage'));
+const WishlistPage = React.lazy(() => import('./WishlistPage'));
+const EntryAuthPage = React.lazy(() => import('./EntryAuthPage'));
+const ShopGrid = React.lazy(() => import('../components/ShopGrid'));
+const JournalPage = React.lazy(() => import('./JournalPage'));
 import { useAppNavigation } from '../context/NavigationContext';
 import { Helmet } from 'react-helmet-async';
 
@@ -68,7 +68,9 @@ const CustomerApp = () => {
                     <meta name="robots" content="noindex, nofollow" />
                 </Helmet>
             )}
-            {content}
+            <Suspense fallback={<div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>}>
+                {content}
+            </Suspense>
         </React.Fragment>
     );
 };

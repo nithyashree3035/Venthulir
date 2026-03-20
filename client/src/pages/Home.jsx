@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import Hero from '../components/Hero';
-import ShopGrid from '../components/ShopGrid';
+const ShopGrid = React.lazy(() => import('../components/ShopGrid'));
 import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet-async';
 import { API_BASE } from '../constants';
@@ -120,8 +120,7 @@ const Home = () => {
                                     alt="Sankarganesh R — CEO & Founder of Venthulir Organic Harvest"
                                     width="130" height="130"
                                     style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', border: '4px solid #d4af37', boxShadow: '0 0 30px rgba(212,175,55,0.25)' }}
-                                    loading="eager"
-                                    fetchPriority="high"
+                                    loading="lazy"
                                     onError={(e) => {
                                         e.target.onerror = null;
                                         e.target.style.display = 'none';
@@ -238,7 +237,9 @@ const Home = () => {
             </section>
 
             {/* MAIN PRODUCTS SECTION */}
-            <ShopGrid title="Our Best Sellers" isHomePage={true} id="products" />
+            <Suspense fallback={<div style={{ padding: '100px', textAlign: 'center' }}>Loading Collection...</div>}>
+                <ShopGrid title="Our Best Sellers" isHomePage={true} id="products" />
+            </Suspense>
 
             {/* TESTIMONIALS */}
             <section style={{ padding: 'clamp(40px, 8vw, 80px) clamp(15px, 5vw, 20px)', background: '#0b3d2e', color: '#fff', textAlign: 'center' }}>
