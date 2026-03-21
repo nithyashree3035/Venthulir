@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../context/CartContext';
 import { ShoppingCart, Trash2, Plus, Minus, ShoppingBag, Leaf, ArrowLeft } from 'lucide-react';
 import { useAppNavigation } from '../context/NavigationContext';
@@ -16,11 +15,7 @@ const CartPage = () => {
         <div className="cart-page-root">
             <div className="cart-container">
                 {/* Header */}
-                <motion.div
-                    className="cart-header"
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                >
+                <div className="cart-header fade-in">
                     <div className="header-left">
                         <ShoppingCart size={32} className="header-icon" />
                         <div>
@@ -28,109 +23,92 @@ const CartPage = () => {
                             <p>{cart.length} product{cart.length !== 1 ? 's' : ''} • {getTotalItems()} total items</p>
                         </div>
                     </div>
-                    <button onClick={() => appNavigate('home')} className="continue-shopping" style={{ background: 'none', border: 'none', cursor: 'pointer', outline: 'none' }}>
+                    <button type="button" onClick={() => appNavigate('home')} className="continue-shopping" style={{ background: 'none', border: 'none', cursor: 'pointer', outline: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <ArrowLeft size={16} />
                         Continue Shopping
                     </button>
-                </motion.div>
+                </div>
 
                 {cart.length === 0 ? (
-                    <motion.div
-                        className="empty-cart"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                    >
+                    <div className="empty-cart fade-in">
                         <ShoppingBag size={80} />
                         <h2>Your cart is empty</h2>
                         <p>Add some organic treasures to get started!</p>
-                        <button onClick={() => appNavigate('home')} className="shop-now-btn" style={{ background: '#0b3d2e', color: '#fff', padding: '10px 20px', borderRadius: '8px', border: 'none', cursor: 'pointer', outline: 'none', textDecoration: 'none' }}>
+                        <button type="button" onClick={() => appNavigate('home')} className="shop-now-btn" style={{ background: '#0b3d2e', color: '#fff', padding: '10px 20px', borderRadius: '8px', border: 'none', cursor: 'pointer', outline: 'none', textDecoration: 'none' }}>
                             Browse Products
                         </button>
-                    </motion.div>
+                    </div>
                 ) : (
                     <div className="cart-layout">
                         {/* Items List */}
                         <div className="cart-items-section">
-                            <AnimatePresence>
-                                {cart.map((item, index) => {
-                                    const itemId = item._id || item.id;
-                                    const variantLabel = item.selectedVariant;
-                                    return (
-                                        <motion.div
-                                            key={`${itemId}-${variantLabel || 'default'}`}
-                                            className="cart-item-card"
-                                            layout
-                                            initial={{ opacity: 0, y: 20 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            exit={{ opacity: 0, scale: 0.9 }}
-                                            transition={{ delay: index * 0.05 }}
-                                        >
-                                            {/* Image */}
-                                            <div className="item-image">
-                                                <img src={item.imageUrl || item.image} alt={item.name} />
-                                            </div>
+                            {cart.map((item, index) => {
+                                const itemId = item._id || item.id;
+                                const variantLabel = item.selectedVariant;
+                                return (
+                                    <div
+                                        key={`${itemId}-${variantLabel || 'default'}`}
+                                        className="cart-item-card fade-in-up"
+                                        style={{ animationDelay: `${index * 0.05}s` }}
+                                    >
+                                        {/* Image */}
+                                        <div className="item-image">
+                                            <img src={item.imageUrl || item.image} alt={item.name} />
+                                        </div>
 
-                                            {/* Details */}
-                                            <div className="item-details">
-                                                <span className="item-category">{item.category}</span>
-                                                <h3 className="item-name">{item.name}</h3>
-                                                {variantLabel && <span className="item-variant" style={{ fontSize: '12px', background: '#ececec', padding: '2px 8px', borderRadius: '4px', fontWeight: 'bold' }}>{variantLabel}</span>}
-                                                <p className="item-price">₹{item.price}</p>
-                                            </div>
+                                        {/* Details */}
+                                        <div className="item-details">
+                                            <span className="item-category">{item.category}</span>
+                                            <h3 className="item-name">{item.name}</h3>
+                                            {variantLabel && <span className="item-variant" style={{ fontSize: '12px', background: '#ececec', padding: '2px 8px', borderRadius: '4px', fontWeight: 'bold' }}>{variantLabel}</span>}
+                                            <p className="item-price">₹{item.price}</p>
+                                        </div>
 
-                                            {/* Quantity Controls */}
-                                            <div className="quantity-controls">
-                                                <motion.button
-                                                    className="qty-btn"
-                                                    onClick={() => decrementQuantity(itemId, variantLabel)}
-                                                    whileTap={{ scale: 0.9 }}
-                                                >
-                                                    <Minus size={14} />
-                                                </motion.button>
-                                                <motion.span
-                                                    className="qty-value"
-                                                    key={item.quantity}
-                                                    initial={{ scale: 1.2 }}
-                                                    animate={{ scale: 1 }}
-                                                >
-                                                    {item.quantity}
-                                                </motion.span>
-                                                <motion.button
-                                                    className="qty-btn"
-                                                    onClick={() => incrementQuantity(itemId, variantLabel)}
-                                                    whileTap={{ scale: 0.9 }}
-                                                >
-                                                    <Plus size={14} />
-                                                </motion.button>
-                                            </div>
-
-                                            {/* Subtotal */}
-                                            <div className="item-subtotal">
-                                                <span className="subtotal-label">Subtotal</span>
-                                                <span className="subtotal-value">₹{item.price * item.quantity}</span>
-                                            </div>
-
-                                            {/* Remove */}
-                                            <motion.button
-                                                className="remove-btn"
-                                                onClick={() => removeFromCart(itemId, variantLabel)}
-                                                whileHover={{ scale: 1.05 }}
-                                                whileTap={{ scale: 0.95 }}
+                                        {/* Quantity Controls */}
+                                        <div className="quantity-controls">
+                                            <button
+                                                type="button"
+                                                className="qty-btn"
+                                                onClick={() => decrementQuantity(itemId, variantLabel)}
+                                                aria-label="Decrease quantity"
                                             >
-                                                <Trash2 size={16} />
-                                            </motion.button>
-                                        </motion.div>
-                                    );
-                                })}
-                            </AnimatePresence>
+                                                <Minus size={14} />
+                                            </button>
+                                            <span className="qty-value">
+                                                {item.quantity}
+                                            </span>
+                                            <button
+                                                type="button"
+                                                className="qty-btn"
+                                                onClick={() => incrementQuantity(itemId, variantLabel)}
+                                                aria-label="Increase quantity"
+                                            >
+                                                <Plus size={14} />
+                                            </button>
+                                        </div>
+
+                                        {/* Subtotal */}
+                                        <div className="item-subtotal">
+                                            <span className="subtotal-label">Subtotal</span>
+                                            <span className="subtotal-value">₹{item.price * item.quantity}</span>
+                                        </div>
+
+                                        {/* Remove */}
+                                        <button
+                                            type="button"
+                                            className="remove-btn"
+                                            onClick={() => removeFromCart(itemId, variantLabel)}
+                                            aria-label="Remove item from cart"
+                                        >
+                                            <Trash2 size={16} />
+                                        </button>
+                                    </div>
+                                );
+                            })}
                         </div>
 
                         {/* Summary */}
-                        <motion.div
-                            className="order-summary"
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                        >
+                        <div className="order-summary slide-in-right">
                             <div className="summary-header">
                                 <Leaf size={20} />
                                 <h2>Order Summary</h2>
@@ -156,22 +134,29 @@ const CartPage = () => {
                                 <span className="total-value">₹{grandTotal}</span>
                             </div>
 
-                            <motion.button
+                            <button
+                                type="button"
                                 className="checkout-btn"
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
                                 onClick={() => appNavigate('checkout')}
                             >
                                 Proceed to Checkout
-                            </motion.button>
+                            </button>
 
-                            <button className="clear-cart-btn" onClick={clearCart}>
+                            <button type="button" className="clear-cart-btn" onClick={clearCart}>
                                 Clear Cart
                             </button>
-                        </motion.div>
+                        </div>
                     </div>
                 )}
             </div>
+            <style>{`
+                .fade-in { animation: fadeIn 0.5s ease forwards; }
+                .fade-in-up { animation: fadeInUp 0.5s ease-out forwards; opacity: 0; }
+                .slide-in-right { animation: slideInRight 0.5s ease-out forwards; }
+                @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+                @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+                @keyframes slideInRight { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+            `}</style>
         </div>
     );
 };

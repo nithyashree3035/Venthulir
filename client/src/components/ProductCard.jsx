@@ -1,6 +1,6 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { ShoppingCart, Heart, Eye, Check, Zap } from 'lucide-react';
+
 import { useAppNavigation } from '../context/NavigationContext';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
@@ -88,12 +88,13 @@ const ProductCard = ({ product }) => {
     };
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className={`venthulir-product-card ${isBestSeller ? 'electric-thunder' : ''}`}
+        <div
+            className={`venthulir-product-card fade-in-up ${isBestSeller ? 'electric-thunder' : ''}`}
             onClick={() => appNavigate('product', { id: productId })}
+            onKeyDown={(e) => { if (e.key === 'Enter') appNavigate('product', { id: productId }) }}
+            role="button"
+            tabIndex="0"
+            aria-label={`View product details for ${product.name}`}
             style={{ cursor: 'pointer' }}
         >
             <div className="card-media">
@@ -188,7 +189,7 @@ const ProductCard = ({ product }) => {
 
             {/* React Bits Thunder Glow Effect */}
             {isBestSeller && <div className="thunder-visual-glow"></div>}
-        </motion.div>
+        </div>
     );
 };
 

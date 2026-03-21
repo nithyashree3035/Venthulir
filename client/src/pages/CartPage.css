@@ -99,7 +99,7 @@
 }
 
 .empty-cart p {
-    color: #888;
+    color: #555;
     margin-bottom: 24px;
 }
 
@@ -223,7 +223,7 @@
 
 .item-price {
     font-size: 14px;
-    color: #888;
+    color: #555;
     margin: 0;
 }
 
@@ -283,7 +283,7 @@
 .subtotal-label {
     display: block;
     font-size: 10px;
-    color: #999;
+    color: #555;
     text-transform: uppercase;
 }
 

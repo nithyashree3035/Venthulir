@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { useAppNavigation } from '../context/NavigationContext';
 import './MotionLayer.css';
 
@@ -38,20 +37,7 @@ const MotionLayer = () => {
             case 2:
                 return { x: outX, y: -20, scale: 0.9, zIndex: 11, opacity: 0, rotate: 25 };
             default:
-                return { x: 0, y: 0, scale: 0, opacity: 0 };
-        }
-    };
-
-    const fadeUpVariants = {
-        hidden: { opacity: 0, y: 40 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
-    };
-
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: { staggerChildren: 0.15, delayChildren: 0.1 }
+                return { x: 0, y: 0, scale: 0, zIndex: 0, opacity: 0, rotate: 0 };
         }
     };
 
@@ -105,19 +91,29 @@ const MotionLayer = () => {
                         {products.map((p, i) => {
                             // Math logic to figure out where each card sits in the 0-4 queue based on the current active item
                             const queuePos = (i - activeIndex + products.length) % products.length;
+                            const styles = getCardStyles(queuePos);
                             return (
-                                <motion.div
+                                <div
                                     key={p.id}
                                     className={`epic-stack-card ${queuePos === 0 ? 'active-salute' : ''}`}
-                                    initial={false}
-                                    animate={getCardStyles(queuePos)}
-                                    transition={{ duration: 0.9, ease: [0.25, 1, 0.4, 1] }}
+                                    style={{
+                                        position: 'absolute',
+                                        transform: `translate(${styles.x}px, ${styles.y}px) scale(${styles.scale}) rotate(${styles.rotate}deg)`,
+                                        opacity: styles.opacity,
+                                        zIndex: styles.zIndex,
+                                        transition: 'all 0.9s cubic-bezier(0.25, 1, 0.4, 1)',
+                                        cursor: 'pointer'
+                                    }}
                                     onClick={() => setActiveIndex(i)}
+                                    role="button"
+                                    aria-label={`Show ${p.name}`}
+                                    tabIndex={0}
+                                    onKeyDown={(e) => { if(e.key === 'Enter') setActiveIndex(i); }}
                                 >
                                     <div className="product-image-wrapper">
                                         <img src={p.src} alt={p.name} />
                                     </div>
-                                </motion.div>
+                                </div>
                             );
                         })}
                     </div>

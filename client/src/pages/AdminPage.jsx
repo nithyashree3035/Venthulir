@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {
     LayoutDashboard, Package, Users, ShoppingCart,
-    Image as ImageIcon, Plus, ShieldQuestion, Send,
-    LogOut, Trash2, Edit2, CheckCircle, Activity,
-    AlertTriangle, BarChart2, RefreshCw
+    Plus, ShieldQuestion, Send,
+    LogOut, Trash2, Edit2, Activity,
+    Loader2, ChevronRight, Search, Download, Trash
 } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import AdminLayout from '../layouts/AdminLayout';
@@ -428,46 +428,46 @@ function AdminPage({ onLogout }) {
         switch (activeTab) {
             case 'Dashboard':
                 return (
-                    <div>
-                        <div className="admin-stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', marginBottom: '20px' }}>
-                            <div style={{ ...cardStyle, cursor: 'pointer' }} onClick={() => setActiveTab('Orders')}>
-                                <h3>Orders</h3>
-                                <p style={statStyle}>{stats.orderCount}</p>
+                    <div className="fade-in">
+                        <div className="admin-stats-grid">
+                            <div className="stat-card" onClick={() => setActiveTab('Orders')} role="button" tabIndex="0" aria-label={`View ${stats.orderCount} Orders`}>
+                                <h3><ShoppingCart size={18} /> Orders</h3>
+                                <p className="stat-value">{stats.orderCount}</p>
                             </div>
-                            <div style={{ ...cardStyle, cursor: 'pointer' }} onClick={() => setActiveTab('All Products')}>
-                                <h3>Products</h3>
-                                <p style={statStyle}>{stats.productCount}</p>
+                            <div className="stat-card" onClick={() => setActiveTab('All Products')} role="button" tabIndex="0" aria-label={`View ${stats.productCount} Products`}>
+                                <h3><Package size={18} /> Products</h3>
+                                <p className="stat-value">{stats.productCount}</p>
                             </div>
-                            <div style={{ ...cardStyle, cursor: 'pointer' }} onClick={() => setActiveTab('Users')}>
-                                <h3>Customers</h3>
-                                <p style={statStyle}>{stats.userCount}</p>
+                            <div className="stat-card" onClick={() => setActiveTab('Users')} role="button" tabIndex="0" aria-label={`View ${stats.userCount} Customers`}>
+                                <h3><Users size={18} /> Customers</h3>
+                                <p className="stat-value">{stats.userCount}</p>
                             </div>
-                            <div style={{ ...cardStyle, cursor: 'pointer' }} onClick={() => setActiveTab('Queries')}>
-                                <h3>Unresolved Queries</h3>
-                                <p style={{ ...statStyle, color: stats.messageCount > 0 ? '#ef4444' : '#22c55e' }}>{stats.messageCount}</p>
+                            <div className="stat-card" onClick={() => setActiveTab('Queries')} role="button" tabIndex="0" aria-label={`View ${stats.messageCount} Unresolved Queries`}>
+                                <h3><ShieldQuestion size={18} /> Queries</h3>
+                                <p className="stat-value" style={{ color: stats.messageCount > 0 ? '#ef4444' : '#22c55e' }}>{stats.messageCount}</p>
                             </div>
-                            <div style={{ ...cardStyle, cursor: 'pointer', borderLeft: '4px solid #f59e0b' }} onClick={() => setActiveTab('Inventory')}>
-                                <h3>⚠ Low Stock</h3>
-                                <p style={{ ...statStyle, color: stats.lowStockCount > 0 ? '#f59e0b' : '#22c55e' }}>{stats.lowStockCount}</p>
+                            <div className="stat-card" onClick={() => setActiveTab('Inventory')} role="button" tabIndex="0" aria-label={`View ${stats.lowStockCount} Low Stock Items`} style={{ borderLeft: '4px solid #f59e0b' }}>
+                                <h3><Activity size={18} /> Low Stock</h3>
+                                <p className="stat-value" style={{ color: stats.lowStockCount > 0 ? '#f59e0b' : '#22c55e' }}>{stats.lowStockCount}</p>
                             </div>
-                            <div style={{ ...cardStyle, cursor: 'pointer', borderLeft: '4px solid #ef4444' }} onClick={() => setActiveTab('Inventory')}>
-                                <h3>🚫 Out of Stock</h3>
-                                <p style={{ ...statStyle, color: stats.outOfStockCount > 0 ? '#ef4444' : '#22c55e' }}>{stats.outOfStockCount}</p>
+                            <div className="stat-card" onClick={() => setActiveTab('Inventory')} role="button" tabIndex="0" aria-label={`View ${stats.outOfStockCount} Out of Stock Items`} style={{ borderLeft: '4px solid #ef4444' }}>
+                                <h3><Trash size={18} /> Out of Stock</h3>
+                                <p className="stat-value" style={{ color: stats.outOfStockCount > 0 ? '#ef4444' : '#22c55e' }}>{stats.outOfStockCount}</p>
                             </div>
                         </div>
                     </div>
                 );
             case 'Add Product':
                 return (
-                    <div className="admin-form-panel" style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '30px' }}>
-                        <div style={cardStyle}>
+                    <div className="admin-form-panel fade-in" style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '30px' }}>
+                        <div className="admin-card">
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px' }}>
                                 <h3 style={{ margin: 0 }}>{isEditing ? 'Edit Existing Harvest' : 'Register New Harvest'}</h3>
-                                {isEditing && <button onClick={resetForm} style={{ ...buttonStyle, marginTop: 0, padding: '8px 15px', background: '#94a3b8' }}>Cancel</button>}
+                                {isEditing && <button onClick={resetForm} className="admin-btn" style={{ background: '#94a3b8', color: '#fff' }}>Cancel</button>}
                             </div>
                             <form onSubmit={handleAddProduct} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                                 <div className="form-section">
-                                    <label style={labelStyle}>Harvest Gallery (1st slot is primary)</label>
+                                    <label className="admin-label">Harvest Gallery (1st slot is primary)</label>
                                     <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '10px' }}>
                                         {[...Array(5)].map((_, i) => (
                                             <div key={i}
@@ -477,6 +477,7 @@ function AdminPage({ onLogout }) {
                                                     display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden',
                                                     background: '#fff', position: 'relative', cursor: 'pointer'
                                                 }}
+                                                aria-label={previewUrls[i] ? `Image ${i+1}` : `Upload Image ${i+1}`}
                                             >
                                                 {previewUrls[i] ? (
                                                     <>
@@ -485,6 +486,7 @@ function AdminPage({ onLogout }) {
                                                             type="button"
                                                             onClick={(e) => removeImage(i, e)}
                                                             style={{ position: 'absolute', top: '2px', right: '2px', width: '16px', height: '16px', borderRadius: '50%', background: '#ef4444', color: '#fff', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '9px' }}
+                                                            aria-label="Remove image"
                                                         >✕</button>
                                                     </>
                                                 ) : <Plus size={16} color="#cbd5e1" />}
@@ -496,16 +498,16 @@ function AdminPage({ onLogout }) {
 
                                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '15px' }}>
                                     <div>
-                                        <label style={labelStyle}>Product Code (Auto if empty)</label>
-                                        <input type="text" style={inputStyle} placeholder="Auto-generated" value={prodForm.productCode} onChange={e => setProdForm({ ...prodForm, productCode: e.target.value })} />
+                                        <label className="admin-label">Product Code</label>
+                                        <input type="text" className="admin-input" placeholder="Auto-generated" value={prodForm.productCode} onChange={e => setProdForm({ ...prodForm, productCode: e.target.value })} />
                                     </div>
                                     <div>
-                                        <label style={labelStyle}>Name</label>
-                                        <input type="text" required style={inputStyle} value={prodForm.name} onChange={e => setProdForm({ ...prodForm, name: e.target.value })} />
+                                        <label className="admin-label">Name</label>
+                                        <input type="text" required className="admin-input" value={prodForm.name} onChange={e => setProdForm({ ...prodForm, name: e.target.value })} />
                                     </div>
                                     <div>
-                                        <label style={labelStyle}>Category</label>
-                                        <select style={inputStyle} value={prodForm.category} onChange={e => setProdForm({ ...prodForm, category: e.target.value })}>
+                                        <label className="admin-label">Category</label>
+                                        <select className="admin-input" value={prodForm.category} onChange={e => setProdForm({ ...prodForm, category: e.target.value })}>
                                             <option>General</option>
                                             <option>Spices</option>
                                             <option>Essential Oils</option>
@@ -514,8 +516,8 @@ function AdminPage({ onLogout }) {
                                         </select>
                                     </div>
                                     <div>
-                                        <label style={labelStyle}>Badge</label>
-                                        <select style={inputStyle} value={prodForm.badge} onChange={e => setProdForm({ ...prodForm, badge: e.target.value })}>
+                                        <label className="admin-label">Badge</label>
+                                        <select className="admin-input" value={prodForm.badge} onChange={e => setProdForm({ ...prodForm, badge: e.target.value })}>
                                             <option value="">None</option>
                                             <option>Best Seller</option>
                                             <option>New Arrival</option>
@@ -525,78 +527,53 @@ function AdminPage({ onLogout }) {
                                         </select>
                                     </div>
                                     <div>
-                                        <label style={labelStyle}>Initial Stock (Units) 🔒</label>
-                                        <input
-                                            type="number"
-                                            min="0"
-                                            style={inputStyle}
-                                            placeholder="e.g. 100"
-                                            value={prodForm.initialStock}
-                                            onChange={e => setProdForm({ ...prodForm, initialStock: e.target.value })}
-                                        />
+                                        <label className="admin-label">Initial Stock</label>
+                                        <input type="number" min="0" className="admin-input" value={prodForm.initialStock} onChange={e => setProdForm({ ...prodForm, initialStock: e.target.value })} />
                                     </div>
                                     <div>
-                                        <label style={labelStyle}>Shipping Charge (₹)</label>
-                                        <input
-                                            type="number"
-                                            min="0"
-                                            style={inputStyle}
-                                            placeholder="e.g. 100"
-                                            value={prodForm.shippingCharge || 0}
-                                            onChange={e => setProdForm({ ...prodForm, shippingCharge: e.target.value })}
-                                        />
+                                        <label className="admin-label">Shipping (₹)</label>
+                                        <input type="number" min="0" className="admin-input" value={prodForm.shippingCharge || 0} onChange={e => setProdForm({ ...prodForm, shippingCharge: e.target.value })} />
                                     </div>
                                     <div>
-                                        <label style={labelStyle}>MRP Illusion (₹)</label>
-                                        <input
-                                            type="number"
-                                            style={inputStyle}
-                                            placeholder="Strikethrough Price"
-                                            value={prodForm.originalPrice}
-                                            onChange={e => setProdForm({ ...prodForm, originalPrice: e.target.value })}
-                                        />
+                                        <label className="admin-label">MRP Illusion (₹)</label>
+                                        <input type="number" className="admin-input" value={prodForm.originalPrice} onChange={e => setProdForm({ ...prodForm, originalPrice: e.target.value })} />
                                     </div>
                                     <div>
-                                        <label style={labelStyle}>Discount Illusion (%)</label>
-                                        <input
-                                            type="number"
-                                            style={inputStyle}
-                                            placeholder="e.g. 30"
-                                            value={prodForm.discountPercent}
-                                            onChange={e => setProdForm({ ...prodForm, discountPercent: e.target.value })}
-                                        />
+                                        <label className="admin-label">Discount (%)</label>
+                                        <input type="number" className="admin-input" value={prodForm.discountPercent} onChange={e => setProdForm({ ...prodForm, discountPercent: e.target.value })} />
                                     </div>
                                 </div>
 
-                                <div className="variants-builder" style={{ background: '#f1f5f9', padding: '20px', borderRadius: '12px' }}>
-                                    <label style={labelStyle}>Measurements & Pricing</label>
+                                <div style={{ background: '#f1f5f9', padding: '20px', borderRadius: '12px' }}>
+                                    <label className="admin-label">Measurements & Pricing</label>
                                     <div style={{ display: 'flex', gap: '10px', marginBottom: '15px' }}>
-                                        <input type="text" placeholder="Size (50g)" style={inputStyle} value={variantInput.label} onChange={e => setVariantInput({ ...variantInput, label: e.target.value })} />
-                                        <input type="number" placeholder="Price" style={inputStyle} value={variantInput.price} onChange={e => setVariantInput({ ...variantInput, price: e.target.value })} />
-                                        <button type="button" onClick={handleAddVariant} style={{ ...buttonStyle, marginTop: 0, padding: '0 20px' }}>Add</button>
+                                        <input type="text" placeholder="Size (50g)" className="admin-input" value={variantInput.label} onChange={e => setVariantInput({ ...variantInput, label: e.target.value })} />
+                                        <input type="number" placeholder="Price" className="admin-input" value={variantInput.price} onChange={e => setVariantInput({ ...variantInput, price: e.target.value })} />
+                                        <button type="button" onClick={handleAddVariant} className="admin-btn admin-btn-primary">Add</button>
                                     </div>
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                                         {variants.map((v, i) => (
                                             <div key={i} style={{ display: 'flex', justifyContent: 'space-between', background: '#fff', padding: '10px 15px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
                                                 <strong>{v.label} - ₹{v.price}</strong>
-                                                <button type="button" onClick={() => removeVariant(i)} style={{ color: '#ef4444', border: 'none', background: 'none', cursor: 'pointer' }}>✕</button>
+                                                <button type="button" onClick={() => removeVariant(i)} style={{ color: '#ef4444', border: 'none', background: 'none', cursor: 'pointer' }} aria-label="Remove variant">✕</button>
                                             </div>
                                         ))}
                                     </div>
                                 </div>
 
                                 <div className="form-section">
-                                    <label style={labelStyle}>Public Description (Justified Layout)</label>
+                                    <label className="admin-label">Public Description</label>
                                     <textarea
                                         required
-                                        style={{ ...inputStyle, height: '140px', resize: 'vertical', textAlign: 'justify' }}
+                                        className="admin-input"
+                                        style={{ height: '140px', resize: 'vertical' }}
                                         value={prodForm.description}
                                         onChange={e => setProdForm({ ...prodForm, description: e.target.value })}
                                         placeholder="Enter the royal description..."
                                     ></textarea>
                                 </div>
-                                <button type="submit" disabled={isUploading} style={{ ...buttonStyle, width: '100%' }}>
-                                    {isUploading ? 'Securing Data...' : (isEditing ? 'Update Records' : 'Publish Harvest')}
+                                <button type="submit" disabled={isUploading} className="admin-btn admin-btn-primary" style={{ width: '100%' }}>
+                                    {isUploading ? <><Loader2 size={18} className="spin" /> Securing Data...</> : (isEditing ? 'Update Records' : 'Publish Harvest')}
                                 </button>
                             </form>
                         </div>
@@ -610,318 +587,33 @@ function AdminPage({ onLogout }) {
                 );
             case 'Users':
                 return (
-                    <div style={cardStyle}>
+                    <div className="admin-card fade-in">
                         <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
-                        <table style={tableStyle}>
-                            <thead>
-                                <tr>
-                                    <th style={thStyle}>Customer</th>
-                                    <th style={thStyle}>Contact</th>
-                                    <th style={thStyle}>Delivery Address</th>
-                                    <th style={thStyle}>Joined</th>
-                                    <th style={thStyle}>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {users.map(u => (
-                                    <tr key={u._id} style={trStyle}>
-                                        <td style={tdStyle}><strong>{u.name}</strong></td>
-                                        <td style={tdStyle}>{u.email}<br /><small>{u.phone}</small></td>
-                                        <td style={tdStyle}>
-                                            <span style={{ fontSize: '0.85rem', color: '#64748b' }}>
-                                                {u.deliveryAddress?.address ? `${u.deliveryAddress.address}, ${u.deliveryAddress.city}, ${u.deliveryAddress.state} ${u.deliveryAddress.zipCode}` : 'Not Provided'}
-                                            </span>
-                                        </td>
-                                        <td style={tdStyle}>{new Date(u.createdAt).toLocaleDateString()}</td>
-                                        <td style={tdStyle}>
-                                            <button onClick={() => handleDeleteUser(u._id)} style={{ color: '#ef4444', background: 'none', border: 'none', cursor: 'pointer' }} title="Delete Customer">
-                                                <Trash2 size={16} />
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        </div>
-                    </div>
-                );
-            case 'Inventory':
-                return (
-                    <div>
-                        {/* Summary Cards */}
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px', marginBottom: '24px' }}>
-                            <div style={{ ...cardStyle, borderLeft: '4px solid #0b3d2e', textAlign: 'center' }}>
-                                <div style={{ fontSize: '12px', color: '#64748b', textTransform: 'uppercase', letterSpacing: '1px' }}>Total Products</div>
-                                <div style={{ fontSize: '32px', fontWeight: 800, color: '#0b3d2e' }}>{inventory.totalProducts}</div>
-                            </div>
-                            <div style={{ ...cardStyle, borderLeft: '4px solid #3b82f6', textAlign: 'center' }}>
-                                <div style={{ fontSize: '12px', color: '#64748b', textTransform: 'uppercase', letterSpacing: '1px' }}>Total Units In Stock</div>
-                                <div style={{ fontSize: '32px', fontWeight: 800, color: '#3b82f6' }}>{inventory.totalStock}</div>
-                            </div>
-                            <div style={{ ...cardStyle, borderLeft: '4px solid #f59e0b', textAlign: 'center' }}>
-                                <div style={{ fontSize: '12px', color: '#64748b', textTransform: 'uppercase', letterSpacing: '1px' }}>⚠ Low Stock (&lt;10)</div>
-                                <div style={{ fontSize: '32px', fontWeight: 800, color: '#f59e0b' }}>{inventory.lowStockProducts?.length || 0}</div>
-                            </div>
-                            <div style={{ ...cardStyle, borderLeft: '4px solid #ef4444', textAlign: 'center' }}>
-                                <div style={{ fontSize: '12px', color: '#64748b', textTransform: 'uppercase', letterSpacing: '1px' }}>🚫 Out of Stock</div>
-                                <div style={{ fontSize: '32px', fontWeight: 800, color: '#ef4444' }}>{inventory.outOfStockProducts?.length || 0}</div>
-                            </div>
-                        </div>
-                        {/* All Products Stock Table */}
-                        <div style={cardStyle}>
-                            <h3 style={{ marginBottom: 16 }}>Product Stock Levels</h3>
-                            <table style={tableStyle}>
+                            <table className="admin-table">
                                 <thead>
                                     <tr>
-                                        <th style={thStyle}>Product</th>
-                                        <th style={thStyle}>Code</th>
-                                        <th style={thStyle}>Category</th>
-                                        <th style={thStyle}>Initial Stock</th>
-                                        <th style={thStyle}>Current Stock</th>
-                                        <th style={thStyle}>Status</th>
-                                        <th style={thStyle}>Restock</th>
+                                        <th>Customer</th>
+                                        <th>Contact</th>
+                                        <th>Delivery Address</th>
+                                        <th>Joined</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {inventory.allProducts?.map(p => {
-                                        const isOut = p.currentStock === 0;
-                                        const isLow = !isOut && p.currentStock < 10;
-                                        return (
-                                            <tr key={p._id} style={{ ...trStyle, background: isOut ? '#fff5f5' : isLow ? '#fffbeb' : '#fff' }}>
-                                                <td style={tdStyle}>
-                                                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                                                        <img src={p.imageUrl} alt="" style={{ width: 36, height: 36, borderRadius: 6, objectFit: 'cover' }} />
-                                                        <strong>{p.name}</strong>
-                                                    </div>
-                                                </td>
-                                                <td style={tdStyle}>
-                                                    <span style={{ fontFamily: 'monospace', background: '#f0fdf4', color: '#166534', padding: '2px 6px', borderRadius: 4, fontSize: 12, fontWeight: 700, border: '1px solid #86efac' }}>
-                                                        {p.productCode || '—'}
-                                                    </span>
-                                                </td>
-                                                <td style={tdStyle}>{p.category}</td>
-                                                <td style={tdStyle}>{p.initialStock}</td>
-                                                <td style={{ ...tdStyle, fontWeight: 800, color: isOut ? '#ef4444' : isLow ? '#f59e0b' : '#0b3d2e' }}>
-                                                    {p.currentStock}
-                                                </td>
-                                                <td style={tdStyle}>
-                                                    {isOut ? <span style={{ background: '#fee2e2', color: '#ef4444', padding: '3px 8px', borderRadius: 4, fontSize: 11, fontWeight: 800 }}>OUT OF STOCK</span>
-                                                        : isLow ? <span style={{ background: '#fef3c7', color: '#d97706', padding: '3px 8px', borderRadius: 4, fontSize: 11, fontWeight: 800 }}>LOW STOCK</span>
-                                                            : <span style={{ background: '#dcfce7', color: '#166534', padding: '3px 8px', borderRadius: 4, fontSize: 11, fontWeight: 800 }}>IN STOCK</span>}
-                                                </td>
-                                                <td style={tdStyle}>
-                                                    <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-                                                        <input
-                                                            type="number" min="1"
-                                                            placeholder="Qty"
-                                                            style={{ width: 60, padding: '6px 8px', border: '1px solid #e2e8f0', borderRadius: 6, fontSize: 13 }}
-                                                            value={restockInputs[p._id] || ''}
-                                                            onChange={e => setRestockInputs(prev => ({ ...prev, [p._id]: e.target.value }))}
-                                                        />
-                                                        <button
-                                                            onClick={() => handleRestock(p._id)}
-                                                            style={{ padding: '6px 10px', background: '#0b3d2e', color: '#fff', border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 12, fontWeight: 700 }}
-                                                        >+ Add</button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                );
-            case 'Orders':
-                return (
-                    <div style={cardStyle}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '15px' }}>
-                            <div style={{ display: 'flex', gap: '15px', alignItems: 'center', flexWrap: 'wrap' }}>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                                    <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#64748b' }}>Start Date</label>
-                                    <input type="date" value={orderStartDate} onChange={(e) => setOrderStartDate(e.target.value)} style={{ padding: '8px 12px', borderRadius: '6px', border: '1px solid #e2e8f0' }} />
-                                </div>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                                    <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#64748b' }}>End Date</label>
-                                    <input type="date" value={orderEndDate} onChange={(e) => setOrderEndDate(e.target.value)} style={{ padding: '8px 12px', borderRadius: '6px', border: '1px solid #e2e8f0' }} />
-                                </div>
-                                <div style={{ alignSelf: 'flex-end', paddingBottom: '2px' }}>
-                                    <button onClick={() => { setOrderStartDate(''); setOrderEndDate(''); }} style={{ padding: '8px 12px', borderRadius: '6px', border: '1px solid #e2e8f0', background: '#f8fafc', cursor: 'pointer', fontWeight: 'bold', color: '#475569' }}>
-                                        Clear Filter
-                                    </button>
-                                </div>
-                            </div>
-                            <button onClick={exportOrdersToCSV} style={{ padding: '10px 16px', background: '#10b981', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', display: 'flex', gap: '8px', alignItems: 'center' }}>
-                                Download Excel (CSV)
-                            </button>
-                        </div>
-                        <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
-                        <table style={tableStyle}>
-                            <thead>
-                                <tr>
-                                    <th style={thStyle}>Date</th>
-                                    <th style={thStyle}>Customer Info</th>
-                                    <th style={thStyle}>Delivery Details</th>
-                                    <th style={thStyle}>Order Summary</th>
-                                    <th style={thStyle}>Status</th>
-                                    <th style={thStyle}>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {getFilteredOrders().map(o => (
-                                    <tr key={o._id} style={trStyle}>
-                                        <td style={tdStyle}>
-                                            <strong>{new Date(o.createdAt).toLocaleDateString()}</strong><br />
-                                            <small style={{ color: '#64748b' }}>{new Date(o.createdAt).toLocaleTimeString()}</small>
-                                        </td>
-                                        <td style={tdStyle}>
-                                            <strong style={{ color: '#0b3d2e' }}>{o.customerName}</strong><br />
-                                            <a href={`mailto:${o.customerEmail}`} style={{ fontSize: '12px', color: '#3b82f6', textDecoration: 'none' }}>{o.customerEmail}</a><br />
-                                            <small style={{ fontWeight: 'bold' }}>📞 {o.phone || 'N/A'}</small>
-                                        </td>
-                                        <td style={tdStyle}>
-                                            {o.deliveryAddress ? (
-                                                <div style={{ fontSize: '12px', color: '#475569', maxWidth: '200px' }}>
-                                                    {o.deliveryAddress.address},<br />
-                                                    {o.deliveryAddress.city}, {o.deliveryAddress.state} - {o.deliveryAddress.zipCode}
-                                                </div>
-                                            ) : (
-                                                <span style={{ color: '#ef4444', fontSize: '12px' }}>Not Provided</span>
-                                            )}
-                                        </td>
-                                        <td style={tdStyle}>
-                                            <div style={{ fontSize: '11px', color: '#64748b', marginBottom: '8px' }}>
-                                                {o.items?.map((item, idx) => (
-                                                    <div key={idx} style={{ marginBottom: '2px' }}>• {item.quantity}x {item.name} {item.variant ? `(${item.variant})` : ''}</div>
-                                                ))}
-                                            </div>
-                                            <div style={{ background: '#f8fafc', padding: '6px', borderRadius: '6px', fontSize: '12px' }}>
-                                                <div style={{ display: 'flex', justifyContent: 'space-between', color: '#475569' }}>
-                                                    <span>Subtotal:</span>
-                                                    <span>₹{o.originalAmount ? o.originalAmount : o.totalAmount}</span>
-                                                </div>
-                                                {(o.shippingCharge || 0) > 0 && (
-                                                    <div style={{ display: 'flex', justifyContent: 'space-between', color: '#475569', marginTop: '2px' }}>
-                                                        <span>Shipping:</span>
-                                                        <span>+ ₹{o.shippingCharge}</span>
-                                                    </div>
-                                                )}
-                                                {o.discountAmount > 0 && (
-                                                    <div style={{ display: 'flex', justifyContent: 'space-between', color: '#166534', marginTop: '2px' }}>
-                                                        <span>Discount ({o.couponUsed}):</span>
-                                                        <span>- ₹{o.discountAmount}</span>
-                                                    </div>
-                                                )}
-                                                <div style={{ display: 'flex', justifyContent: 'space-between', color: '#0b3d2e', fontWeight: '900', marginTop: '4px', borderTop: '1px solid #e2e8f0', paddingTop: '4px' }}>
-                                                    <span>Total:</span>
-                                                    <span>₹{o.totalAmount}</span>
-                                                </div>
-                                            </div>
-                                            <div style={{ marginTop: '8px', fontSize: '11px', fontWeight: 'bold', color: '#d4af37', background: '#fdfcf7', padding: '2px 6px', borderRadius: '4px', display: 'inline-block', border: '1px solid #f0ede0' }}>
-                                                {o.paymentMethod || 'Cash on Delivery'}
-                                            </div>
-                                        </td>
-                                        <td style={tdStyle}>
-                                            <select
-                                                value={o.status}
-                                                onChange={e => handleUpdateOrderStatus(o._id, e.target.value)}
-                                                style={{
-                                                    padding: '4px 8px', borderRadius: '6px', border: '1px solid #e2e8f0',
-                                                    fontSize: '12px', fontWeight: '700', cursor: 'pointer',
-                                                    background: o.status === 'Cancelled' ? '#fee2e2' : o.status === 'Delivered' ? '#dcfce7' : o.status === 'Returned' ? '#fef3c7' : '#f1f5f9',
-                                                    color: o.status === 'Cancelled' ? '#ef4444' : o.status === 'Delivered' ? '#166534' : o.status === 'Returned' ? '#d97706' : '#475569'
-                                                }}
-                                            >
-                                                {['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled', 'Returned'].map(s => (
-                                                    <option key={s} value={s}>{s}</option>
-                                                ))}
-                                            </select>
-                                        </td>
-                                        <td style={tdStyle}>
-                                            <button onClick={() => handleDeleteOrder(o._id)} style={{ color: '#ef4444', background: 'none', border: 'none', cursor: 'pointer' }} title="Delete Order">
-                                                <Trash2 size={16} />
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        </div>
-                    </div>
-                );
-            case 'Coupons':
-                return (
-                    <div className="admin-form-panel" style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '30px' }}>
-                        <div style={cardStyle}>
-                            <h3 style={{ marginBottom: '20px' }}>Generate Coupon</h3>
-                            <form onSubmit={handleAddCoupon} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                                <div>
-                                    <label style={labelStyle}>Coupon Code</label>
-                                    <input required type="text" style={inputStyle} value={couponForm.couponCode} onChange={e => setCouponForm({ ...couponForm, couponCode: e.target.value })} placeholder="e.g. SUMMER25" />
-                                </div>
-                                <div>
-                                    <label style={labelStyle}>Target Product (Optional)</label>
-                                    <select style={inputStyle} value={couponForm.productId} onChange={e => setCouponForm({ ...couponForm, productId: e.target.value })}>
-                                        <option value="">-- Apply to Generic Cart --</option>
-                                        {products.map(p => <option key={p._id} value={p._id}>{p.name} {p.productCode ? `(${p.productCode})` : ''}</option>)}
-                                    </select>
-                                </div>
-                                <div>
-                                    <label style={labelStyle}>Max Uses</label>
-                                    <input required type="number" style={inputStyle} value={couponForm.maxUses} onChange={e => setCouponForm({ ...couponForm, maxUses: e.target.value })} />
-                                </div>
-                                <div>
-                                    <label style={labelStyle}>Discount %</label>
-                                    <input required type="number" min="1" max="100" style={inputStyle} value={couponForm.discountPercentage} onChange={e => setCouponForm({ ...couponForm, discountPercentage: e.target.value })} />
-                                </div>
-                                <div>
-                                    <label style={labelStyle}>Expiry Date</label>
-                                    <input required type="date" style={inputStyle} value={couponForm.expiryDate} onChange={e => setCouponForm({ ...couponForm, expiryDate: e.target.value })} />
-                                </div>
-                                <button type="submit" style={buttonStyle}>{isEditingCoupon ? 'Update Coupon' : 'Save Coupon'}</button>
-                                {isEditingCoupon && (
-                                    <button type="button" onClick={() => { setIsEditingCoupon(false); setEditingCouponId(null); setCouponForm({ couponCode: '', productId: '', maxUses: 25, expiryDate: '', discountPercentage: 10, status: 'Active' }); }} style={{ ...buttonStyle, background: '#64748b', marginTop: '8px' }}>Cancel Edit</button>
-                                )}
-                            </form>
-                        </div>
-                        <div style={cardStyle}>
-                            <h3 style={{ marginBottom: '20px' }}>Active Coupons</h3>
-                            <table style={tableStyle}>
-                                <thead>
-                                    <tr>
-                                        <th style={thStyle}>Code</th>
-                                        <th style={thStyle}>Discount</th>
-                                        <th style={thStyle}>Uses</th>
-                                        <th style={thStyle}>Expires</th>
-                                        <th style={thStyle}>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {coupons.length === 0 && (
-                                        <tr>
-                                            <td colSpan="5" style={{ ...tdStyle, textAlign: 'center', padding: '40px', color: '#94a3b8' }}>
-                                                No coupons generated yet. Start by creating one on the left.
+                                    {users.map(u => (
+                                        <tr key={u._id}>
+                                            <td><strong>{u.name}</strong></td>
+                                            <td>{u.email}<br /><small>{u.phone}</small></td>
+                                            <td>
+                                                <span style={{ fontSize: '0.85rem', color: '#64748b' }}>
+                                                    {u.deliveryAddress?.address ? `${u.deliveryAddress.address}, ${u.deliveryAddress.city}, ${u.deliveryAddress.state} ${u.deliveryAddress.zipCode}` : 'Not Provided'}
+                                                </span>
                                             </td>
-                                        </tr>
-                                    )}
-                                    {coupons.map(c => (
-                                        <tr key={c._id} style={trStyle}>
-                                            <td style={tdStyle}>
-                                                <strong>{c.couponCode}</strong>
-                                                {c.productId && (
-                                                    <div style={{ fontSize: '10px', color: '#64748b', marginTop: '4px' }}>
-                                                        Applied to: <strong>{c.productId.productCode || '—'}</strong>
-                                                    </div>
-                                                )}
-                                            </td>
-                                            <td style={tdStyle}>{c.discountPercentage}%</td>
-                                            <td style={tdStyle}>{c.usedCount} / {c.maxUses}</td>
-                                            <td style={tdStyle}>{new Date(c.expiryDate).toLocaleDateString()}</td>
-                                            <td style={tdStyle}>
-                                                <div style={{ display: 'flex', gap: '6px' }}>
-                                                    <button onClick={() => handleEditCoupon(c)} style={{ padding: '4px 8px', background: '#0b3d2e', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' }}>Edit</button>
-                                                    <button onClick={() => handleDeleteCoupon(c._id)} style={{ padding: '4px 8px', background: '#ef4444', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' }}>Delete</button>
-                                                </div>
+                                            <td>{new Date(u.createdAt).toLocaleDateString()}</td>
+                                            <td>
+                                                <button onClick={() => handleDeleteUser(u._id)} className="admin-btn admin-btn-danger" style={{ padding: '8px' }} aria-label={`Delete customer ${u.name}`}>
+                                                    <Trash2 size={16} />
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}
@@ -930,40 +622,331 @@ function AdminPage({ onLogout }) {
                         </div>
                     </div>
                 );
+            case 'Inventory':
+                return (
+                    <div className="fade-in">
+                        <div className="admin-stats-grid">
+                            <div className="stat-card" style={{ borderLeft: '4px solid #0b3d2e' }}>
+                                <h3>Total Products</h3>
+                                <p className="stat-value">{inventory.totalProducts}</p>
+                            </div>
+                            <div className="stat-card" style={{ borderLeft: '4px solid #3b82f6' }}>
+                                <h3>Units In Stock</h3>
+                                <p className="stat-value" style={{ color: '#3b82f6' }}>{inventory.totalStock}</p>
+                            </div>
+                            <div className="stat-card" style={{ borderLeft: '4px solid #f59e0b' }}>
+                                <h3>Low Stock (&lt;10)</h3>
+                                <p className="stat-value" style={{ color: '#f59e0b' }}>{inventory.lowStockProducts?.length || 0}</p>
+                            </div>
+                            <div className="stat-card" style={{ borderLeft: '4px solid #ef4444' }}>
+                                <h3>Out of Stock</h3>
+                                <p className="stat-value" style={{ color: '#ef4444' }}>{inventory.outOfStockProducts?.length || 0}</p>
+                            </div>
+                        </div>
+                        <div className="admin-card">
+                            <h3 style={{ marginBottom: 16 }}>Product Stock Levels</h3>
+                            <div style={{ overflowX: 'auto' }}>
+                                <table className="admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Code</th>
+                                            <th>Category</th>
+                                            <th>Initial</th>
+                                            <th>Current</th>
+                                            <th>Status</th>
+                                            <th>Restock</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {inventory.allProducts?.map(p => {
+                                            const isOut = p.currentStock === 0;
+                                            const isLow = !isOut && p.currentStock < 10;
+                                            return (
+                                                <tr key={p._id} style={{ background: isOut ? '#fff5f5' : isLow ? '#fffbeb' : 'inherit' }}>
+                                                    <td>
+                                                        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                                                            <img src={p.imageUrl} alt="" style={{ width: 36, height: 36, borderRadius: 6, objectFit: 'cover' }} />
+                                                            <strong>{p.name}</strong>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <span className="admin-badge" style={{ background: '#f0fdf4', color: '#166534', border: '1px solid #86efac' }}>
+                                                            {p.productCode || '—'}
+                                                        </span>
+                                                    </td>
+                                                    <td>{p.category}</td>
+                                                    <td>{p.initialStock}</td>
+                                                    <td style={{ fontWeight: 800, color: isOut ? '#ef4444' : isLow ? '#f59e0b' : '#0b3d2e' }}>
+                                                        {p.currentStock}
+                                                    </td>
+                                                    <td>
+                                                        {isOut ? <span className="admin-badge" style={{ background: '#fee2e2', color: '#ef4444' }}>OUT OF STOCK</span>
+                                                            : isLow ? <span className="admin-badge" style={{ background: '#fef3c7', color: '#d97706' }}>LOW STOCK</span>
+                                                                : <span className="admin-badge" style={{ background: '#dcfce7', color: '#166534' }}>IN STOCK</span>}
+                                                    </td>
+                                                    <td>
+                                                        <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+                                                            <input
+                                                                type="number" min="1"
+                                                                placeholder="Qty"
+                                                                className="admin-input"
+                                                                style={{ width: 70, padding: '6px 8px' }}
+                                                                value={restockInputs[p._id] || ''}
+                                                                onChange={e => setRestockInputs(prev => ({ ...prev, [p._id]: e.target.value }))}
+                                                                aria-label="Restock quantity"
+                                                            />
+                                                            <button
+                                                                onClick={() => handleRestock(p._id)}
+                                                                className="admin-btn admin-btn-primary"
+                                                                style={{ padding: '6px 12px', fontSize: '12px' }}
+                                                                aria-label="Add stock"
+                                                            >+ Add</button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                );
+            case 'Orders':
+                return (
+                    <div className="admin-card fade-in">
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px', flexWrap: 'wrap', gap: '20px' }}>
+                            <div style={{ display: 'flex', gap: '15px', alignItems: 'flex-end', flexWrap: 'wrap' }}>
+                                <div>
+                                    <label className="admin-label">Start Date</label>
+                                    <input type="date" className="admin-input" value={orderStartDate} onChange={(e) => setOrderStartDate(e.target.value)} />
+                                </div>
+                                <div>
+                                    <label className="admin-label">End Date</label>
+                                    <input type="date" className="admin-input" value={orderEndDate} onChange={(e) => setOrderEndDate(e.target.value)} />
+                                </div>
+                                <button onClick={() => { setOrderStartDate(''); setOrderEndDate(''); }} className="admin-btn" style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: '#475569' }}>
+                                    Clear
+                                </button>
+                            </div>
+                            <button onClick={exportOrdersToCSV} className="admin-btn" style={{ background: '#10b981', color: 'white' }}>
+                                <Download size={18} /> Export CSV
+                            </button>
+                        </div>
+                        <div style={{ overflowX: 'auto' }}>
+                            <table className="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Customer</th>
+                                        <th>Delivery</th>
+                                        <th>Summary</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {getFilteredOrders().map(o => (
+                                        <tr key={o._id}>
+                                            <td>
+                                                <strong>{new Date(o.createdAt).toLocaleDateString()}</strong><br />
+                                                <small style={{ color: '#64748b' }}>{new Date(o.createdAt).toLocaleTimeString()}</small>
+                                            </td>
+                                            <td>
+                                                <strong style={{ color: '#0b3d2e' }}>{o.customerName}</strong><br />
+                                                <a href={`mailto:${o.customerEmail}`} style={{ fontSize: '12px', color: '#3b82f6', textDecoration: 'none' }}>{o.customerEmail}</a><br />
+                                                <small style={{ fontWeight: 'bold' }}>📞 {o.phone || 'N/A'}</small>
+                                            </td>
+                                            <td>
+                                                {o.deliveryAddress ? (
+                                                    <div style={{ fontSize: '12px', color: '#475569', maxWidth: '200px' }}>
+                                                        {o.deliveryAddress.address},<br />
+                                                        {o.deliveryAddress.city}, {o.deliveryAddress.state} - {o.deliveryAddress.zipCode}
+                                                    </div>
+                                                ) : <span style={{ color: '#ef4444', fontSize: '12px' }}>Not Provided</span>}
+                                            </td>
+                                            <td>
+                                                <div style={{ fontSize: '11px', color: '#64748b', marginBottom: '8px' }}>
+                                                    {o.items?.map((item, idx) => (
+                                                        <div key={idx}>• {item.quantity}x {item.name} {item.variant ? `(${item.variant})` : ''}</div>
+                                                    ))}
+                                                </div>
+                                                <div style={{ background: '#f8fafc', padding: '10px', borderRadius: '8px', fontSize: '12px', border: '1px solid #e2e8f0' }}>
+                                                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                        <span>Subtotal:</span>
+                                                        <span>₹{o.originalAmount ? o.originalAmount : o.totalAmount}</span>
+                                                    </div>
+                                                    {(o.shippingCharge || 0) > 0 && (
+                                                        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '2px' }}>
+                                                            <span>Shipping:</span>
+                                                            <span>+ ₹{o.shippingCharge}</span>
+                                                        </div>
+                                                    )}
+                                                    {o.discountAmount > 0 && (
+                                                        <div style={{ display: 'flex', justifyContent: 'space-between', color: '#166534', marginTop: '2px' }}>
+                                                            <span>Discount:</span>
+                                                            <span>- ₹{o.discountAmount}</span>
+                                                        </div>
+                                                    )}
+                                                    <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: '900', marginTop: '4px', borderTop: '1px solid #e2e8f0', paddingTop: '4px' }}>
+                                                        <span>Total:</span>
+                                                        <span>₹{o.totalAmount}</span>
+                                                    </div>
+                                                </div>
+                                                <div className="admin-badge" style={{ marginTop: '8px', background: '#fdfcf7', border: '1px solid #f0ede0', color: '#d4af37' }}>
+                                                    {o.paymentMethod || 'COD'}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <select
+                                                    value={o.status}
+                                                    onChange={e => handleUpdateOrderStatus(o._id, e.target.value)}
+                                                    className="admin-input"
+                                                    style={{
+                                                        padding: '6px 10px', width: 'auto',
+                                                        background: o.status === 'Cancelled' ? '#fee2e2' : o.status === 'Delivered' ? '#dcfce7' : o.status === 'Returned' ? '#fef3c7' : '#f1f5f9',
+                                                        color: o.status === 'Cancelled' ? '#ef4444' : o.status === 'Delivered' ? '#166534' : o.status === 'Returned' ? '#d97706' : '#475569',
+                                                        fontWeight: 'bold', border: 'none'
+                                                    }}
+                                                    aria-label="Order Status"
+                                                >
+                                                    {['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled', 'Returned'].map(s => (
+                                                        <option key={s} value={s}>{s}</option>
+                                                    ))}
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <button onClick={() => handleDeleteOrder(o._id)} className="admin-btn admin-btn-danger" style={{ padding: '8px' }} aria-label="Delete order">
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                );
+            case 'Coupons':
+                return (
+                    <div className="admin-form-panel fade-in" style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '30px' }}>
+                        <div className="admin-card">
+                            <h3 style={{ marginBottom: '20px' }}>Generate Coupon</h3>
+                            <form onSubmit={handleAddCoupon} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                                <div>
+                                    <label className="admin-label">Coupon Code</label>
+                                    <input required type="text" className="admin-input" value={couponForm.couponCode} onChange={e => setCouponForm({ ...couponForm, couponCode: e.target.value })} placeholder="e.g. SUMMER25" />
+                                </div>
+                                <div>
+                                    <label className="admin-label">Target Product (Optional)</label>
+                                    <select className="admin-input" value={couponForm.productId} onChange={e => setCouponForm({ ...couponForm, productId: e.target.value })}>
+                                        <option value="">-- Apply to Generic Cart --</option>
+                                        {products.map(p => <option key={p._id} value={p._id}>{p.name} {p.productCode ? `(${p.productCode})` : ''}</option>)}
+                                    </select>
+                                </div>
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+                                    <div>
+                                        <label className="admin-label">Max Uses</label>
+                                        <input required type="number" className="admin-input" value={couponForm.maxUses} onChange={e => setCouponForm({ ...couponForm, maxUses: e.target.value })} />
+                                    </div>
+                                    <div>
+                                        <label className="admin-label">Discount %</label>
+                                        <input required type="number" min="1" max="100" className="admin-input" value={couponForm.discountPercentage} onChange={e => setCouponForm({ ...couponForm, discountPercentage: e.target.value })} />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="admin-label">Expiry Date</label>
+                                    <input required type="date" className="admin-input" value={couponForm.expiryDate} onChange={e => setCouponForm({ ...couponForm, expiryDate: e.target.value })} />
+                                </div>
+                                <button type="submit" className="admin-btn admin-btn-primary" style={{ width: '100%' }}>{isEditingCoupon ? 'Update Coupon' : 'Save Coupon'}</button>
+                                {isEditingCoupon && (
+                                    <button type="button" onClick={() => { setIsEditingCoupon(false); setEditingCouponId(null); setCouponForm({ couponCode: '', productId: '', maxUses: 25, expiryDate: '', discountPercentage: 10, status: 'Active' }); }} className="admin-btn" style={{ background: '#64748b', color: '#fff', marginTop: '8px' }}>Cancel Edit</button>
+                                )}
+                            </form>
+                        </div>
+                        <div className="admin-card">
+                            <h3 style={{ marginBottom: '20px' }}>Active Coupons</h3>
+                            <div style={{ overflowX: 'auto' }}>
+                                <table className="admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Discount</th>
+                                            <th>Uses</th>
+                                            <th>Expires</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {coupons.length === 0 ? (
+                                            <tr>
+                                                <td colSpan="5" style={{ textAlign: 'center', padding: '40px', color: '#94a3b8' }}>
+                                                    No coupons generated yet. Start by creating one on the left.
+                                                </td>
+                                            </tr>
+                                        ) : coupons.map(c => (
+                                            <tr key={c._id}>
+                                                <td>
+                                                    <strong>{c.couponCode}</strong>
+                                                    {c.productId && (
+                                                        <div style={{ fontSize: '10px', color: '#64748b', marginTop: '4px' }}>
+                                                            Applied to: <strong>{c.productId.productCode || '—'}</strong>
+                                                        </div>
+                                                    )}
+                                                </td>
+                                                <td>{c.discountPercentage}%</td>
+                                                <td>{c.usedCount} / {c.maxUses}</td>
+                                                <td>{new Date(c.expiryDate).toLocaleDateString()}</td>
+                                                <td>
+                                                    <div style={{ display: 'flex', gap: '6px' }}>
+                                                        <button onClick={() => handleEditCoupon(c)} className="admin-btn admin-btn-primary" style={{ padding: '6px 12px', fontSize: '12px' }} aria-label="Edit coupon">Edit</button>
+                                                        <button onClick={() => handleDeleteCoupon(c._id)} className="admin-btn admin-btn-danger" style={{ padding: '6px 12px', fontSize: '12px' }} aria-label="Delete coupon">Delete</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                );
             case 'Queries':
                 return (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                        {messages.length === 0 && (
-                            <div style={{ ...cardStyle, textAlign: 'center', padding: '60px', color: '#94a3b8' }}>
+                    <div className="fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                        {messages.length === 0 ? (
+                            <div className="admin-card" style={{ textAlign: 'center', padding: '60px', color: '#94a3b8' }}>
                                 <ShieldQuestion size={48} style={{ margin: '0 auto 15px', display: 'block' }} />
                                 <p>No customer messages or support queries found. All clear!</p>
                             </div>
-                        )}
-                        {messages.map(m => (
-                            <div key={m._id} style={{ ...cardStyle, borderLeft: m.status === 'Open' ? '5px solid #d4af37' : '5px solid #e2e8f0' }}>
+                        ) : messages.map(m => (
+                            <div key={m._id} className="admin-card" style={{ borderLeft: m.status === 'Open' ? '5px solid #d4af37' : '5px solid #e2e8f0' }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '15px' }}>
                                     <div>
                                         <h4 style={{ margin: 0 }}>{m.customerName}</h4>
                                         <small>{m.customerEmail} • {new Date(m.createdAt).toLocaleDateString()}</small>
                                     </div>
-                                    <span style={{ fontSize: '12px', fontWeight: 'bold', color: m.status === 'Open' ? '#d4af37' : '#94a3b8' }}>{m.status.toUpperCase()}</span>
+                                    <span className="admin-badge" style={{ color: m.status === 'Open' ? '#d4af37' : '#94a3b8' }}>{m.status.toUpperCase()}</span>
                                 </div>
-                                <p style={{ fontStyle: 'italic', background: '#f8fafc', padding: '15px', borderRadius: '8px', color: '#475569' }}>"{m.message}"</p>
+                                <p style={{ fontStyle: 'italic', background: '#f8fafc', padding: '15px', borderRadius: '8px', color: '#475569', border: '1px solid #e2e8f0' }}>"{m.message}"</p>
                                 {m.status === 'Open' ? (
                                     <div style={{ marginTop: '20px' }}>
                                         <textarea
                                             placeholder="Write reply..."
-                                            style={{ ...inputStyle, minHeight: '80px', marginBottom: '10px' }}
+                                            className="admin-input"
+                                            style={{ minHeight: '80px', marginBottom: '10px' }}
                                             value={replyTexts[m._id] || ''}
                                             onChange={e => setReplyTexts({ ...replyTexts, [m._id]: e.target.value })}
+                                            aria-label="Reply message"
                                         />
                                         <button
-                                            className="action-btn"
                                             disabled={isResolving[m._id]}
                                             onClick={() => handleResolveMessage(m._id)}
-                                            style={{ ...buttonStyle, background: '#0b3d2e', color: '#d4af37' }}
+                                            className="admin-btn admin-btn-primary"
+                                            style={{ color: '#d4af37' }}
                                         >
-                                            {isResolving[m._id] ? 'Sending...' : 'Respond & Resolve'}
+                                            {isResolving[m._id] ? <><Loader2 size={16} className="spin" /> Sending...</> : 'Respond & Resolve'}
                                         </button>
                                     </div>
                                 ) : (
@@ -977,64 +960,68 @@ function AdminPage({ onLogout }) {
                 );
             case 'Activity':
                 return (
-                    <div style={cardStyle}>
-                        <table style={tableStyle}>
-                            <thead>
-                                <tr>
-                                    <th style={thStyle}>Time</th>
-                                    <th style={thStyle}>User</th>
-                                    <th style={thStyle}>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {activityLogs.map((log, i) => (
-                                    <tr key={i} style={trStyle}>
-                                        <td style={tdStyle}>{new Date(log.timestamp).toLocaleTimeString()}</td>
-                                        <td style={tdStyle}>{log.userName}</td>
-                                        <td style={tdStyle}><code style={{ background: '#f1f5f9', padding: '2px 6px', borderRadius: '4px' }}>{log.action}</code></td>
+                    <div className="admin-card fade-in">
+                        <div style={{ overflowX: 'auto' }}>
+                            <table className="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>User</th>
+                                        <th>Action</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {activityLogs.map((log, i) => (
+                                        <tr key={i}>
+                                            <td>{new Date(log.timestamp).toLocaleTimeString()}</td>
+                                            <td>{log.userName}</td>
+                                            <td><code style={{ background: '#f1f5f9', padding: '2px 8px', borderRadius: '6px', fontSize: '12px' }}>{log.action}</code></td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 );
             case 'All Products':
                 return (
-                    <div style={cardStyle}>
-                        <table style={tableStyle}>
-                            <thead>
-                                <tr>
-                                    <th style={thStyle}>Product</th>
-                                    <th style={thStyle}>Product Code</th>
-                                    <th style={thStyle}>Price</th>
-                                    <th style={thStyle}>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {products.map(p => (
-                                    <tr key={p._id} style={trStyle}>
-                                        <td style={tdStyle}>
-                                            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                                                <img src={p.imageUrl} alt="" style={{ width: '40px', height: '40px', borderRadius: '4px', objectFit: 'cover' }} />
-                                                <strong>{p.name}</strong>
-                                            </div>
-                                        </td>
-                                        <td style={tdStyle}>
-                                            <span style={{ fontFamily: 'monospace', background: '#f0fdf4', color: '#166534', padding: '3px 8px', borderRadius: '4px', fontSize: '13px', fontWeight: '700', border: '1px solid #86efac' }}>
-                                                {p.productCode || '—'}
-                                            </span>
-                                        </td>
-                                        <td style={tdStyle}>₹{p.price}</td>
-                                        <td style={tdStyle}>
-                                            <div style={{ display: 'flex', gap: '10px' }}>
-                                                <button onClick={() => handleEditProduct(p)} style={{ border: 'none', background: '#f1f5f9', padding: '6px', borderRadius: '4px', cursor: 'pointer' }}><Edit2 size={16} /></button>
-                                                <button onClick={() => handleDeleteProduct(p._id)} style={{ border: 'none', background: '#fee2e2', color: '#ef4444', padding: '6px', borderRadius: '4px', cursor: 'pointer' }}><Trash2 size={16} /></button>
-                                            </div>
-                                        </td>
+                    <div className="admin-card fade-in">
+                        <div style={{ overflowX: 'auto' }}>
+                            <table className="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Product Code</th>
+                                        <th>Price</th>
+                                        <th>Actions</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {products.map(p => (
+                                        <tr key={p._id}>
+                                            <td>
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                                                    <img src={p.imageUrl} alt="" style={{ width: '40px', height: '40px', borderRadius: '6px', objectFit: 'cover' }} />
+                                                    <strong>{p.name}</strong>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span className="admin-badge" style={{ background: '#f0fdf4', color: '#166534', border: '1px solid #86efac' }}>
+                                                    {p.productCode || '—'}
+                                                </span>
+                                            </td>
+                                            <td>₹{p.price}</td>
+                                            <td>
+                                                <div style={{ display: 'flex', gap: '10px' }}>
+                                                    <button onClick={() => handleEditProduct(p)} className="admin-btn" style={{ padding: '8px', background: '#f1f5f9' }} aria-label="Edit product"><Edit2 size={16} /></button>
+                                                    <button onClick={() => handleDeleteProduct(p._id)} className="admin-btn admin-btn-danger" style={{ padding: '8px' }} aria-label="Delete product"><Trash2 size={16} /></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 );
             default: return null;
@@ -1043,84 +1030,48 @@ function AdminPage({ onLogout }) {
 
     return (
         <AdminLayout activeTab={activeTab} setActiveTab={setActiveTab} onLogout={onLogout}>
-            {renderContent()}
+            <div className="admin-page-root fade-in">
+                {renderContent()}
+            </div>
+            <style>{`
+                .admin-page-root { animation: fadeIn 0.4s ease forwards; }
+                .fade-in { animation: fadeIn 0.4s ease forwards; }
+                .fade-in-up { animation: fadeInUp 0.5s ease-out forwards; opacity: 0; }
+                .fade-in-scale { animation: fadeInScale 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+                
+                @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+                @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+                @keyframes fadeInScale { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+                @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+                .spin { animation: spin 1s linear infinite; }
+
+                .admin-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 25px; }
+                .stat-card { background: #fff; padding: 24px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #edf2f7; cursor: pointer; transition: all 0.2s; }
+                .stat-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border-color: #d4af37; }
+                .stat-card h3 { font-size: 14px; font-weight: 700; color: #64748b; text-transform: uppercase; margin: 0 0 10px; display: flex; align-items: center; gap: 8px; }
+                .stat-value { font-size: 32px; font-weight: 800; color: #0b3d2e; margin: 0; }
+
+                .admin-card { background: #fff; padding: 24px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.1); width: 100%; box-sizing: border-box; }
+                .admin-table { width: 100%; border-collapse: collapse; }
+                .admin-table th { padding: 12px 15px; text-align: left; border-bottom: 2px solid #f1f5f9; color: #64748b; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+                .admin-table td { padding: 12px 15px; border-bottom: 1px solid #f1f5f9; font-size: 14px; vertical-align: middle; }
+                .admin-table tr { transition: background 0.2s; }
+                .admin-table tr:hover { background: #f8fafc; }
+
+                .admin-input { width: 100%; padding: 10px 15px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 14px; transition: all 0.2s; box-sizing: border-box; font-family: inherit; }
+                .admin-input:focus { border-color: #d4af37; outline: none; box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1); }
+                .admin-label { display: block; font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+                .admin-btn { padding: 10px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; border: none; font-size: 14px; justify-content: center; }
+                .admin-btn-primary { background: #0b3d2e; color: #fff; }
+                .admin-btn-primary:hover { background: #082f23; transform: translateY(-1px); }
+                .admin-btn-danger { background: #fee2e2; color: #ef4444; }
+                .admin-btn-danger:hover { background: #fecaca; }
+                
+                .admin-badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 800; text-transform: uppercase; display: inline-block; }
+            `}</style>
         </AdminLayout>
     );
 }
-
-// Styling Objects
-const cardStyle = {
-    background: '#fff',
-    padding: '24px',
-    borderRadius: '12px',
-    boxShadow: '0 2px 10px rgba(0,0,0,0.05)',
-    border: '1px solid #edf2f7',
-};
-
-const statStyle = {
-    fontSize: '32px',
-    fontWeight: '800',
-    color: '#0b3d2e',
-    margin: '10px 0 0'
-};
-
-const labelStyle = {
-    display: 'block',
-    fontSize: '13px',
-    fontWeight: '700',
-    color: '#64748b',
-    marginBottom: '8px',
-    textTransform: 'uppercase',
-    letterSpacing: '0.5px'
-};
-
-const inputStyle = {
-    width: '100%',
-    padding: '10px 15px',
-    borderRadius: '8px',
-    border: '1px solid #e2e8f0',
-    fontSize: '14px',
-    outline: 'none'
-};
-
-const buttonStyle = {
-    background: '#0b3d2e',
-    color: '#fff',
-    padding: '12px 20px',
-    border: 'none',
-    borderRadius: '8px',
-    fontWeight: '700',
-    cursor: 'pointer',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    transition: '0.2s',
-    justifyContent: 'center'
-};
-
-const tableStyle = {
-    width: '100%',
-    borderCollapse: 'collapse',
-};
-
-const thStyle = {
-    padding: '12px 15px',
-    textAlign: 'left',
-    borderBottom: '2px solid #f1f5f9',
-    color: '#64748b',
-    fontSize: '12px',
-    textTransform: 'uppercase',
-    letterSpacing: '0.05em'
-};
-
-const tdStyle = {
-    padding: '12px 15px',
-    borderBottom: '1px solid #f1f5f9',
-    fontSize: '14px'
-};
-
-const trStyle = {
-    transition: 'background 0.2s'
-};
 
 export default AdminPage;

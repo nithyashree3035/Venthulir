@@ -136,16 +136,16 @@ const Footer = () => {
                             <form className="traditional-form" onSubmit={handleSubmit}>
                                 <div className="form-split">
                                     <input
-                                        type="text" placeholder="Name" required
+                                        type="text" placeholder="Name" required aria-label="Your Name"
                                         value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })}
                                     />
                                     <input
-                                        type="text" placeholder="Order #" required
+                                        type="text" placeholder="Order #" required aria-label="Order ID"
                                         value={formData.orderId} onChange={e => setFormData({ ...formData, orderId: e.target.value })}
                                     />
                                 </div>
                                 <input
-                                    type="email" placeholder="Email Address (for official reply)" required
+                                    type="email" placeholder="Email Address (for official reply)" required aria-label="Email Address"
                                     style={{ width: '100%', padding: '12px', borderRadius: '4px', border: '1px solid #ddd', marginBottom: '10px' }}
                                     value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })}
                                 />
@@ -163,7 +163,7 @@ const Footer = () => {
                                     <option>Other</option>
                                 </select>
                                 <textarea
-                                    placeholder="Describe your concern here..." required
+                                    placeholder="Describe your concern here..." required aria-label="Message details"
                                     value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })}
                                 ></textarea>
                                 <button type="submit" className="royal-btn" disabled={isSubmitting}>

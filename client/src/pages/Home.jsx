@@ -1,9 +1,8 @@
 import React, { useEffect, Suspense } from 'react';
 import Hero from '../components/Hero';
-const ShopGrid = React.lazy(() => import('../components/ShopGrid'));
+import ShopGrid from '../components/ShopGrid';
 import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet-async';
-import { API_BASE } from '../constants';
 import { ShieldCheck, Truck, RefreshCcw, Leaf, ChevronRight, BookOpen } from 'lucide-react';
 import { useAppNavigation } from '../context/NavigationContext';
 import './Home.css';
@@ -11,10 +10,7 @@ import './Home.css';
 const Home = () => {
     const { appNavigate } = useAppNavigation();
     
-    // Silently warm up the Render backend to prevent cold-start delays on first product click
-    useEffect(() => {
-        fetch(`${API_BASE}/products?limit=1`, { method: 'GET' }).catch(() => {});
-    }, []);
+    // Removed warmup fetch to prevent chaining critical request penalty
 
     return (
         <div className="home-unified-root">
@@ -237,9 +233,7 @@ const Home = () => {
             </section>
 
             {/* MAIN PRODUCTS SECTION */}
-            <Suspense fallback={<div style={{ padding: '100px', textAlign: 'center' }}>Loading Collection...</div>}>
                 <ShopGrid title="Our Best Sellers" isHomePage={true} id="products" />
-            </Suspense>
 
             {/* TESTIMONIALS */}
             <section style={{ padding: 'clamp(40px, 8vw, 80px) clamp(15px, 5vw, 20px)', background: '#0b3d2e', color: '#fff', textAlign: 'center' }}>

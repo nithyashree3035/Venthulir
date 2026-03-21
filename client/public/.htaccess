@@ -80,6 +80,8 @@ RewriteRule ^admin/(.*)$ /admin/index.html [L]
   Header set X-Frame-Options "SAMEORIGIN"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
   Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+  Header set Cross-Origin-Opener-Policy "same-origin"
 </IfModule>
 
 # --- Keep-Alive ---

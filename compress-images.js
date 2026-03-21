@@ -8,7 +8,9 @@ const compressAndResize = async () => {
 
   const filesToProcess = [
     { file: path.join(publicDir, 'story.jpg'), width: 800, type: 'jpeg' },
-    { file: path.join(publicDir, 'journal-herbs.jpg'), width: 800, type: 'jpeg' },
+    { file: path.join(publicDir, 'journal-herbs.jpg'), width: 600, type: 'jpeg' },
+    { file: path.join(publicDir, 'journal-spices.jpg'), width: 600, type: 'jpeg' },
+    { file: path.join(publicDir, 'journal-turmeric.jpg'), width: 600, type: 'jpeg' },
     { file: path.join(publicDir, 'organic.png'), width: 200, type: 'png' }
   ];
 
@@ -18,7 +20,7 @@ const compressAndResize = async () => {
     productFiles.forEach(f => {
       filesToProcess.push({
         file: path.join(productsDir, f),
-        width: 300, // as per Lighthouse displayed size ~200px, so 300px is safe
+        width: 220, // slightly larger than lighthouse 217px display width
         type: 'png'
       });
     });

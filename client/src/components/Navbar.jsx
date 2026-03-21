@@ -54,13 +54,13 @@ const Navbar = () => {
             >
               {isMobileMenuOpen ? <CloseIcon size={24} /> : <Menu size={24} />}
             </button>
-            <div className="at-brand-logo-wrap" style={{ cursor: 'pointer' }} onClick={() => { setIsMobileMenuOpen(false); appNavigate('home'); }}>
+            <div className="at-brand-logo-wrap" role="button" aria-label="Go to Home" tabIndex="0" style={{ cursor: 'pointer' }} onClick={() => { setIsMobileMenuOpen(false); appNavigate('home'); }} onKeyDown={(e) => { if (e.key === 'Enter') { setIsMobileMenuOpen(false); appNavigate('home'); } }}>
               <img src={logo} alt="Venthulir Logo" width="98" height="55" style={{ height: '55px', objectFit: 'contain' }} />
             </div>
           </div>
 
           <div className="at-nav-actions">
-            <div className="at-action-item profile-trigger" onClick={() => {
+            <div className="at-action-item profile-trigger" role="button" tabIndex="0" aria-label="Profile" onKeyDown={(e) => { if(e.key==='Enter') { if(!isAuthenticated) setIsAuthOpen(true); else appNavigate('profile'); } }} onClick={() => {
               if (!isAuthenticated) return setIsAuthOpen(true);
               appNavigate('profile');
             }}>
@@ -77,12 +77,12 @@ const Navbar = () => {
               </div>
             </div>
 
-            <div className="at-icon-btn" style={{ cursor: 'pointer' }} onClick={() => appNavigate('wishlist')}>
+            <div className="at-icon-btn" role="button" tabIndex="0" aria-label="Wishlist" style={{ cursor: 'pointer' }} onClick={() => appNavigate('wishlist')} onKeyDown={(e) => { if(e.key === 'Enter') appNavigate('wishlist'); }}>
               <Heart size={22} />
               {wishlist.length > 0 && <span className="at-badge gold">{wishlist.length}</span>}
             </div>
 
-            <div className="at-cart-btn" style={{ cursor: 'pointer' }} onClick={() => appNavigate('cart')}>
+            <div className="at-cart-btn" role="button" tabIndex="0" aria-label="Cart" style={{ cursor: 'pointer' }} onClick={() => appNavigate('cart')} onKeyDown={(e) => { if(e.key === 'Enter') appNavigate('cart'); }}>
               <ShoppingCart size={22} />
               <span className="at-cart-text">Cart ({getTotalItems()})</span>
             </div>

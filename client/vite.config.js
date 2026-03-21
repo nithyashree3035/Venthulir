@@ -23,12 +23,7 @@ export default defineConfig(({ mode }) => {
       : {
        sourcemap: true,
       rollupOptions: {
-        input: path.resolve(__dirname, 'index.html'),
-        output: {
-          manualChunks: {
-            vendor: ['react', 'react-dom', 'react-router-dom', 'framer-motion', 'lucide-react', 'axios']
-          }
-        }
+        input: path.resolve(__dirname, 'index.html')
       },
       outDir: 'dist',
       },

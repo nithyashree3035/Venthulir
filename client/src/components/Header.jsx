@@ -34,8 +34,8 @@ const Header = () => {
 
                 {/* Amazon-Style Wide Search */}
                 <div className="nav-search">
-                    <input type="text" placeholder="Search fresh harvest, cold pressed oils, raw honey..." />
-                    <button className="search-btn">🔍</button>
+                    <input type="text" placeholder="Search fresh harvest, cold pressed oils, raw honey..." aria-label="Search products" />
+                    <button className="search-btn" aria-label="Search submit">🔍</button>
                 </div>
 
                 <div className="nav-right">
