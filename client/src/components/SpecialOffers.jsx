@@ -231,14 +231,10 @@ export default function SpecialOffers() {
         return () => controller.abort();
     }, []);
 
-    /* Don't render anything while loading or if no active offers */
-    if (loading) return null;
-    if (!offers.length) return null;
-
     return (
         <section className="sof-section" id="special-offers" aria-labelledby="sof-heading">
 
-            {/* ══ FULL-WIDTH RED BANNER ══ */}
+            {/* ══ FULL-WIDTH RED BANNER — ALWAYS VISIBLE ══ */}
             <div className="sof-banner" role="banner">
                 <div className="sof-banner-inner">
                     <div className="sof-banner-left">
@@ -258,29 +254,32 @@ export default function SpecialOffers() {
                 </div>
             </div>
 
-            {/* ══ SECTION HEADER ══ */}
-            <div className="sof-header-wrap">
-                <div className="sof-header-content">
-                    <div className="sof-header-icon-wrap">
-                        <Flame size={24} />
+            {/* ══ OFFER CARDS — only when active offers exist ══ */}
+            {!loading && offers.length > 0 && (
+                <>
+                    <div className="sof-header-wrap">
+                        <div className="sof-header-content">
+                            <div className="sof-header-icon-wrap">
+                                <Flame size={24} />
+                            </div>
+                            <div>
+                                <h2 id="sof-heading" className="sof-section-title">
+                                    🔥 Special Limited Offers
+                                </h2>
+                                <p className="sof-section-sub">
+                                    Exclusive deals crafted for Venthulir's early members
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <h2 id="sof-heading" className="sof-section-title">
-                            🔥 Special Limited Offers
-                        </h2>
-                        <p className="sof-section-sub">
-                            Exclusive deals crafted for Venthulir's early members
-                        </p>
-                    </div>
-                </div>
-            </div>
 
-            {/* ══ OFFER CARDS GRID ══ */}
-            <div className="sof-grid">
-                {offers.map(offer => (
-                    <OfferCard key={offer._id} offer={offer} />
-                ))}
-            </div>
+                    <div className="sof-grid">
+                        {offers.map(offer => (
+                            <OfferCard key={offer._id} offer={offer} />
+                        ))}
+                    </div>
+                </>
+            )}
         </section>
     );
 }
