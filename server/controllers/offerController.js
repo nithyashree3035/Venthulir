@@ -63,6 +63,7 @@ exports.createOffer = async (req, res) => {
             stock: parseInt(stock) || 0,
             rating: parseFloat(rating) || 0,
             condition: condition || 'First 60 customers only allowed',
+            comboContents: req.body.comboContents || '',
             startDate: new Date(startDate),
             endDate: new Date(endDate),
             isActive: true,

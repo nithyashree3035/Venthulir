@@ -46,7 +46,7 @@ function AdminPage({ onLogout }) {
         offerPrice: '', mrpIllusion: '', discountPercent: '',
         category: 'General', badge: 'Limited Offer',
         stock: '', rating: '', condition: 'First 60 customers only allowed',
-        startDate: '', endDate: ''
+        comboContents: '', startDate: '', endDate: ''
     });
     const [offerPreviewUrls, setOfferPreviewUrls] = useState([]);
     const [isEditingOffer, setIsEditingOffer] = useState(false);
@@ -404,7 +404,7 @@ function AdminPage({ onLogout }) {
     };
 
     const resetOfferForm = () => {
-        setOfferForm({ name: '', description: '', imageUrl: '', price: '', offerPrice: '', mrpIllusion: '', discountPercent: '', category: 'General', badge: 'Limited Offer', stock: '', rating: '', condition: 'First 60 customers only allowed', startDate: '', endDate: '' });
+        setOfferForm({ name: '', description: '', imageUrl: '', price: '', offerPrice: '', mrpIllusion: '', discountPercent: '', category: 'General', badge: 'Limited Offer', stock: '', rating: '', condition: 'First 60 customers only allowed', comboContents: '', startDate: '', endDate: '' });
         setOfferPreviewUrls([]);
         setIsEditingOffer(false);
         setEditingOfferId(null);
@@ -424,6 +424,7 @@ function AdminPage({ onLogout }) {
             stock: o.stock,
             rating: o.rating || '',
             condition: o.condition || 'First 60 customers only allowed',
+            comboContents: o.comboContents || '',
             startDate: o.startDate ? new Date(o.startDate).toISOString().split('T')[0] : '',
             endDate: o.endDate ? new Date(o.endDate).toISOString().split('T')[0] : ''
         });
@@ -1374,10 +1375,15 @@ function AdminPage({ onLogout }) {
                                     </div>
                                 </div>
 
-                                {/* Description */}
+                                {/* Description & Combo */}
                                 <div>
                                     <label className="admin-label">Description *</label>
-                                    <textarea required className="admin-input" style={{ height: '100px', resize: 'vertical' }} value={offerForm.description} onChange={e => setOfferForm({ ...offerForm, description: e.target.value })} placeholder="Describe the offer product..." />
+                                    <textarea required className="admin-input" style={{ height: '100px', resize: 'vertical', marginBottom: '15px' }} value={offerForm.description} onChange={e => setOfferForm({ ...offerForm, description: e.target.value })} placeholder="Describe the offer product..." />
+                                </div>
+                                <div>
+                                    <label className="admin-label">Combo Contents <span style={{ color: '#94a3b8', fontSize: '11px', fontWeight: 'normal' }}>(Optional)</span></label>
+                                    <input type="text" className="admin-input" value={offerForm.comboContents} onChange={e => setOfferForm({ ...offerForm, comboContents: e.target.value })} placeholder="e.g. Turmeric 100g + Chilli 200g + Coriander 150g" />
+                                    <small style={{ color: '#94a3b8', fontSize: '11px', marginTop: '4px', display: 'block' }}>Separate items with a plus (+) sign. They will appear as a numbered list on the offer card.</small>
                                 </div>
 
                                 {/* Discount preview */}

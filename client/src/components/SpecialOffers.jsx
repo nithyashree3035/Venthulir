@@ -126,6 +126,23 @@ function OfferCard({ offer }) {
                 <h3 className="sof-name">{offer.name}</h3>
                 <p className="sof-desc">{offer.description}</p>
 
+                {/* Combo Optional Breakdown */}
+                {offer.comboContents && (
+                    <div style={{ marginTop: '10px', marginBottom: '10px', padding: '10px', background: 'rgba(212, 175, 55, 0.05)', border: '1px solid rgba(212, 175, 55, 0.3)', borderRadius: '8px' }}>
+                        <p style={{ fontSize: '10px', fontWeight: 800, color: '#b8860b', textTransform: 'uppercase', letterSpacing: '0.6px', margin: '0 0 8px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            📦 What's inside this pack:
+                        </p>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                            {offer.comboContents.split('+').map((item, i) => (
+                                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '5px', background: '#fff', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '4px 8px', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>
+                                    <span style={{ width: '14px', height: '14px', borderRadius: '50%', background: '#0b3d2e', color: '#d4af37', fontSize: '8px', fontWeight: 900, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{i + 1}</span>
+                                    <span style={{ fontSize: '12px', fontWeight: 700, color: '#0b3d2e' }}>{item.trim()}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
                 {/* Star rating */}
                 {offer.rating > 0 && (
                     <div className="sof-rating" aria-label={`${offer.rating} out of 5 stars`}>
