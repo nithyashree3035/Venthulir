@@ -40,7 +40,11 @@ function OfferCard({ offer }) {
     const { appNavigate } = useAppNavigation() || {};
 
     const time = useCountdown(offer.endDate);
-    const discountPct = Math.round(((offer.price - offer.offerPrice) / offer.price) * 100);
+    // Use admin-set values where available, fall back to auto-calculated
+    const displayMrp = offer.mrpIllusion || offer.price;
+    const discountPct = offer.discountPercent
+        ? Math.round(offer.discountPercent)
+        : Math.round(((displayMrp - offer.offerPrice) / displayMrp) * 100);
     const isStockOver = offer.stock <= 0;
     const productId = offer._id;
     const inCart = isInCart ? isInCart(productId) : false;
@@ -142,10 +146,10 @@ function OfferCard({ offer }) {
                 <div className="sof-pricing">
                     <span className="sof-symbol">₹</span>
                     <span className="sof-offer-price">{offer.offerPrice.toLocaleString('en-IN')}</span>
-                    <span className="sof-mrp">M.R.P: <s>₹{offer.price.toLocaleString('en-IN')}</s></span>
+                    <span className="sof-mrp">M.R.P: <s>₹{displayMrp.toLocaleString('en-IN')}</s></span>
                 </div>
                 <div className="sof-save-chip">
-                    You save ₹{(offer.price - offer.offerPrice).toLocaleString('en-IN')}
+                    You save ₹{(displayMrp - offer.offerPrice).toLocaleString('en-IN')}
                 </div>
 
                 {/* Countdown timer */}

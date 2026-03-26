@@ -5,8 +5,10 @@ const OfferSchema = new mongoose.Schema({
     description: { type: String, required: true },
     imageUrl: { type: String },
     images: { type: [String], default: [] },
-    price: { type: Number, required: true },         // Original price
-    offerPrice: { type: Number, required: true },    // Discounted price
+    price: { type: Number, required: true },         // Actual selling price (original)
+    offerPrice: { type: Number, required: true },    // Discounted offer price
+    mrpIllusion: { type: Number, default: null },    // Optional higher MRP displayed as strikethrough
+    discountPercent: { type: Number, default: null }, // Optional manual discount %
     category: { type: String, default: 'General' },
     badge: { type: String, default: 'Limited Offer' },
     stock: { type: Number, default: 0, min: 0 },

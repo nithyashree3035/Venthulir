@@ -41,7 +41,8 @@ function AdminPage({ onLogout }) {
     const [offers, setOffers] = useState([]);
     const [offerForm, setOfferForm] = useState({
         name: '', description: '', imageUrl: '', price: '',
-        offerPrice: '', category: 'General', badge: 'Limited Offer',
+        offerPrice: '', mrpIllusion: '', discountPercent: '',
+        category: 'General', badge: 'Limited Offer',
         stock: '', rating: '', condition: 'First 60 customers only allowed',
         startDate: '', endDate: ''
     });
@@ -395,7 +396,7 @@ function AdminPage({ onLogout }) {
     };
 
     const resetOfferForm = () => {
-        setOfferForm({ name: '', description: '', imageUrl: '', price: '', offerPrice: '', category: 'General', badge: 'Limited Offer', stock: '', rating: '', condition: 'First 60 customers only allowed', startDate: '', endDate: '' });
+        setOfferForm({ name: '', description: '', imageUrl: '', price: '', offerPrice: '', mrpIllusion: '', discountPercent: '', category: 'General', badge: 'Limited Offer', stock: '', rating: '', condition: 'First 60 customers only allowed', startDate: '', endDate: '' });
         setOfferPreviewUrls([]);
         setIsEditingOffer(false);
         setEditingOfferId(null);
@@ -408,11 +409,13 @@ function AdminPage({ onLogout }) {
             imageUrl: o.imageUrl || '',
             price: o.price,
             offerPrice: o.offerPrice,
+            mrpIllusion: o.mrpIllusion || '',
+            discountPercent: o.discountPercent || '',
             category: o.category || 'General',
             badge: o.badge || 'Limited Offer',
             stock: o.stock,
             rating: o.rating || '',
-            condition: o.condition || 'New',
+            condition: o.condition || 'First 60 customers only allowed',
             startDate: o.startDate ? new Date(o.startDate).toISOString().split('T')[0] : '',
             endDate: o.endDate ? new Date(o.endDate).toISOString().split('T')[0] : ''
         });
@@ -1227,11 +1230,29 @@ function AdminPage({ onLogout }) {
                                     </div>
                                     <div>
                                         <label className="admin-label">Original Price (₹) *</label>
-                                        <input required type="number" min="1" step="0.01" className="admin-input" value={offerForm.price} onChange={e => setOfferForm({ ...offerForm, price: e.target.value })} placeholder="e.g. 500" />
+                                        <input required type="number" min="1" step="0.01" className="admin-input" value={offerForm.price} onChange={e => {
+                                            const p = e.target.value;
+                                            const disc = offerForm.offerPrice && p ? Math.round(((parseFloat(p) - parseFloat(offerForm.offerPrice)) / parseFloat(p)) * 100) : '';
+                                            setOfferForm({ ...offerForm, price: p, discountPercent: disc || offerForm.discountPercent });
+                                        }} placeholder="e.g. 500" />
                                     </div>
                                     <div>
                                         <label className="admin-label">Offer Price (₹) *</label>
-                                        <input required type="number" min="1" step="0.01" className="admin-input" value={offerForm.offerPrice} onChange={e => setOfferForm({ ...offerForm, offerPrice: e.target.value })} placeholder="e.g. 350" />
+                                        <input required type="number" min="1" step="0.01" className="admin-input" value={offerForm.offerPrice} onChange={e => {
+                                            const op = e.target.value;
+                                            const disc = offerForm.price && op ? Math.round(((parseFloat(offerForm.price) - parseFloat(op)) / parseFloat(offerForm.price)) * 100) : '';
+                                            setOfferForm({ ...offerForm, offerPrice: op, discountPercent: disc || offerForm.discountPercent });
+                                        }} placeholder="e.g. 350" />
+                                    </div>
+                                    <div>
+                                        <label className="admin-label">MRP Illusion (₹)</label>
+                                        <input type="number" min="1" step="0.01" className="admin-input" value={offerForm.mrpIllusion} onChange={e => setOfferForm({ ...offerForm, mrpIllusion: e.target.value })} placeholder="Displayed strikethrough MRP" />
+                                        <small style={{ color: '#94a3b8', fontSize: '10px', marginTop: '3px', display: 'block' }}>Optional higher MRP shown as strikethrough to customer</small>
+                                    </div>
+                                    <div>
+                                        <label className="admin-label">Discount (%)</label>
+                                        <input type="number" min="1" max="99" step="1" className="admin-input" value={offerForm.discountPercent} onChange={e => setOfferForm({ ...offerForm, discountPercent: e.target.value })} placeholder="Auto-calculated or set manually" />
+                                        <small style={{ color: '#94a3b8', fontSize: '10px', marginTop: '3px', display: 'block' }}>Auto-fills from price fields — override if needed</small>
                                     </div>
                                     <div>
                                         <label className="admin-label">Stock Units *</label>

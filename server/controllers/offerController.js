@@ -40,8 +40,8 @@ exports.createOffer = async (req, res) => {
     try {
         const {
             name, description, imageUrl, images,
-            price, offerPrice, category, badge,
-            stock, rating, condition,
+            price, offerPrice, mrpIllusion, discountPercent,
+            category, badge, stock, rating, condition,
             startDate, endDate
         } = req.body;
 
@@ -56,11 +56,13 @@ exports.createOffer = async (req, res) => {
             images: images || [],
             price: parseFloat(price),
             offerPrice: parseFloat(offerPrice),
+            mrpIllusion: mrpIllusion ? parseFloat(mrpIllusion) : null,
+            discountPercent: discountPercent ? parseFloat(discountPercent) : null,
             category: category || 'General',
             badge: badge || 'Limited Offer',
             stock: parseInt(stock) || 0,
             rating: parseFloat(rating) || 0,
-            condition: condition || 'New',
+            condition: condition || 'First 60 customers only allowed',
             startDate: new Date(startDate),
             endDate: new Date(endDate),
             isActive: true,
