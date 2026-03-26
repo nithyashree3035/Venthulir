@@ -29,6 +29,8 @@ function AdminPage({ onLogout }) {
     const [orderEndDate, setOrderEndDate] = useState('');
     const [variants, setVariants] = useState([]);
     const [variantInput, setVariantInput] = useState({ label: '', price: '' });
+    const [comboContents, setComboContents] = useState([]);
+    const [comboInput, setComboInput] = useState({ item: '', weight: '' });
     const [showCustomUnit, setShowCustomUnit] = useState(false);
     const [previewUrls, setPreviewUrls] = useState([]);
     const [isUploading, setIsUploading] = useState(false);
@@ -268,6 +270,7 @@ function AdminPage({ onLogout }) {
                 images: finalImages,
                 imageUrl: finalImages.length > 0 ? finalImages[0] : '',
                 variants: variants,
+                comboContents: comboContents.filter(c => c.item && c.weight),
                 originalPrice: prodForm.originalPrice || undefined,
                 discountPercent: prodForm.discountPercent || undefined
             };
@@ -293,6 +296,8 @@ function AdminPage({ onLogout }) {
     const resetForm = () => {
         setProdForm({ productCode: '', name: '', price: '', description: '', category: 'General', badge: '', shippingCharge: 0, initialStock: '', originalPrice: '', discountPercent: '' });
         setVariants([]);
+        setComboContents([]);
+        setComboInput({ item: '', weight: '' });
         setPreviewUrls([]);
         setIsEditing(false);
         setEditingId(null);
@@ -313,6 +318,8 @@ function AdminPage({ onLogout }) {
             discountPercent: p.discountPercent || ''
         });
         setVariants(p.variants || []);
+        setComboContents(p.comboContents || []);
+        setComboInput({ item: '', weight: '' });
         setPreviewUrls((p.images || []).map(url => ({ url, file: null })));
         setIsEditing(true);
         setEditingId(p._id);
@@ -697,6 +704,60 @@ function AdminPage({ onLogout }) {
                                             </div>
                                         ))}
                                     </div>
+                                </div>
+
+                                {/* ── Combo Contents ───────────────────────── */}
+                                <div style={{ background: '#f1f5f9', padding: '20px', borderRadius: '12px' }}>
+                                    <label className="admin-label" style={{ marginBottom: '4px' }}>Combo Contents <span style={{ color: '#94a3b8', fontWeight: 500 }}>(Optional — for combo packs)</span></label>
+                                    <p style={{ fontSize: '11px', color: '#94a3b8', margin: '0 0 12px' }}>List each item with its weight, e.g. Turmeric Powder — 100g</p>
+                                    <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', flexWrap: 'wrap' }}>
+                                        <input
+                                            type="text"
+                                            className="admin-input"
+                                            style={{ flex: 2, minWidth: '120px' }}
+                                            placeholder="Item name (e.g. Turmeric Powder)"
+                                            value={comboInput.item}
+                                            onChange={e => setComboInput({ ...comboInput, item: e.target.value })}
+                                        />
+                                        <input
+                                            type="text"
+                                            className="admin-input"
+                                            style={{ flex: 1, minWidth: '80px' }}
+                                            placeholder="Weight (e.g. 100g)"
+                                            value={comboInput.weight}
+                                            onChange={e => setComboInput({ ...comboInput, weight: e.target.value })}
+                                            onKeyDown={e => {
+                                                if (e.key === 'Enter') {
+                                                    e.preventDefault();
+                                                    if (comboInput.item.trim() && comboInput.weight.trim()) {
+                                                        setComboContents([...comboContents, { item: comboInput.item.trim(), weight: comboInput.weight.trim() }]);
+                                                        setComboInput({ item: '', weight: '' });
+                                                    }
+                                                }
+                                            }}
+                                        />
+                                        <button
+                                            type="button"
+                                            className="admin-btn admin-btn-primary"
+                                            onClick={() => {
+                                                if (comboInput.item.trim() && comboInput.weight.trim()) {
+                                                    setComboContents([...comboContents, { item: comboInput.item.trim(), weight: comboInput.weight.trim() }]);
+                                                    setComboInput({ item: '', weight: '' });
+                                                }
+                                            }}
+                                        >Add</button>
+                                    </div>
+                                    {comboContents.length > 0 && (
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                                            {comboContents.map((c, i) => (
+                                                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#fff', padding: '8px 14px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                                                    <span style={{ fontSize: '13px', color: '#0b2e1f', fontWeight: 700 }}>📦 {c.item}</span>
+                                                    <span style={{ fontSize: '12px', color: '#64748b', fontWeight: 600, background: '#f8fafc', padding: '2px 10px', borderRadius: '20px', border: '1px solid #e2e8f0' }}>{c.weight}</span>
+                                                    <button type="button" onClick={() => setComboContents(comboContents.filter((_, j) => j !== i))} style={{ color: '#ef4444', border: 'none', background: 'none', cursor: 'pointer', fontSize: '16px', lineHeight: 1 }} aria-label="Remove item">✕</button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
 
                                 <div className="form-section">

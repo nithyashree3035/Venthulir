@@ -20,6 +20,10 @@ const ProductSchema = new mongoose.Schema({
         label: { type: String, required: true },
         price: { type: Number, required: true }
     }],
+    comboContents: [{
+        item:   { type: String, required: true },  // e.g. "Turmeric Powder"
+        weight: { type: String, required: true }   // e.g. "100g"
+    }],
     initialStock: { type: Number, default: 0, min: 0 },
     currentStock: { type: Number, default: 0, min: 0 },
     createdAt: { type: Date, default: Date.now },

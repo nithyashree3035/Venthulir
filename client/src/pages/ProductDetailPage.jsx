@@ -391,21 +391,44 @@ const ProductDetailPage = ({ id }) => {
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', marginBottom: '30px' }}>
                             <details style={{ background: '#fff', border: '1px solid #eee', borderRadius: '8px', padding: '15px' }}>
                                 <summary style={{ fontWeight: 'bold', color: '#0b3d2e', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><CheckCircle2 size={16}/> Ingredients & Net Weight</span>
+                                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><CheckCircle2 size={16}/> {product.comboContents?.length > 0 ? 'Combo Pack Contents & Weights' : 'Ingredients & Net Weight'}</span>
                                 </summary>
                                 <div style={{ padding: '15px 0 0', fontSize: '14px', lineHeight: '1.6', color: '#555' }}>
-                                    <p style={{ whiteSpace: 'pre-line' }}><strong>Ingredients:</strong><br/>
-                                        {(() => {
-                                            const name = product.name.toLowerCase();
-                                            if (name.includes('chilli')) return '100% Dried Red Chillies';
-                                            if (name.includes('garam masala')) return 'Coriander Seeds\nCumin Seeds\nBlack Pepper\nCloves\nCinnamon\nCardamom\nBay Leaf\nNutmeg';
-                                            if (name.includes('coriander')) return '100% Coriander Seeds';
-                                            if (name.includes('turmeric')) return '100% Dried Turmeric';
-                                            if (name.includes('sambar')) return 'Coriander Seeds\nDried Red Chillies\nCumin Seeds\nBlack Pepper\nFenugreek Seeds\nTurmeric\nCurry Leaves\nAsafoetida';
-                                            return 'Made from 100% natural and traditional sources. No preservatives, artificial colors, or chemicals added.';
-                                        })()}
-                                    </p>
-                                    <p><strong>Net Weight:</strong> {selectedVariant ? selectedVariant.label : 'Standard Pack'}</p>
+                                    {product.comboContents?.length > 0 ? (
+                                        /* ── Combo breakdown table ── */
+                                        <div>
+                                            <p style={{ fontSize: '12px', color: '#94a3b8', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.5px', fontWeight: 700 }}>
+                                                📦 This is a Combo Pack — {product.comboContents.length} items included
+                                            </p>
+                                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                                {product.comboContents.map((c, i) => (
+                                                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#fdfcf7', padding: '10px 16px', borderRadius: '8px', border: '1px solid #f0ede0' }}>
+                                                        <span style={{ fontWeight: 700, color: '#0b3d2e', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                            <span style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#0b3d2e', color: '#d4af37', fontSize: '11px', fontWeight: 900, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>{i + 1}</span>
+                                                            {c.item}
+                                                        </span>
+                                                        <span style={{ fontWeight: 800, color: '#cc0c39', background: 'rgba(204,12,57,0.07)', padding: '3px 12px', borderRadius: '20px', fontSize: '13px', border: '1px solid rgba(204,12,57,0.15)' }}>{c.weight}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        /* ── Standard ingredient text ── */
+                                        <>
+                                            <p style={{ whiteSpace: 'pre-line' }}><strong>Ingredients:</strong><br/>
+                                                {(() => {
+                                                    const name = product.name.toLowerCase();
+                                                    if (name.includes('chilli')) return '100% Dried Red Chillies';
+                                                    if (name.includes('garam masala')) return 'Coriander Seeds\nCumin Seeds\nBlack Pepper\nCloves\nCinnamon\nCardamom\nBay Leaf\nNutmeg';
+                                                    if (name.includes('coriander')) return '100% Coriander Seeds';
+                                                    if (name.includes('turmeric')) return '100% Dried Turmeric';
+                                                    if (name.includes('sambar')) return 'Coriander Seeds\nDried Red Chillies\nCumin Seeds\nBlack Pepper\nFenugreek Seeds\nTurmeric\nCurry Leaves\nAsafoetida';
+                                                    return 'Made from 100% natural and traditional sources. No preservatives, artificial colors, or chemicals added.';
+                                                })()}
+                                            </p>
+                                            <p><strong>Net Weight:</strong> {selectedVariant ? selectedVariant.label : 'Standard Pack'}</p>
+                                        </>
+                                    )}
                                 </div>
                             </details>
 
