@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
     LayoutDashboard, Package, Users, ShoppingCart,
-    ShieldQuestion, LogOut, Menu, X, Activity
+    ShieldQuestion, LogOut, Menu, X, Activity, Tag
 } from 'lucide-react';
 import logo from '../assets/organic.png';
 import './AdminLayout.css';
@@ -16,6 +16,7 @@ const AdminLayout = ({ children, activeTab, setActiveTab, onLogout }) => {
         { id: 'Add Product', icon: Package, label: 'Add Harvest' },
         { id: 'All Products', icon: Package, label: 'All Products' },
         { id: 'Inventory', icon: Activity, label: 'Inventory' },
+        { id: 'Offers', icon: Tag, label: 'Offers' },
         { id: 'Users', icon: Users, label: 'Customers' },
         { id: 'Orders', icon: ShoppingCart, label: 'Orders' },
         { id: 'Coupons', icon: Activity, label: 'Coupons' },

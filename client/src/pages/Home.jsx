@@ -2,6 +2,7 @@ import React, { useEffect, Suspense } from 'react';
 import Hero from '../components/Hero';
 import ShopGrid from '../components/ShopGrid';
 import Footer from '../components/Footer';
+import SpecialOffers from '../components/SpecialOffers';
 import { Helmet } from 'react-helmet-async';
 import { ShieldCheck, Truck, RefreshCcw, Leaf, ChevronRight, BookOpen } from 'lucide-react';
 import { useAppNavigation } from '../context/NavigationContext';
@@ -231,6 +232,9 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+
+            {/* SPECIAL LIMITED OFFERS — shown above Best Sellers */}
+            <SpecialOffers onAddToCart={() => {}} />
 
             {/* MAIN PRODUCTS SECTION */}
                 <ShopGrid title="Our Best Sellers" isHomePage={true} id="products" />

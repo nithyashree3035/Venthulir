@@ -3,7 +3,7 @@ import {
     LayoutDashboard, Package, Users, ShoppingCart,
     Plus, ShieldQuestion, Send,
     LogOut, Trash2, Edit2, Activity,
-    Loader2, ChevronRight, Search, Download, Trash
+    Loader2, ChevronRight, Search, Download, Trash, Tag
 } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import AdminLayout from '../layouts/AdminLayout';
@@ -36,6 +36,19 @@ function AdminPage({ onLogout }) {
     const [editingId, setEditingId] = useState(null);
     const [replyTexts, setReplyTexts] = useState({});
     const [isResolving, setIsResolving] = useState({});
+
+    // ── Offers State ────────────────────────────────────
+    const [offers, setOffers] = useState([]);
+    const [offerForm, setOfferForm] = useState({
+        name: '', description: '', imageUrl: '', price: '',
+        offerPrice: '', category: 'General', badge: 'Limited Offer',
+        stock: '', rating: '', condition: 'New',
+        startDate: '', endDate: ''
+    });
+    const [offerPreviewUrls, setOfferPreviewUrls] = useState([]);
+    const [isEditingOffer, setIsEditingOffer] = useState(false);
+    const [editingOfferId, setEditingOfferId] = useState(null);
+    const [isOfferUploading, setIsOfferUploading] = useState(false);
 
     useEffect(() => {
         fetchData();
@@ -109,6 +122,13 @@ function AdminPage({ onLogout }) {
                 }
             }
         } catch (err) { console.error('Coupons fetch error:', err); }
+
+        try {
+            if (activeTab === 'Offers') {
+                const fetchedOffers = await api.get('/offers');
+                setOffers(Array.isArray(fetchedOffers) ? fetchedOffers : []);
+            }
+        } catch (err) { console.error('Offers fetch error:', err); }
     };
 
     const handleUpdateOrderStatus = async (orderId, newStatus) => {
@@ -343,6 +363,121 @@ function AdminPage({ onLogout }) {
             console.error(err);
         } finally {
             setIsResolving({ ...isResolving, [id]: false });
+        }
+    };
+
+    // ── Offer handlers ─────────────────────────────────────
+    const getOfferStatus = (offer) => {
+        const now = new Date();
+        if (!offer.isActive) return { label: 'Inactive', color: '#94a3b8', bg: '#f1f5f9' };
+        if (offer.stock <= 0) return { label: 'Stock Over', color: '#ef4444', bg: '#fee2e2' };
+        if (now < new Date(offer.startDate)) return { label: 'Upcoming', color: '#3b82f6', bg: '#dbeafe' };
+        if (now > new Date(offer.endDate)) return { label: 'Expired', color: '#64748b', bg: '#f1f5f9' };
+        return { label: 'Active', color: '#16a34a', bg: '#dcfce7' };
+    };
+
+    const handleOfferFileChange = async (e) => {
+        const files = Array.from(e.target.files);
+        if (!files.length) return;
+        const MAX_SIZE = 10 * 1024 * 1024;
+        const valid = files.filter(f => {
+            if (f.size > MAX_SIZE) { alert(`${f.name} exceeds 10MB.`); return false; }
+            return true;
+        }).slice(0, 5 - offerPreviewUrls.length);
+        const previews = valid.map(f => ({ url: URL.createObjectURL(f), file: f }));
+        setOfferPreviewUrls(prev => [...prev, ...previews]);
+        e.target.value = '';
+    };
+
+    const removeOfferImage = (idx, e) => {
+        if (e) e.stopPropagation();
+        setOfferPreviewUrls(prev => prev.filter((_, i) => i !== idx));
+    };
+
+    const resetOfferForm = () => {
+        setOfferForm({ name: '', description: '', imageUrl: '', price: '', offerPrice: '', category: 'General', badge: 'Limited Offer', stock: '', rating: '', condition: 'New', startDate: '', endDate: '' });
+        setOfferPreviewUrls([]);
+        setIsEditingOffer(false);
+        setEditingOfferId(null);
+    };
+
+    const handleEditOffer = (o) => {
+        setOfferForm({
+            name: o.name,
+            description: o.description,
+            imageUrl: o.imageUrl || '',
+            price: o.price,
+            offerPrice: o.offerPrice,
+            category: o.category || 'General',
+            badge: o.badge || 'Limited Offer',
+            stock: o.stock,
+            rating: o.rating || '',
+            condition: o.condition || 'New',
+            startDate: o.startDate ? new Date(o.startDate).toISOString().split('T')[0] : '',
+            endDate: o.endDate ? new Date(o.endDate).toISOString().split('T')[0] : ''
+        });
+        setOfferPreviewUrls((o.images || []).map(url => ({ url, file: null })));
+        setIsEditingOffer(true);
+        setEditingOfferId(o._id);
+        setActiveTab('Offers');
+    };
+
+    const handleSubmitOffer = async (e) => {
+        e.preventDefault();
+        setIsOfferUploading(true);
+        try {
+            const filesToUpload = offerPreviewUrls.filter(p => p.file).map(p => p.file);
+            let uploadedUrls = [];
+
+            if (filesToUpload.length > 0) {
+                const formData = new FormData();
+                filesToUpload.forEach(f => formData.append('images', f));
+                const uploadRes = await fetch(`${API_BASE}/admin/upload`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('venthulir_admin_token') || localStorage.getItem('venthulir_token')}` },
+                    body: formData
+                });
+                if (uploadRes.ok) {
+                    const data = await uploadRes.json();
+                    uploadedUrls = data.imageUrls.map(url => url.includes('localhost:7000') ? url.replace('http://localhost:7000', API_BASE.replace('/api', '')) : url);
+                } else {
+                    throw new Error('Image upload failed.');
+                }
+            }
+
+            let upIdx = 0;
+            const finalImages = offerPreviewUrls.map(p => p.file ? uploadedUrls[upIdx++] || '' : p.url).filter(Boolean);
+
+            const payload = {
+                ...offerForm,
+                images: finalImages,
+                imageUrl: finalImages[0] || offerForm.imageUrl || ''
+            };
+
+            if (isEditingOffer) {
+                await api.put(`/offers/${editingOfferId}`, payload);
+                alert('Offer Updated Successfully');
+            } else {
+                await api.post('/offers', payload);
+                alert('Offer Created Successfully');
+            }
+            resetOfferForm();
+            fetchData();
+        } catch (err) {
+            console.error('Offer submit error:', err);
+            alert('Failed: ' + err.message);
+        } finally {
+            setIsOfferUploading(false);
+        }
+    };
+
+    const handleDeleteOffer = async (id) => {
+        if (!window.confirm('Delete this offer?')) return;
+        try {
+            await api.delete(`/offers/${id}`);
+            fetchData();
+        } catch (err) {
+            alert('Delete failed: ' + err.message);
         }
     };
 
@@ -1021,6 +1156,192 @@ function AdminPage({ onLogout }) {
                                     ))}
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                );
+            case 'Offers':
+                return (
+                    <div className="admin-form-panel fade-in" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '30px' }}>
+                        {/* ── Form ── */}
+                        <div className="admin-card">
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+                                <h3 style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                    <Tag size={20} style={{ color: '#d4af37' }} />
+                                    {isEditingOffer ? 'Edit Offer' : 'Create New Offer'}
+                                </h3>
+                                {isEditingOffer && <button onClick={resetOfferForm} className="admin-btn" style={{ background: '#94a3b8', color: '#fff' }}>Cancel</button>}
+                            </div>
+
+                            <form onSubmit={handleSubmitOffer} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                                {/* Images */}
+                                <div className="form-section">
+                                    <label className="admin-label">Offer Images (up to 5)</label>
+                                    <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '10px' }}>
+                                        {[...Array(5)].map((_, i) => (
+                                            <div key={i}
+                                                onClick={() => !offerPreviewUrls[i] && document.getElementById('offerFileInput').click()}
+                                                style={{ width: '70px', height: '70px', borderRadius: '10px', border: offerPreviewUrls[i] ? '2px solid #d4af37' : '2px dashed #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#f8fafc', position: 'relative', cursor: 'pointer' }}
+                                                aria-label={offerPreviewUrls[i] ? `Image ${i+1}` : `Upload Image ${i+1}`}
+                                            >
+                                                {offerPreviewUrls[i] ? (
+                                                    <>
+                                                        <img src={offerPreviewUrls[i].url} alt={`offer-${i}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                        <button type="button" onClick={(e) => removeOfferImage(i, e)} style={{ position: 'absolute', top: '2px', right: '2px', width: '16px', height: '16px', borderRadius: '50%', background: '#ef4444', color: '#fff', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '9px', cursor: 'pointer' }} aria-label="Remove image">✕</button>
+                                                    </>
+                                                ) : <Plus size={16} color="#cbd5e1" />}
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <input id="offerFileInput" type="file" multiple accept="image/*" style={{ display: 'none' }} onChange={handleOfferFileChange} />
+                                    <div style={{ marginTop: '8px' }}>
+                                        <label className="admin-label" style={{ marginBottom: '4px' }}>Or paste Image URL</label>
+                                        <input type="url" className="admin-input" placeholder="https://..." value={offerForm.imageUrl} onChange={e => setOfferForm({ ...offerForm, imageUrl: e.target.value })} />
+                                    </div>
+                                </div>
+
+                                {/* Core fields */}
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '15px' }}>
+                                    <div>
+                                        <label className="admin-label">Product Name *</label>
+                                        <input required type="text" className="admin-input" value={offerForm.name} onChange={e => setOfferForm({ ...offerForm, name: e.target.value })} placeholder="e.g. Cold-Pressed Oil" />
+                                    </div>
+                                    <div>
+                                        <label className="admin-label">Category</label>
+                                        <select className="admin-input" value={offerForm.category} onChange={e => setOfferForm({ ...offerForm, category: e.target.value })}>
+                                            <option>General</option><option>Spices</option><option>Essential Oils</option><option>Health &amp; Skin Care</option><option>Wellness Products</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className="admin-label">Condition</label>
+                                        <select className="admin-input" value={offerForm.condition} onChange={e => setOfferForm({ ...offerForm, condition: e.target.value })}>
+                                            <option>New</option><option>Refurbished</option><option>Used</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className="admin-label">Badge Label</label>
+                                        <input type="text" className="admin-input" value={offerForm.badge} onChange={e => setOfferForm({ ...offerForm, badge: e.target.value })} placeholder="Limited Offer" />
+                                    </div>
+                                    <div>
+                                        <label className="admin-label">Original Price (₹) *</label>
+                                        <input required type="number" min="1" step="0.01" className="admin-input" value={offerForm.price} onChange={e => setOfferForm({ ...offerForm, price: e.target.value })} placeholder="e.g. 500" />
+                                    </div>
+                                    <div>
+                                        <label className="admin-label">Offer Price (₹) *</label>
+                                        <input required type="number" min="1" step="0.01" className="admin-input" value={offerForm.offerPrice} onChange={e => setOfferForm({ ...offerForm, offerPrice: e.target.value })} placeholder="e.g. 350" />
+                                    </div>
+                                    <div>
+                                        <label className="admin-label">Stock Units *</label>
+                                        <input required type="number" min="0" className="admin-input" value={offerForm.stock} onChange={e => setOfferForm({ ...offerForm, stock: e.target.value })} placeholder="e.g. 60" />
+                                    </div>
+                                    <div>
+                                        <label className="admin-label">Rating (0–5)</label>
+                                        <input type="number" min="0" max="5" step="0.1" className="admin-input" value={offerForm.rating} onChange={e => setOfferForm({ ...offerForm, rating: e.target.value })} placeholder="e.g. 4.5" />
+                                    </div>
+                                    <div>
+                                        <label className="admin-label">Start Date *</label>
+                                        <input required type="date" className="admin-input" value={offerForm.startDate} onChange={e => setOfferForm({ ...offerForm, startDate: e.target.value })} />
+                                    </div>
+                                    <div>
+                                        <label className="admin-label">End Date *</label>
+                                        <input required type="date" className="admin-input" value={offerForm.endDate} onChange={e => setOfferForm({ ...offerForm, endDate: e.target.value })} />
+                                    </div>
+                                </div>
+
+                                {/* Description */}
+                                <div>
+                                    <label className="admin-label">Description *</label>
+                                    <textarea required className="admin-input" style={{ height: '100px', resize: 'vertical' }} value={offerForm.description} onChange={e => setOfferForm({ ...offerForm, description: e.target.value })} placeholder="Describe the offer product..." />
+                                </div>
+
+                                {/* Discount preview */}
+                                {offerForm.price && offerForm.offerPrice && parseFloat(offerForm.price) > 0 && (
+                                    <div style={{ background: '#f0fdf4', border: '1px solid #86efac', borderRadius: '10px', padding: '12px 16px', display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+                                        <span style={{ fontSize: '13px', color: '#166534', fontWeight: '700' }}>
+                                            Discount: {Math.round(((parseFloat(offerForm.price) - parseFloat(offerForm.offerPrice)) / parseFloat(offerForm.price)) * 100)}%
+                                        </span>
+                                        <span style={{ fontSize: '13px', color: '#166534', fontWeight: '700' }}>
+                                            Customer Saves: ₹{(parseFloat(offerForm.price) - parseFloat(offerForm.offerPrice)).toLocaleString('en-IN')}
+                                        </span>
+                                    </div>
+                                )}
+
+                                <button type="submit" disabled={isOfferUploading} className="admin-btn admin-btn-primary" style={{ width: '100%', padding: '14px' }}>
+                                    {isOfferUploading ? <><Loader2 size={18} className="spin" /> Publishing...</> : (isEditingOffer ? 'Update Offer' : 'Publish Offer 🔥')}
+                                </button>
+                            </form>
+                        </div>
+
+                        {/* ── Offers List ── */}
+                        <div className="admin-card">
+                            <h3 style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                <Tag size={18} style={{ color: '#d4af37' }} /> All Offers
+                                <span style={{ marginLeft: 'auto', fontSize: '13px', color: '#94a3b8', fontWeight: '400' }}>{offers.length} total</span>
+                            </h3>
+
+                            {offers.length === 0 ? (
+                                <div style={{ textAlign: 'center', padding: '60px 20px', color: '#94a3b8' }}>
+                                    <Tag size={48} style={{ margin: '0 auto 16px', display: 'block', opacity: 0.3 }} />
+                                    <p>No offers created yet. Use the form above to publish your first offer.</p>
+                                </div>
+                            ) : (
+                                <div style={{ overflowX: 'auto' }}>
+                                    <table className="admin-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Offer</th>
+                                                <th>Price</th>
+                                                <th>Offer Price</th>
+                                                <th>Stock</th>
+                                                <th>Duration</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {offers.map(o => {
+                                                const st = getOfferStatus(o);
+                                                return (
+                                                    <tr key={o._id}>
+                                                        <td>
+                                                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                                                <img
+                                                                    src={o.imageUrl || 'https://placehold.co/40x40/0b3d2e/d4af37?text=O'}
+                                                                    alt={o.name}
+                                                                    loading="lazy"
+                                                                    style={{ width: '40px', height: '40px', borderRadius: '8px', objectFit: 'cover', flexShrink: 0 }}
+                                                                    onError={e => { e.target.src = 'https://placehold.co/40x40/0b3d2e/d4af37?text=O'; }}
+                                                                />
+                                                                <div>
+                                                                    <strong style={{ display: 'block', maxWidth: '180px' }}>{o.name}</strong>
+                                                                    <small style={{ color: '#64748b' }}>{o.category}</small>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td><span style={{ textDecoration: 'line-through', color: '#94a3b8' }}>₹{o.price}</span></td>
+                                                        <td><strong style={{ color: '#16a34a' }}>₹{o.offerPrice}</strong></td>
+                                                        <td style={{ fontWeight: '700', color: o.stock <= 0 ? '#ef4444' : o.stock < 10 ? '#f59e0b' : '#0b3d2e' }}>{o.stock}</td>
+                                                        <td style={{ fontSize: '12px', color: '#475569' }}>
+                                                            <div>{new Date(o.startDate).toLocaleDateString('en-IN')}</div>
+                                                            <div style={{ color: '#94a3b8' }}>→ {new Date(o.endDate).toLocaleDateString('en-IN')}</div>
+                                                        </td>
+                                                        <td>
+                                                            <span className="admin-badge" style={{ background: st.bg, color: st.color, border: `1px solid ${st.color}30` }}>
+                                                                {st.label}
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <div style={{ display: 'flex', gap: '8px' }}>
+                                                                <button onClick={() => handleEditOffer(o)} className="admin-btn" style={{ padding: '7px 12px', background: '#f1f5f9', fontSize: '12px' }} aria-label="Edit offer"><Edit2 size={14} /></button>
+                                                                <button onClick={() => handleDeleteOffer(o._id)} className="admin-btn admin-btn-danger" style={{ padding: '7px 12px', fontSize: '12px' }} aria-label="Delete offer"><Trash2 size={14} /></button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
                         </div>
                     </div>
                 );

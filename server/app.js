@@ -44,6 +44,7 @@ app.use('/api/admin', require('./routes/adminRoutes'));
 app.use('/api/messages', require('./routes/messageRoutes'));
 app.use('/api/coupons', require('./routes/couponRoutes'));
 app.use('/api/orders', require('./routes/orderRoutes'));
+app.use('/api/offers', require('./routes/offerRoutes'));
 
 // API Diagnostic Routes
 app.get('/', (req, res) => {
