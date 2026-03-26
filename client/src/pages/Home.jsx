@@ -234,7 +234,7 @@ const Home = () => {
             </section>
 
             {/* SPECIAL LIMITED OFFERS — shown above Best Sellers */}
-            <SpecialOffers onAddToCart={() => {}} />
+            <SpecialOffers />
 
             {/* MAIN PRODUCTS SECTION */}
                 <ShopGrid title="Our Best Sellers" isHomePage={true} id="products" />

@@ -11,7 +11,7 @@ const OfferSchema = new mongoose.Schema({
     badge: { type: String, default: 'Limited Offer' },
     stock: { type: Number, default: 0, min: 0 },
     rating: { type: Number, default: 0, min: 0, max: 5 },
-    condition: { type: String, default: 'New' },     // New / Refurbished / Used
+    condition: { type: String, default: 'First 60 customers only allowed' },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
     isActive: { type: Boolean, default: true },

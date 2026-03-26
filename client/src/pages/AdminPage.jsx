@@ -42,7 +42,7 @@ function AdminPage({ onLogout }) {
     const [offerForm, setOfferForm] = useState({
         name: '', description: '', imageUrl: '', price: '',
         offerPrice: '', category: 'General', badge: 'Limited Offer',
-        stock: '', rating: '', condition: 'New',
+        stock: '', rating: '', condition: 'First 60 customers only allowed',
         startDate: '', endDate: ''
     });
     const [offerPreviewUrls, setOfferPreviewUrls] = useState([]);
@@ -395,7 +395,7 @@ function AdminPage({ onLogout }) {
     };
 
     const resetOfferForm = () => {
-        setOfferForm({ name: '', description: '', imageUrl: '', price: '', offerPrice: '', category: 'General', badge: 'Limited Offer', stock: '', rating: '', condition: 'New', startDate: '', endDate: '' });
+        setOfferForm({ name: '', description: '', imageUrl: '', price: '', offerPrice: '', category: 'General', badge: 'Limited Offer', stock: '', rating: '', condition: 'First 60 customers only allowed', startDate: '', endDate: '' });
         setOfferPreviewUrls([]);
         setIsEditingOffer(false);
         setEditingOfferId(null);
@@ -1213,9 +1213,13 @@ function AdminPage({ onLogout }) {
                                     </div>
                                     <div>
                                         <label className="admin-label">Condition</label>
-                                        <select className="admin-input" value={offerForm.condition} onChange={e => setOfferForm({ ...offerForm, condition: e.target.value })}>
-                                            <option>New</option><option>Refurbished</option><option>Used</option>
-                                        </select>
+                                        <input
+                                            type="text"
+                                            className="admin-input"
+                                            value={offerForm.condition}
+                                            onChange={e => setOfferForm({ ...offerForm, condition: e.target.value })}
+                                            placeholder="e.g. First 60 customers only allowed"
+                                        />
                                     </div>
                                     <div>
                                         <label className="admin-label">Badge Label</label>
