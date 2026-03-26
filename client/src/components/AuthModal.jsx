@@ -152,7 +152,7 @@ const AuthModal = ({ isOpen, onClose }) => {
                 const res = await login(formData.email, formData.password, rememberMe);
                 setIsVerifying(false);
                 if (res.success) {
-                    if (formData.email === 'shreenithya111@gmail.com') {
+                    if (formData.email === 'thesmgroups@gmail.com') {
                         window.location.href = '/admin';
                         return;
                     }
@@ -176,7 +176,7 @@ const AuthModal = ({ isOpen, onClose }) => {
                 const res = await register(formData.name, formData.email, formData.phone, formData.password, '', '', '', '', '');
                 setIsVerifying(false);
                 if (res.success) {
-                    if (formData.email === 'shreenithya111@gmail.com') {
+                    if (formData.email === 'thesmgroups@gmail.com') {
                         window.location.href = '/admin';
                         return;
                     }

@@ -1,7 +1,7 @@
 /**
  * VENTHULIR — DATABASE CLEANUP SCRIPT
  * Removes ALL test/dummy data while keeping:
- *   ✅ Real admin account (shreenithya111@gmail.com)
+ *   ✅ Real admin account (thesmgroups@gmail.com)
  *   ✅ Real products (non-test-named)
  * Removes:
  *   🗑  All Orders
@@ -14,7 +14,7 @@
 require('dotenv').config({ path: __dirname + '/.env' });
 const mongoose = require('mongoose');
 
-const ADMIN_EMAIL = 'shreenithya111@gmail.com';
+const ADMIN_EMAIL = 'thesmgroups@gmail.com';
 
 // Test product name prefixes created by Jest test suites
 const TEST_PREFIXES = [

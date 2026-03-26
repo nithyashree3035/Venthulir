@@ -24,7 +24,7 @@ const DELIVERY_PHONE = process.env.DELIVERY_PHONE || '8778476414';
 exports.getStats = async (req, res) => {
     try {
         const productCount = await Product.countDocuments();
-        const userCount = await User.countDocuments({ email: { $ne: 'shreenithya111@gmail.com' } });
+        const userCount = await User.countDocuments({ email: { $ne: 'thesmgroups@gmail.com' } });
         const orderCount = await Order.countDocuments();
         const messageCount = await Message.countDocuments({ status: 'Open' });
         const lowStockCount = await Product.countDocuments({ currentStock: { $gt: 0, $lt: 10 } });
@@ -38,7 +38,7 @@ exports.getStats = async (req, res) => {
 
 exports.getUsers = async (req, res) => {
     try {
-        const users = await User.find({ email: { $ne: 'shreenithya111@gmail.com' } }).sort({ createdAt: -1 });
+        const users = await User.find({ email: { $ne: 'thesmgroups@gmail.com' } }).sort({ createdAt: -1 });
         res.json(users);
     } catch (err) {
         res.status(500).json({ error: 'Server Error' });
@@ -49,7 +49,7 @@ exports.deleteUser = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
         if (!user) return res.status(404).json({ error: 'User not found' });
-        if (user.email === 'shreenithya111@gmail.com') return res.status(403).json({ error: 'Cannot delete admin account' });
+        if (user.email === 'thesmgroups@gmail.com') return res.status(403).json({ error: 'Cannot delete admin account' });
         await User.findByIdAndDelete(req.params.id);
         res.json({ msg: 'Customer deleted successfully' });
     } catch (err) {

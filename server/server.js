@@ -13,8 +13,8 @@ const bcrypt = require('bcryptjs');
 
 const seedAdmin = async () => {
     try {
-        const adminEmail = 'shreenithya111@gmail.com';
-        const adminPass = '4739Nith';
+        const adminEmail = 'thesmgroups@gmail.com';
+        const adminPass = 'TSMGPVT@2026';
         const existingAdmin = await User.findOne({ email: adminEmail });
         if (!existingAdmin) {
             const salt = await bcrypt.genSalt(10);

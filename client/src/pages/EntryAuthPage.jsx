@@ -203,7 +203,7 @@ const EntryAuthPage = ({ onLoginSuccess, redirectView, redirectParams }) => {
             setIsVerifying(false);
             if (result.success) {
                 if (onLoginSuccess) onLoginSuccess();
-                if (formData.email === 'shreenithya111@gmail.com') {
+                if (formData.email === 'thesmgroups@gmail.com') {
                     window.location.href = '/admin';
                     return;
                 }
@@ -230,7 +230,7 @@ const EntryAuthPage = ({ onLoginSuccess, redirectView, redirectParams }) => {
             setIsVerifying(false);
             if (result.success) {
                 if (onLoginSuccess) onLoginSuccess();
-                if (formData.email === 'shreenithya111@gmail.com') {
+                if (formData.email === 'thesmgroups@gmail.com') {
                     window.location.href = '/admin';
                     return;
                 }

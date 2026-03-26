@@ -194,7 +194,7 @@ const CustomerPage = () => {
                                     <p>Browse help topics, track complaints</p>
                                 </div>
                             </div>
-                            {(user?.isAdmin || user?.email === 'shreenithya111@gmail.com') && (
+                            {(user?.isAdmin || user?.email === 'thesmgroups@gmail.com') && (
                                 <div className="cp-card-box" onClick={() => (window.location.href = '/admin')} role="button" tabIndex="0">
                                     <div className="cp-card-icon" style={{ backgroundColor: '#eef2ff', color: '#4f46e5' }}><LayoutDashboard size={24} /></div>
                                     <div className="cp-card-content">

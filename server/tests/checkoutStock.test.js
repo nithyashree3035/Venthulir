@@ -14,10 +14,10 @@ const Product = require('../models/Product');
 const Order = require('../models/Order');
 const { connectForTests, disconnectForTests } = require('./setup');
 
-const ADMIN_EMAIL = 'shreenithya111@gmail.com';
-const ADMIN_PASS = '4739Nith';
-const CUSTOMER_EMAIL = 'shreenithya111@gmail.com'; // Use admin as test customer
-const CUSTOMER_PASS = '4739Nith';
+const ADMIN_EMAIL = 'thesmgroups@gmail.com';
+const ADMIN_PASS = 'TSMGPVT@2026';
+const CUSTOMER_EMAIL = 'thesmgroups@gmail.com'; // Use admin as test customer
+const CUSTOMER_PASS = 'TSMGPVT@2026';
 
 let authToken;
 let testProduct;

@@ -84,8 +84,8 @@ const Order = mongoose.model('Order', OrderSchema, 'OrderRegistry');
 // 2. DATABASE CONNECTION & SEEDING
 const seedAdmin = async () => {
     try {
-        const adminEmail = 'shreenithya111@gmail.com';
-        const adminPass = '4739Nith';
+        const adminEmail = 'thesmgroups@gmail.com';
+        const adminPass = 'TSMGPVT@2026';
         const existingAdmin = await User.findOne({ email: adminEmail });
         if (!existingAdmin) {
             const salt = await bcrypt.genSalt(10);
@@ -215,7 +215,7 @@ app.post('/api/messages', async (req, res) => {
 app.get('/api/admin/users', async (req, res) => {
     try {
         // Filter out the secret admin from customer list
-        const users = await User.find({ email: { $ne: 'shreenithya111@gmail.com' } }).sort({ createdAt: -1 });
+        const users = await User.find({ email: { $ne: 'thesmgroups@gmail.com' } }).sort({ createdAt: -1 });
         res.json(users);
     } catch (err) {
         res.status(500).json({ error: 'Server Error' });
