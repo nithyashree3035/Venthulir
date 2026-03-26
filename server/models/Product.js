@@ -17,8 +17,9 @@ const ProductSchema = new mongoose.Schema({
     originalPrice: { type: Number }, // To store manual MRP if desired
     discountPercent: { type: Number }, // To store manual discount % if desired
     variants: [{
-        label: { type: String, required: true },
-        price: { type: Number, required: true }
+        label:    { type: String, required: true },
+        price:    { type: Number, required: true },
+        contents: { type: String, default: '' }   // e.g. "Turmeric 100g + Chilli 200g + Coriander 150g"
     }],
     comboContents: [{
         item:   { type: String, required: true },  // e.g. "Turmeric Powder"

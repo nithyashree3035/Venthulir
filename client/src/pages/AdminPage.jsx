@@ -28,7 +28,7 @@ function AdminPage({ onLogout }) {
     const [orderStartDate, setOrderStartDate] = useState('');
     const [orderEndDate, setOrderEndDate] = useState('');
     const [variants, setVariants] = useState([]);
-    const [variantInput, setVariantInput] = useState({ label: '', price: '' });
+    const [variantInput, setVariantInput] = useState({ label: '', price: '', contents: '' });
     const [comboContents, setComboContents] = useState([]);
     const [comboInput, setComboInput] = useState({ item: '', weight: '' });
     const [showCustomUnit, setShowCustomUnit] = useState(false);
@@ -169,9 +169,10 @@ function AdminPage({ onLogout }) {
 
         setVariants([...variants, {
             label: variantInput.label,
-            price: parseFloat(finalPrice)
+            price: parseFloat(finalPrice),
+            contents: variantInput.contents.trim() || ''
         }]);
-        setVariantInput({ label: '', price: '' });
+        setVariantInput({ label: '', price: '', contents: '' });
         setShowCustomUnit(false);
     };
 
@@ -691,16 +692,56 @@ function AdminPage({ onLogout }) {
 
                                 <div style={{ background: '#f1f5f9', padding: '20px', borderRadius: '12px' }}>
                                     <label className="admin-label">Measurements & Pricing</label>
-                                    <div style={{ display: 'flex', gap: '10px', marginBottom: '15px' }}>
-                                        <input type="text" placeholder="Size (50g)" className="admin-input" value={variantInput.label} onChange={e => setVariantInput({ ...variantInput, label: e.target.value })} />
-                                        <input type="number" placeholder="Price" className="admin-input" value={variantInput.price} onChange={e => setVariantInput({ ...variantInput, price: e.target.value })} />
-                                        <button type="button" onClick={handleAddVariant} className="admin-btn admin-btn-primary">Add</button>
+                                    <p style={{ fontSize: '11px', color: '#94a3b8', margin: '0 0 12px' }}>For combo packs: fill the <strong>Contents</strong> field to list items with weights (e.g. Turmeric 100g + Chilli 200g)</p>
+
+                                    {/* Row 1: label + price */}
+                                    <div style={{ display: 'flex', gap: '10px', marginBottom: '8px', flexWrap: 'wrap' }}>
+                                        <input
+                                            type="text"
+                                            placeholder="Size / Label (e.g. 500g or Masala Combo)"
+                                            className="admin-input"
+                                            style={{ flex: 2, minWidth: '140px' }}
+                                            value={variantInput.label}
+                                            onChange={e => setVariantInput({ ...variantInput, label: e.target.value })}
+                                        />
+                                        <input
+                                            type="number"
+                                            placeholder="Price (₹)"
+                                            className="admin-input"
+                                            style={{ flex: 1, minWidth: '90px' }}
+                                            value={variantInput.price}
+                                            onChange={e => setVariantInput({ ...variantInput, price: e.target.value })}
+                                        />
                                     </div>
+
+                                    {/* Row 2: combo contents (optional) */}
+                                    <div style={{ display: 'flex', gap: '10px', marginBottom: '15px', flexWrap: 'wrap' }}>
+                                        <input
+                                            type="text"
+                                            placeholder="Combo contents with weight: e.g. Turmeric 100g + Chilli 200g + Coriander 150g"
+                                            className="admin-input"
+                                            style={{ flex: 3, minWidth: '200px', borderColor: variantInput.contents ? '#0b2e1f' : undefined }}
+                                            value={variantInput.contents}
+                                            onChange={e => setVariantInput({ ...variantInput, contents: e.target.value })}
+                                        />
+                                        <button type="button" onClick={handleAddVariant} className="admin-btn admin-btn-primary" style={{ flexShrink: 0 }}>Add</button>
+                                    </div>
+
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                                         {variants.map((v, i) => (
-                                            <div key={i} style={{ display: 'flex', justifyContent: 'space-between', background: '#fff', padding: '10px 15px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-                                                <strong>{v.label} - ₹{v.price}</strong>
-                                                <button type="button" onClick={() => removeVariant(i)} style={{ color: '#ef4444', border: 'none', background: 'none', cursor: 'pointer' }} aria-label="Remove variant">✕</button>
+                                            <div key={i} style={{ background: '#fff', padding: '10px 15px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                    <strong style={{ color: '#0b2e1f' }}>{v.label} — ₹{v.price}</strong>
+                                                    <button type="button" onClick={() => removeVariant(i)} style={{ color: '#ef4444', border: 'none', background: 'none', cursor: 'pointer', fontSize: '16px' }} aria-label="Remove variant">✕</button>
+                                                </div>
+                                                {v.contents && (
+                                                    <div style={{ marginTop: '5px', fontSize: '12px', color: '#64748b', display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+                                                        <span style={{ fontWeight: 700, color: '#94a3b8' }}>📦 Contents:</span>
+                                                        {v.contents.split('+').map((item, j) => (
+                                                            <span key={j} style={{ background: '#f0fdf4', border: '1px solid #86efac', color: '#166534', padding: '1px 8px', borderRadius: '12px', fontWeight: 600 }}>{item.trim()}</span>
+                                                        ))}
+                                                    </div>
+                                                )}
                                             </div>
                                         ))}
                                     </div>

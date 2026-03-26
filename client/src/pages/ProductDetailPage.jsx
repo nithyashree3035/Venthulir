@@ -336,6 +336,23 @@ const ProductDetailPage = ({ id }) => {
                                         </button>
                                     ))}
                                 </div>
+
+                                {/* Combo breakdown — shown when selected variant has contents */}
+                                {selectedVariant?.contents && (
+                                    <div style={{ marginTop: '16px', paddingTop: '14px', borderTop: '1px dashed #e5e7eb' }}>
+                                        <p style={{ fontSize: '11px', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.8px', margin: '0 0 10px' }}>
+                                            📦 What's inside this pack:
+                                        </p>
+                                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                                            {selectedVariant.contents.split('+').map((item, i) => (
+                                                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '6px', background: '#fff', border: '1px solid #f0ede0', borderRadius: '8px', padding: '6px 12px' }}>
+                                                    <span style={{ width: '18px', height: '18px', borderRadius: '50%', background: '#0b3d2e', color: '#d4af37', fontSize: '10px', fontWeight: 900, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{i + 1}</span>
+                                                    <span style={{ fontSize: '13px', fontWeight: 700, color: '#0b3d2e' }}>{item.trim()}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         )}
 
