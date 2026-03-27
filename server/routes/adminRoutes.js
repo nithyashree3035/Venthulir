@@ -37,5 +37,6 @@ router.get('/logs', adminController.getLogs);
 // Inventory Dashboard
 router.get('/inventory', inventoryController.getInventory);
 router.put('/inventory/:productId/restock', inventoryController.restockProduct);
+router.put('/inventory/offers/:offerId/restock', inventoryController.restockOffer);
 
 module.exports = router;

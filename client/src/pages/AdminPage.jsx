@@ -21,6 +21,7 @@ function AdminPage({ onLogout }) {
     const [coupons, setCoupons] = useState([]);
     const [inventory, setInventory] = useState({ totalProducts: 0, totalStock: 0, lowStockProducts: [], outOfStockProducts: [], allProducts: [] });
     const [restockInputs, setRestockInputs] = useState({});
+    const [offerRestockInputs, setOfferRestockInputs] = useState({});
     const [prodForm, setProdForm] = useState({ productCode: '', name: '', price: '', description: '', category: 'General', badge: '', shippingCharge: 0, initialStock: '', originalPrice: '', discountPercent: '' });
     const [couponForm, setCouponForm] = useState({ couponCode: '', productId: '', maxUses: 25, expiryDate: '', discountPercentage: 10, status: 'Active' });
     const [isEditingCoupon, setIsEditingCoupon] = useState(false);
@@ -152,6 +153,18 @@ function AdminPage({ onLogout }) {
             fetchData();
         } catch (err) {
             alert('Restock failed: ' + err.message);
+        }
+    };
+
+    const handleRestockOffer = async (offerId) => {
+        const qty = parseInt(offerRestockInputs[offerId] || 0);
+        if (!qty || qty <= 0) return alert('Enter a valid quantity.');
+        try {
+            await api.put(`/admin/inventory/offers/${offerId}/restock`, { quantity: qty });
+            setOfferRestockInputs(prev => ({ ...prev, [offerId]: '' }));
+            fetchData();
+        } catch (err) {
+            alert('Offer restock failed: ' + err.message);
         }
     };
 
@@ -866,26 +879,39 @@ function AdminPage({ onLogout }) {
             case 'Inventory':
                 return (
                     <div className="fade-in">
+                        {/* ── Summary Stats ── */}
                         <div className="admin-stats-grid">
                             <div className="stat-card" style={{ borderLeft: '4px solid #0b3d2e' }}>
                                 <h3>Total Products</h3>
                                 <p className="stat-value">{inventory.totalProducts}</p>
                             </div>
                             <div className="stat-card" style={{ borderLeft: '4px solid #3b82f6' }}>
-                                <h3>Units In Stock</h3>
+                                <h3>Product Stock</h3>
                                 <p className="stat-value" style={{ color: '#3b82f6' }}>{inventory.totalStock}</p>
+                            </div>
+                            <div className="stat-card" style={{ borderLeft: '4px solid #d4af37' }}>
+                                <h3>Total Offers</h3>
+                                <p className="stat-value" style={{ color: '#d4af37' }}>{inventory.totalOffers || 0}</p>
+                            </div>
+                            <div className="stat-card" style={{ borderLeft: '4px solid #8b5cf6' }}>
+                                <h3>Offer Stock</h3>
+                                <p className="stat-value" style={{ color: '#8b5cf6' }}>{inventory.totalOfferStock || 0}</p>
                             </div>
                             <div className="stat-card" style={{ borderLeft: '4px solid #f59e0b' }}>
                                 <h3>Low Stock (&lt;10)</h3>
-                                <p className="stat-value" style={{ color: '#f59e0b' }}>{inventory.lowStockProducts?.length || 0}</p>
+                                <p className="stat-value" style={{ color: '#f59e0b' }}>{(inventory.lowStockProducts?.length || 0) + (inventory.lowStockOffers?.length || 0)}</p>
                             </div>
                             <div className="stat-card" style={{ borderLeft: '4px solid #ef4444' }}>
                                 <h3>Out of Stock</h3>
-                                <p className="stat-value" style={{ color: '#ef4444' }}>{inventory.outOfStockProducts?.length || 0}</p>
+                                <p className="stat-value" style={{ color: '#ef4444' }}>{(inventory.outOfStockProducts?.length || 0) + (inventory.outOfStockOffers?.length || 0)}</p>
                             </div>
                         </div>
-                        <div className="admin-card">
-                            <h3 style={{ marginBottom: 16 }}>Product Stock Levels</h3>
+
+                        {/* ── Products Stock Table ── */}
+                        <div className="admin-card" style={{ marginBottom: 24 }}>
+                            <h3 style={{ marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
+                                <Package size={18} style={{ color: '#0b3d2e' }} /> Product Stock Levels
+                            </h3>
                             <div style={{ overflowX: 'auto' }}>
                                 <table className="admin-table">
                                     <thead>
@@ -942,6 +968,79 @@ function AdminPage({ onLogout }) {
                                                                 className="admin-btn admin-btn-primary"
                                                                 style={{ padding: '6px 12px', fontSize: '12px' }}
                                                                 aria-label="Add stock"
+                                                            >+ Add</button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        {/* ── Offers Stock Table ── */}
+                        <div className="admin-card">
+                            <h3 style={{ marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
+                                <Tag size={18} style={{ color: '#d4af37' }} /> Offer Stock Levels
+                            </h3>
+                            <div style={{ overflowX: 'auto' }}>
+                                <table className="admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Offer</th>
+                                            <th>Category</th>
+                                            <th>Offer Price</th>
+                                            <th>Current Stock</th>
+                                            <th>Status</th>
+                                            <th>Restock</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {(inventory.allOffers || []).length === 0 ? (
+                                            <tr><td colSpan="6" style={{ textAlign: 'center', color: '#94a3b8', padding: '30px' }}>No offers found.</td></tr>
+                                        ) : (inventory.allOffers || []).map(o => {
+                                            const isOut = o.stock === 0;
+                                            const isLow = !isOut && o.stock < 10;
+                                            return (
+                                                <tr key={o._id} style={{ background: isOut ? '#fff5f5' : isLow ? '#fffbeb' : 'inherit' }}>
+                                                    <td>
+                                                        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                                                            <img
+                                                                src={o.imageUrl || 'https://placehold.co/36x36/0b3d2e/d4af37?text=O'}
+                                                                alt=""
+                                                                style={{ width: 36, height: 36, borderRadius: 6, objectFit: 'cover' }}
+                                                                onError={e => { e.target.src = 'https://placehold.co/36x36/0b3d2e/d4af37?text=O'; }}
+                                                            />
+                                                            <strong>{o.name}</strong>
+                                                        </div>
+                                                    </td>
+                                                    <td>{o.category}</td>
+                                                    <td style={{ color: '#16a34a', fontWeight: 700 }}>₹{o.offerPrice}</td>
+                                                    <td style={{ fontWeight: 800, color: isOut ? '#ef4444' : isLow ? '#f59e0b' : '#0b3d2e' }}>
+                                                        {o.stock}
+                                                    </td>
+                                                    <td>
+                                                        {isOut ? <span className="admin-badge" style={{ background: '#fee2e2', color: '#ef4444' }}>OUT OF STOCK</span>
+                                                            : isLow ? <span className="admin-badge" style={{ background: '#fef3c7', color: '#d97706' }}>LOW STOCK</span>
+                                                                : <span className="admin-badge" style={{ background: '#dcfce7', color: '#166534' }}>IN STOCK</span>}
+                                                    </td>
+                                                    <td>
+                                                        <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+                                                            <input
+                                                                type="number" min="1"
+                                                                placeholder="Qty"
+                                                                className="admin-input"
+                                                                style={{ width: 70, padding: '6px 8px' }}
+                                                                value={offerRestockInputs[o._id] || ''}
+                                                                onChange={e => setOfferRestockInputs(prev => ({ ...prev, [o._id]: e.target.value }))}
+                                                                aria-label="Restock offer quantity"
+                                                            />
+                                                            <button
+                                                                onClick={() => handleRestockOffer(o._id)}
+                                                                className="admin-btn admin-btn-primary"
+                                                                style={{ padding: '6px 12px', fontSize: '12px', background: '#7c3aed' }}
+                                                                aria-label="Add offer stock"
                                                             >+ Add</button>
                                                         </div>
                                                     </td>
