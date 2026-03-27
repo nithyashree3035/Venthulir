@@ -67,6 +67,17 @@ const CheckoutPage = ({ viewParams = {} }) => {
                 const list = Array.isArray(data.products) ? data.products : (Array.isArray(data) ? data : []);
                 found = list.find(p => String(p._id) === String(id) || String(p.id) === String(id));
             }
+            if (!found || found.message) {
+                try {
+                    const offerData = await api.get('/offers/active');
+                    const offersList = Array.isArray(offerData) ? offerData : [];
+                    found = offersList.find(o => String(o._id) === String(id) || String(o.id) === String(id));
+                    if (found) {
+                        found.price = found.offerPrice;
+                        found.isOffer = true;
+                    }
+                } catch (e) {}
+            }
             if (found) {
                 setProduct(found);
                 setQuantity(qty);

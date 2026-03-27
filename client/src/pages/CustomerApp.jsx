@@ -1,13 +1,29 @@
 import React, { Suspense } from 'react';
 import Home from './Home';
-const ProductDetailPage = React.lazy(() => import('./ProductDetailPage'));
-const CartPage = React.lazy(() => import('./CartPage'));
-const CheckoutPage = React.lazy(() => import('./CheckoutPage'));
-const CustomerPage = React.lazy(() => import('./CustomerPage'));
-const WishlistPage = React.lazy(() => import('./WishlistPage'));
-const EntryAuthPage = React.lazy(() => import('./EntryAuthPage'));
-const ShopGrid = React.lazy(() => import('../components/ShopGrid'));
-const JournalPage = React.lazy(() => import('./JournalPage'));
+
+// Handles Vite dynamic import failures due to cached index.html
+const safeLazy = (importFunc) => React.lazy(() => 
+    importFunc().catch((err) => {
+        if (err.message.includes('fetch dynamically imported module') || err.message.includes('Failed to fetch') || err.message.includes('Importing a module script failed')) {
+            window.sessionStorage.setItem('venthulir_reloaded', 'true');
+            if (window.sessionStorage.getItem('venthulir_reloaded_count') < 3) {
+                 const count = parseInt(window.sessionStorage.getItem('venthulir_reloaded_count') || 0) + 1;
+                 window.sessionStorage.setItem('venthulir_reloaded_count', count);
+                 window.location.reload(true);
+            }
+        }
+        return Promise.reject(err);
+    })
+);
+
+const ProductDetailPage = safeLazy(() => import('./ProductDetailPage'));
+const CartPage = safeLazy(() => import('./CartPage'));
+const CheckoutPage = safeLazy(() => import('./CheckoutPage'));
+const CustomerPage = safeLazy(() => import('./CustomerPage'));
+const WishlistPage = safeLazy(() => import('./WishlistPage'));
+const EntryAuthPage = safeLazy(() => import('./EntryAuthPage'));
+const ShopGrid = safeLazy(() => import('../components/ShopGrid'));
+const JournalPage = safeLazy(() => import('./JournalPage'));
 import { useAppNavigation } from '../context/NavigationContext';
 import { Helmet } from 'react-helmet-async';
 
