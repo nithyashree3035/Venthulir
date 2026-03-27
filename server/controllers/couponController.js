@@ -10,7 +10,7 @@ const OWNER_EMAIL = process.env.OWNER_EMAIL || process.env.EMAIL_USER;
 // Validate Coupon
 exports.validateCoupon = async (req, res) => {
     try {
-        const { code, productId } = req.body;
+        const { code, productId, customerEmail } = req.body;
         if (!code) return res.status(400).json({ error: 'Coupon code required' });
 
         const coupon = await Coupon.findOne({ couponCode: code.toUpperCase() });
@@ -19,6 +19,11 @@ exports.validateCoupon = async (req, res) => {
         if (coupon.status !== 'Active') return res.status(400).json({ error: 'Coupon is inactive' });
         if (new Date(coupon.expiryDate) < new Date()) return res.status(400).json({ error: 'Coupon has expired' });
         if (coupon.usedCount >= coupon.maxUses) return res.status(400).json({ error: 'Coupon limit reached' });
+
+        if (customerEmail) {
+            const hasUsed = await Order.findOne({ customerEmail, couponUsed: coupon.couponCode });
+            if (hasUsed) return res.status(400).json({ error: 'You have already used this coupon code' });
+        }
 
         // If coupon is tied to a specific product
         if (coupon.productId && String(coupon.productId) !== String(productId)) {
@@ -50,6 +55,11 @@ exports.applyCheckout = async (req, res) => {
                 return res.status(400).json({ error: 'Coupon is no longer valid' });
             }
 
+            if (customerEmail) {
+                const hasUsed = await Order.findOne({ customerEmail, couponUsed: coupon.couponCode });
+                if (hasUsed) return res.status(400).json({ error: 'You have already used this coupon code' });
+            }
+
             // Increment usage
             coupon.usedCount += 1;
             await coupon.save();
@@ -72,7 +82,7 @@ exports.applyCheckout = async (req, res) => {
             originalAmount: originalAmount || totalAmount,
             shippingCharge: shippingCharge || 0,
             discountAmount: discountAmount || 0,
-            couponUsed: couponUsed || null,
+            couponUsed: (couponCode && typeof couponCode === 'string') ? couponCode.toUpperCase() : null,
             totalAmount: finalAmount,
             paymentMethod: 'Cash on Delivery',
             status: 'Processing'

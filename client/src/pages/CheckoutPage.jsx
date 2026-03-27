@@ -148,7 +148,7 @@ const CheckoutPage = ({ viewParams = {} }) => {
         setCouponError('');
         try {
             const productId = isCartMode ? null : (product?._id || product?.id);
-            const res = await api.post('/coupons/validate', { code: couponInput, productId });
+            const res = await api.post('/coupons/validate', { code: couponInput, productId, customerEmail: user?.email });
             if (res.valid) {
                 setAppliedCoupon({ code: res.couponCode, discountPercentage: res.discountPercentage });
                 setCouponInput('');
