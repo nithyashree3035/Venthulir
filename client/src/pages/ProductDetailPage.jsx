@@ -280,17 +280,17 @@ const ProductDetailPage = ({ id }) => {
 
                                 return (
                                     <>
-                                        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '15px', marginBottom: '10px' }}>
-                                            <span style={{ fontSize: '42px', color: '#cc0c39', fontWeight: '300', letterSpacing: '-2px' }}>
+                                        <div className="p-price-display-wrapper">
+                                            <span className="p-discount">
                                                 -{disc}%
                                             </span>
-                                            <div style={{ display: 'flex', alignItems: 'flex-start', marginTop: '8px' }}>
-                                                <span className="p-currency" style={{ fontSize: '24px', fontWeight: 'bold' }}>₹</span>
-                                                <span className="p-price" style={{ fontSize: '54px', fontWeight: 'bold', lineHeight: '0.8', letterSpacing: '-3px' }}>
+                                            <div className="p-price-amount-wrap">
+                                                <span className="p-currency">₹</span>
+                                                <span className="p-price">
                                                     {currentPrice}
                                                 </span>
                                             </div>
-                                            {quantity > 1 && <span style={{ color: '#888', fontSize: '22px', fontWeight: 'bold', marginLeft: '12px', alignSelf: 'center' }}>× {quantity}</span>}
+                                            {quantity > 1 && <span className="p-qty-indicator">× {quantity}</span>}
                                         </div>
                                         <div style={{ fontSize: '16px', color: '#565959' }}>
                                             M.R.P.: <span className="mrp-highlight">₹{mrp}</span>
@@ -385,7 +385,7 @@ const ProductDetailPage = ({ id }) => {
                         <p className="p-description">{product.description}</p>
 
                         {/* TRUST BADGES SECTION */}
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '15px', padding: '20px', background: '#fdfcf7', borderRadius: '12px', marginBottom: '30px', border: '1px solid #f0ede0' }}>
+                        <div className="trust-badges-grid">
                             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                 <ShieldCheck size={20} color="#0b3d2e" />
                                 <span style={{ fontSize: '13px', fontWeight: 'bold', color: '#333' }}>Secure Payment</span>

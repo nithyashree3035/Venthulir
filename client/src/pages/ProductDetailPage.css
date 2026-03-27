@@ -128,17 +128,17 @@
 }
 
 .p-title {
-    font-size: 32px;
+    font-size: clamp(28px, 6vw, 52px);
     margin-bottom: 15px;
     color: #0b3d2e;
     line-height: 1.1;
     font-weight: 900;
     letter-spacing: -1px;
+    word-break: break-word;
 }
 
 @media (min-width: 768px) {
     .p-title {
-        font-size: 52px;
         margin-bottom: 20px;
         letter-spacing: -1.5px;
     }
@@ -176,16 +176,40 @@
     color: #0b3d2e;
 }
 
-.p-amount {
-    font-size: 32px;
-    font-weight: 950;
-    color: #0b3d2e;
+.p-price-display-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap; /* allow wrapping on extremely thin screens */
 }
 
-@media (min-width: 768px) {
-    .p-amount {
-        font-size: 40px;
-    }
+.p-discount {
+    font-size: clamp(28px, 6vw, 42px);
+    color: #cc0c39;
+    font-weight: 300;
+    letter-spacing: -1.5px;
+}
+
+.p-price-amount-wrap {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 5px;
+}
+
+.p-price {
+    font-size: clamp(36px, 8vw, 54px);
+    font-weight: bold;
+    line-height: 0.8;
+    letter-spacing: -2px;
+}
+
+.p-qty-indicator {
+    color: #888;
+    font-size: clamp(16px, 4vw, 22px);
+    font-weight: bold;
+    margin-left: 12px;
+    align-self: center;
 }
 
 .mrp-highlight {
@@ -218,6 +242,23 @@
     flex-direction: column;
     gap: 15px;
     margin-bottom: 30px;
+}
+
+.trust-badges-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 20px;
+    background: #fdfcf7;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    border: 1px solid #f0ede0;
+}
+
+@media (min-width: 480px) {
+    .trust-badges-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .quantity-selector {
