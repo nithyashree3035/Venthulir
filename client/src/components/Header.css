@@ -1,8 +1,8 @@
 :root {
-    --royal-green: #1b4d3e;
-    --dark-green: #0b261d;
-    --gold: #d4af37;
-    --cream: #f4f7f4;
+    --royal-green: #0d1f2d;
+    --dark-green: #08131c;
+    --gold: #c9a84c;
+    --cream: #f4f2ec;
 }
 
 /* LAYER 1: THE TICKER */
@@ -46,13 +46,14 @@
 
 /* LAYER 2: MAIN NAV */
 .nav-main {
-    background-color: var(--royal-green);
+    background-color: #0d1f2d;
     padding: 12px 25px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 20px;
     color: white;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.15);
 }
 
 .nav-logo {
@@ -230,8 +231,9 @@
 
 /* LAYER 3: SUB NAV */
 .nav-sub {
-    background-color: #265d4c;
+    background-color: #1a3a4a;
     padding: 8px 25px;
+    border-top: 1px solid rgba(201, 168, 76, 0.12);
 }
 
 .nav-sub ul {

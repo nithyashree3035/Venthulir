@@ -18,8 +18,8 @@
 
 .v-royal-leaf {
     position: absolute;
-    color: #0b3d2e;
-    /* Royal Dark Green */
+    color: #0d1f2d;
+    /* Corporate Deep Navy */
     opacity: 0;
     animation: royalLeafFall linear infinite;
 }
@@ -52,7 +52,7 @@
     background: #082f23;
     padding: 40px;
     border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 .founder-left-col {
@@ -68,6 +68,7 @@
         gap: 50px;
         text-align: left;
     }
+
     .founder-left-col {
         border-right: 1px solid rgba(255, 255, 255, 0.1);
         padding-right: 40px;
@@ -80,11 +81,12 @@
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    border: 4px solid #d4af37;
+    border: 4px solid #c9a84c;
     object-fit: cover;
-    background: #062017;
+    object-position: center top;
+    background: #08131c;
     margin-bottom: 25px;
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+    box-shadow: 0 0 30px rgba(201, 168, 76, 0.2);
 }
 
 .founder-avatar {
@@ -132,14 +134,14 @@
     background: #fff;
     padding: 30px;
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    border: 1px solid rgba(0,0,0,0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
 }
 
 .story-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     border-color: #d4af37;
 }
 
@@ -149,6 +151,7 @@
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -159,9 +162,17 @@
     animation: fadeInUp 0.8s ease forwards;
 }
 
-.delay-1 { animation-delay: 0.2s; }
-.delay-2 { animation-delay: 0.4s; }
-.delay-3 { animation-delay: 0.6s; }
+.delay-1 {
+    animation-delay: 0.2s;
+}
+
+.delay-2 {
+    animation-delay: 0.4s;
+}
+
+.delay-3 {
+    animation-delay: 0.6s;
+}
 
 .interactable-card {
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -187,13 +198,16 @@
         text-align: center;
         padding: 5px 0;
     }
+
     .offer-flex-banner h2 {
         font-size: 16px !important;
     }
+
     .offer-flex-banner p {
         font-size: 13px !important;
         margin-bottom: 5px !important;
     }
+
     .offer-flex-banner button {
         padding: 8px 16px !important;
         font-size: 12px !important;

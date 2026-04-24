@@ -1,20 +1,26 @@
 /* Fonts loaded asynchronously via index.html preload — no @import here */
 
-/* ROYAL COLOR COMBO */
+/* CORPORATE EXECUTIVE COLOR SYSTEM */
 :root {
-  --dark-green: #0b3d2e;
-  --light-green: #2d6b4a;
-  --beige: #f5f1e8;
+  --dark-green: #0d1f2d;
+  /* Deep corporate navy */
+  --light-green: #1a3a4a;
+  /* Corporate slate */
+  --beige: #f4f2ec;
+  /* Executive ivory */
   --pure-white: #ffffff;
   --bg-color: #ffffff;
   --card-bg: #ffffff;
-  --text-main: var(--dark-green);
-  --text-muted: #6b7a74;
-  --border-color: #e8e6df;
-  --input-bg: var(--beige);
+  --text-main: #0d1f2d;
+  --text-muted: #5a6a76;
+  --border-color: #e2dfd6;
+  --input-bg: #f4f2ec;
   --header-height: 100px;
   /* Reduced for mobile */
   --font-main: 'Inter', sans-serif;
+  /* Corporate accent */
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
 }
 
 @media (min-width: 1024px) {
@@ -42,7 +48,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* --- MODERN BOLD HEADLINES --- */
+/* --- CORPORATE BOLD HEADLINES --- */
 h1,
 h2,
 h3,
@@ -111,24 +117,25 @@ button {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--dark-green);
+  background: linear-gradient(180deg, #0d1f2d, #c9a84c);
   border-radius: 4px;
 }
 
-/* --- TOP RUNNING SLOGAN BAR --- */
+/* --- TOP RUNNING SLOGAN BAR — CORPORATE --- */
 .at-top-bar {
-  background: var(--dark-green) !important;
-  color: var(--beige) !important;
+  background: #0d1f2d !important;
+  color: #e8c97a !important;
   height: 32px;
   /* Compact on mobile */
   display: flex !important;
   align-items: center;
   overflow: hidden;
   font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
   font-family: var(--font-main);
   z-index: 5001;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.25);
 }
 
 @media (min-width: 768px) {
@@ -227,11 +234,25 @@ button {
 }
 
 @keyframes notificationSlideIn {
-  from { opacity: 0; transform: translateX(100%) scale(0.8); }
-  to { opacity: 1; transform: translateX(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateX(100%) scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
 }
 
 @keyframes notificationSlideOut {
-  from { opacity: 1; transform: translateX(0) scale(1); }
-  to { opacity: 0; transform: translateX(60%) scale(0.9); }
+  from {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(60%) scale(0.9);
+  }
 }

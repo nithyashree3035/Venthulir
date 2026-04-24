@@ -10,7 +10,7 @@ import './Home.css';
 
 const Home = () => {
     const { appNavigate } = useAppNavigation();
-    
+
     // Removed warmup fetch to prevent chaining critical request penalty
 
     return (
@@ -57,10 +57,10 @@ const Home = () => {
                     zIndex: 0
                 }}></div>
                 {/* Dark overlay so text stays readable */}
-                <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(5, 30, 18, 0.75)', zIndex: 1 }}></div>
+                <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(13, 31, 45, 0.80)', zIndex: 1 }}></div>
 
                 <div style={{ position: 'relative', zIndex: 2, maxWidth: '860px', margin: '0 auto', padding: 'clamp(25px, 5vw, 50px)', background: 'rgba(255, 255, 255, 0.07)', backdropFilter: 'blur(12px)', borderRadius: '20px', border: '1px solid rgba(255, 255, 255, 0.15)', textAlign: 'center', color: '#fff', boxShadow: '0 30px 60px rgba(0,0,0,0.4)', width: '100%', boxSizing: 'border-box' }} className="fade-in-up">
-                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 20px', background: 'rgba(212,175,55,0.25)', color: '#d4af37', borderRadius: '30px', fontWeight: 'bold', fontSize: '13px', marginBottom: '25px', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 20px', background: 'rgba(201, 168, 76, 0.2)', color: '#c9a84c', borderRadius: '30px', fontWeight: 'bold', fontSize: '13px', marginBottom: '25px', letterSpacing: '1px', textTransform: 'uppercase' }}>
                         <Leaf size={14} />
                         Our Origin Story
                     </div>
@@ -84,8 +84,8 @@ const Home = () => {
                     <button
                         onClick={() => { document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' }); }}
                         style={{ marginTop: '35px', background: '#d4af37', color: '#111', padding: '14px 38px', fontSize: 'clamp(15px, 2.5vw, 18px)', fontWeight: 'bold', border: 'none', borderRadius: '50px', cursor: 'pointer', boxShadow: '0 8px 20px rgba(0,0,0,0.25)', transition: 'all 0.3s ease' }}
-                        onMouseEnter={e => { e.currentTarget.style.transform='translateY(-3px)'; e.currentTarget.style.boxShadow='0 14px 28px rgba(0,0,0,0.35)'; }}
-                        onMouseLeave={e => { e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='0 8px 20px rgba(0,0,0,0.25)'; }}
+                        onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 14px 28px rgba(0,0,0,0.35)'; }}
+                        onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.25)'; }}
                     >
                         Experience Purity
                     </button>
@@ -93,9 +93,9 @@ const Home = () => {
             </section>
 
             {/* MEET THE LEADERSHIP SECTION */}
-            <section style={{ padding: '80px 20px', background: '#0b3d2e', color: '#fff' }}>
+            <section style={{ padding: '80px 20px', background: 'linear-gradient(135deg, #0d1f2d 0%, #1a3a4a 100%)', color: '#fff' }}>
                 <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-                    <h2 style={{ fontSize: 'clamp(28px, 5vw, 36px)', color: '#d4af37', fontWeight: '900', marginBottom: '10px', fontFamily: '"Playfair Display", serif', textAlign: 'center' }}>
+                    <h2 style={{ fontSize: 'clamp(28px, 5vw, 36px)', color: '#c9a84c', fontWeight: '900', marginBottom: '10px', fontFamily: '"Playfair Display", serif', textAlign: 'center' }}>
                         Meet Our Leadership
                     </h2>
                     <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.65)', fontSize: '15px', marginBottom: '55px', letterSpacing: '0.5px' }}>
@@ -107,8 +107,8 @@ const Home = () => {
 
                         {/* --- CEO Card --- */}
                         <div style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '20px', padding: 'clamp(25px, 5vw, 40px)', backdropFilter: 'blur(8px)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', transition: 'all 0.3s ease', boxShadow: '0 10px 40px rgba(0,0,0,0.2)' }}
-                            onMouseEnter={e => { e.currentTarget.style.transform='translateY(-8px)'; e.currentTarget.style.boxShadow='0 20px 50px rgba(0,0,0,0.35)'; e.currentTarget.style.borderColor='rgba(212,175,55,0.4)'; }}
-                            onMouseLeave={e => { e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='0 10px 40px rgba(0,0,0,0.2)'; e.currentTarget.style.borderColor='rgba(255,255,255,0.12)'; }}
+                            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-8px)'; e.currentTarget.style.boxShadow = '0 20px 50px rgba(0,0,0,0.35)'; e.currentTarget.style.borderColor = 'rgba(212,175,55,0.4)'; }}
+                            onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 40px rgba(0,0,0,0.2)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; }}
                         >
                             {/* Photo */}
                             <div style={{ position: 'relative', marginBottom: '20px' }}>
@@ -116,7 +116,7 @@ const Home = () => {
                                     src="/sankarganesh.png"
                                     alt="Sankarganesh R — CEO & Founder of Venthulir Organic Harvest"
                                     width="130" height="130"
-                                    style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', border: '4px solid #d4af37', boxShadow: '0 0 30px rgba(212,175,55,0.25)' }}
+                                    style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', objectPosition: 'center top', border: '4px solid #c9a84c', boxShadow: '0 0 30px rgba(201,168,76,0.3)' }}
                                     loading="lazy"
                                     onError={(e) => {
                                         e.target.onerror = null;
@@ -127,7 +127,7 @@ const Home = () => {
                                 />
                                 <div id="founder-fallback" style={{ display: 'none', width: '130px', height: '130px', borderRadius: '50%', border: '4px solid #d4af37', background: '#062017', alignItems: 'center', justifyContent: 'center', fontSize: '48px', fontWeight: '900', color: '#d4af37', boxShadow: '0 0 30px rgba(212,175,55,0.25)' }}>SR</div>
                                 {/* Role badge */}
-                                <div style={{ position: 'absolute', bottom: '-8px', left: '50%', transform: 'translateX(-50%)', background: '#d4af37', color: '#0b3d2e', fontSize: '11px', fontWeight: '900', padding: '3px 12px', borderRadius: '20px', whiteSpace: 'nowrap', letterSpacing: '0.5px' }}>CEO & FOUNDER</div>
+                                <div style={{ position: 'absolute', bottom: '-8px', left: '50%', transform: 'translateX(-50%)', background: '#c9a84c', color: '#0d1f2d', fontSize: '11px', fontWeight: '900', padding: '3px 12px', borderRadius: '20px', whiteSpace: 'nowrap', letterSpacing: '0.5px' }}>CEO & FOUNDER</div>
                             </div>
 
                             {/* Name & Title */}
@@ -139,21 +139,21 @@ const Home = () => {
 
                             {/* Bio */}
                             <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.8)', lineHeight: '1.75', marginBottom: '22px', textAlign: 'center' }}>
-                                An accomplished mechanical engineer and entrepreneur who leads Venthulir with a deep vision to bring authentic organic wellness back to everyday life.
+                                A seasoned mechanical engineer and strategic entrepreneur, Sankarganesh R. leads Venthulir with a mandate to redefine the organic sector through operational excellence, farm-to-consumer transparency, and science-backed wellness standards.
                             </p>
 
                             {/* Roles */}
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center', marginTop: 'auto' }}>
-                                {['Designer', 'Trainer', 'Team Leader', 'Project Head', 'CEO & Founder'].map((role) => (
-                                    <span key={role} style={{ fontSize: '12px', fontWeight: '600', color: '#d4af37', background: 'rgba(212,175,55,0.1)', border: '1px solid rgba(212,175,55,0.3)', padding: '4px 12px', borderRadius: '20px' }}>{role}</span>
+                                {['Strategic Leadership', 'Organic Innovation', 'Team Development', 'Project Governance', 'CEO & Founder'].map((role) => (
+                                    <span key={role} style={{ fontSize: '12px', fontWeight: '600', color: '#c9a84c', background: 'rgba(201,168,76,0.1)', border: '1px solid rgba(201,168,76,0.3)', padding: '4px 12px', borderRadius: '20px' }}>{role}</span>
                                 ))}
                             </div>
                         </div>
 
                         {/* --- Managing Director Card --- */}
                         <div style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '20px', padding: 'clamp(25px, 5vw, 40px)', backdropFilter: 'blur(8px)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', transition: 'all 0.3s ease', boxShadow: '0 10px 40px rgba(0,0,0,0.2)' }}
-                            onMouseEnter={e => { e.currentTarget.style.transform='translateY(-8px)'; e.currentTarget.style.boxShadow='0 20px 50px rgba(0,0,0,0.35)'; e.currentTarget.style.borderColor='rgba(212,175,55,0.4)'; }}
-                            onMouseLeave={e => { e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='0 10px 40px rgba(0,0,0,0.2)'; e.currentTarget.style.borderColor='rgba(255,255,255,0.12)'; }}
+                            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-8px)'; e.currentTarget.style.boxShadow = '0 20px 50px rgba(0,0,0,0.35)'; e.currentTarget.style.borderColor = 'rgba(212,175,55,0.4)'; }}
+                            onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 40px rgba(0,0,0,0.2)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; }}
                         >
                             {/* Avatar (initials) */}
                             <div style={{ position: 'relative', marginBottom: '20px' }}>
@@ -161,7 +161,7 @@ const Home = () => {
                                     src="/ganga.jpg"
                                     alt="Ganga — Managing Director of Venthulir Organic Harvest"
                                     width="130" height="130"
-                                    style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', border: '4px solid #d4af37', boxShadow: '0 0 30px rgba(212,175,55,0.25)' }}
+                                    style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', objectPosition: 'center top', border: '4px solid #c9a84c', boxShadow: '0 0 30px rgba(201,168,76,0.3)' }}
                                     loading="lazy"
                                     onError={(e) => {
                                         e.target.onerror = null;
@@ -172,7 +172,7 @@ const Home = () => {
                                 />
                                 <div id="ganga-fallback" style={{ display: 'none', width: '130px', height: '130px', borderRadius: '50%', border: '4px solid #d4af37', background: 'linear-gradient(135deg, #082f23, #0f5c3a)', alignItems: 'center', justifyContent: 'center', fontSize: '48px', fontWeight: '900', color: '#d4af37', boxShadow: '0 0 30px rgba(212,175,55,0.25)' }}>G</div>
                                 {/* Role badge */}
-                                <div style={{ position: 'absolute', bottom: '-8px', left: '50%', transform: 'translateX(-50%)', background: '#d4af37', color: '#0b3d2e', fontSize: '11px', fontWeight: '900', padding: '3px 12px', borderRadius: '20px', whiteSpace: 'nowrap', letterSpacing: '0.5px' }}>MANAGING DIRECTOR</div>
+                                <div style={{ position: 'absolute', bottom: '-8px', left: '50%', transform: 'translateX(-50%)', background: '#c9a84c', color: '#0d1f2d', fontSize: '11px', fontWeight: '900', padding: '3px 12px', borderRadius: '20px', whiteSpace: 'nowrap', letterSpacing: '0.5px' }}>MANAGING DIRECTOR</div>
                             </div>
 
                             {/* Name & Title */}
@@ -184,13 +184,13 @@ const Home = () => {
 
                             {/* Bio */}
                             <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.8)', lineHeight: '1.75', marginBottom: '22px', textAlign: 'center' }}>
-                                A commerce-driven visionary, Ganga oversees Venthulir's business operations and strategic direction, ensuring every decision reflects the brand's commitment to purity and excellence.
+                                A commerce-driven executive, Ganga steers Venthulir's corporate strategy, financial operations, and brand governance — ensuring every business decision upholds the highest standards of integrity, sustainability, and market leadership.
                             </p>
 
                             {/* Roles */}
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center', marginTop: 'auto' }}>
-                                {['Business Strategy', 'Operations', 'Brand Management', 'Managing Director'].map((role) => (
-                                    <span key={role} style={{ fontSize: '12px', fontWeight: '600', color: '#d4af37', background: 'rgba(212,175,55,0.1)', border: '1px solid rgba(212,175,55,0.3)', padding: '4px 12px', borderRadius: '20px' }}>{role}</span>
+                                {['Corporate Strategy', 'Financial Oversight', 'Brand Governance', 'Managing Director'].map((role) => (
+                                    <span key={role} style={{ fontSize: '12px', fontWeight: '600', color: '#c9a84c', background: 'rgba(201,168,76,0.1)', border: '1px solid rgba(201,168,76,0.3)', padding: '4px 12px', borderRadius: '20px' }}>{role}</span>
                                 ))}
                             </div>
                         </div>
@@ -200,14 +200,14 @@ const Home = () => {
             </section>
 
             {/* WHY VENTHULIR - TRUST AND BENEFITS SECTION */}
-            <section style={{ padding: '80px 20px', background: '#fdfcf7', textAlign: 'center' }}>
-                <h2 style={{ fontSize: '36px', color: '#0b3d2e', fontWeight: '900', marginBottom: '40px', fontFamily: '"Playfair Display", serif' }}>Why Venthulir?</h2>
+            <section style={{ padding: '80px 20px', background: '#f4f2ec', textAlign: 'center' }}>
+                <h2 style={{ fontSize: '36px', color: '#0d1f2d', fontWeight: '900', marginBottom: '40px', fontFamily: '"Playfair Display", serif' }}>Why Venthulir?</h2>
                 <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '30px', alignItems: 'center' }}>
                     <p style={{ fontSize: '18px', lineHeight: '1.8', color: '#555', maxWidth: '800px' }}>
-                        Started with a mission to bring traditional herbal wellness back to modern homes. 
+                        Started with a mission to bring traditional herbal wellness back to modern homes.
                         We ensure small-batch preparation and source directly from local farmers so that every product is 100% pure, natural, and rigorously quality tested.
                     </p>
-                    
+
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '30px', width: '100%', marginTop: '30px' }}>
                         <div className="trust-badge-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px' }}>
                             <div style={{ padding: '20px', background: '#e8f5e9', borderRadius: '50%', color: '#2e7d32' }}><Leaf size={40} /></div>
@@ -237,11 +237,11 @@ const Home = () => {
             <SpecialOffers />
 
             {/* MAIN PRODUCTS SECTION */}
-                <ShopGrid title="Our Best Sellers" isHomePage={true} id="products" />
+            <ShopGrid title="Our Best Sellers" isHomePage={true} id="products" />
 
             {/* TESTIMONIALS */}
-            <section style={{ padding: 'clamp(40px, 8vw, 80px) clamp(15px, 5vw, 20px)', background: '#0b3d2e', color: '#fff', textAlign: 'center' }}>
-                <h2 style={{ fontSize: 'clamp(28px, 5vw, 36px)', marginBottom: '40px', fontFamily: '"Playfair Display", serif', color: '#d4af37' }}>What Our Customers Say</h2>
+            <section style={{ padding: 'clamp(40px, 8vw, 80px) clamp(15px, 5vw, 20px)', background: 'linear-gradient(135deg, #0d1f2d 0%, #1a3a4a 100%)', color: '#fff', textAlign: 'center' }}>
+                <h2 style={{ fontSize: 'clamp(28px, 5vw, 36px)', marginBottom: '40px', fontFamily: '"Playfair Display", serif', color: '#c9a84c' }}>What Our Customers Say</h2>
                 <div style={{ maxWidth: '800px', margin: '0 auto' }}>
                     <p style={{ fontSize: 'clamp(18px, 4vw, 22px)', fontStyle: 'italic', lineHeight: '1.8', marginBottom: '30px' }}>
                         "The purity and aroma of Venthulir spices are unmatched. It feels like returning to the food our grandparents used to make. Absolutely loving it!"
@@ -257,16 +257,16 @@ const Home = () => {
                         <span style={{ fontSize: '28px' }}>🔥</span>
                         <h2 style={{ fontSize: 'clamp(20px, 3vw, 24px)', fontWeight: '900', margin: 0, textTransform: 'uppercase' }}>Limited Time Offer</h2>
                     </div>
-                    
+
                     <p style={{ fontSize: 'clamp(16px, 2.5vw, 18px)', margin: 0, fontWeight: '500', flexGrow: 1, textAlign: 'center' }}>
                         Get <span style={{ fontWeight: 'bold', color: '#ffea00' }}>10% OFF</span> on your First Order + 🎁 <span style={{ fontWeight: 'bold', color: '#ffea00' }}>Free Shipping</span> Above ₹499!
                     </p>
-                    
-                    <button 
+
+                    <button
                         onClick={() => { document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' }); }}
                         style={{ background: '#ffcd00', color: '#111', padding: '12px 30px', fontSize: '16px', fontWeight: 'bold', border: 'none', borderRadius: '50px', cursor: 'pointer', boxShadow: '0 5px 15px rgba(0,0,0,0.2)', transition: 'all 0.3s ease', whiteSpace: 'nowrap' }}
-                        onMouseEnter={e => { e.currentTarget.style.transform='scale(1.05)'; e.currentTarget.style.boxShadow='0 8px 20px rgba(0,0,0,0.3)'; }}
-                        onMouseLeave={e => { e.currentTarget.style.transform='scale(1)'; e.currentTarget.style.boxShadow='0 5px 15px rgba(0,0,0,0.2)'; }}
+                        onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.05)'; e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.3)'; }}
+                        onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)'; }}
                     >
                         Claim Offer Now
                     </button>
@@ -280,42 +280,42 @@ const Home = () => {
                         <h2 style={{ fontSize: 'clamp(28px, 5vw, 36px)', color: '#0b3d2e', fontWeight: '900', fontFamily: '"Playfair Display", serif', marginBottom: '10px' }}>Wellness Journal</h2>
                         <div style={{ width: '60px', height: '4px', background: '#d4af37', margin: '0 auto', borderRadius: '2px' }}></div>
                     </div>
-                    
+
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '40px' }}>
                         {[
-                            { 
-                                title: 'Benefits of Turmeric Powder', 
-                                snippet: 'Discover why this golden spice is essential for your daily immunity and overall well-being...', 
+                            {
+                                title: 'Benefits of Turmeric Powder',
+                                snippet: 'Discover why this golden spice is essential for your daily immunity and overall well-being...',
                                 image: '/journal-turmeric.jpg',
                                 delay: 'delay-1'
                             },
-                            { 
-                                title: 'Herbal Remedies for Immunity', 
-                                snippet: 'Traditional concoctions you can make at home to stay strong and healthy during weather changes...', 
+                            {
+                                title: 'Herbal Remedies for Immunity',
+                                snippet: 'Traditional concoctions you can make at home to stay strong and healthy during weather changes...',
                                 image: '/journal-herbs.jpg',
                                 delay: 'delay-2'
                             },
-                            { 
-                                title: 'Natural vs Chemical Spices', 
-                                snippet: 'A deep dive into why pure organic spices matter for your diet and long-term vitality...', 
+                            {
+                                title: 'Natural vs Chemical Spices',
+                                snippet: 'A deep dive into why pure organic spices matter for your diet and long-term vitality...',
                                 image: '/journal-spices.jpg',
                                 delay: 'delay-3'
                             }
                         ].map((post, idx) => (
-                            <div 
-                                key={idx} 
+                            <div
+                                key={idx}
                                 className={`fade-in-up ${post.delay}`}
                                 onClick={() => appNavigate('journal', { post })}
-                                style={{ background: '#fdfcf7', borderRadius: '16px', overflow: 'hidden', border: '1px solid #f0f0f0', cursor: 'pointer', transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)', display: 'flex', flexDirection: 'column', position: 'relative' }} 
-                                onMouseEnter={e => { 
-                                    e.currentTarget.style.transform='translateY(-12px)'; 
-                                    e.currentTarget.style.boxShadow='0 25px 50px rgba(11, 61, 46, 0.15)'; 
-                                    e.currentTarget.querySelector('.journal-img').style.transform='scale(1.1)';
-                                }} 
-                                onMouseLeave={e => { 
-                                    e.currentTarget.style.transform='translateY(0)'; 
-                                    e.currentTarget.style.boxShadow='0 10px 20px rgba(0,0,0,0.05)'; 
-                                    e.currentTarget.querySelector('.journal-img').style.transform='scale(1)';
+                                style={{ background: '#fdfcf7', borderRadius: '16px', overflow: 'hidden', border: '1px solid #f0f0f0', cursor: 'pointer', transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)', display: 'flex', flexDirection: 'column', position: 'relative' }}
+                                onMouseEnter={e => {
+                                    e.currentTarget.style.transform = 'translateY(-12px)';
+                                    e.currentTarget.style.boxShadow = '0 25px 50px rgba(11, 61, 46, 0.15)';
+                                    e.currentTarget.querySelector('.journal-img').style.transform = 'scale(1.1)';
+                                }}
+                                onMouseLeave={e => {
+                                    e.currentTarget.style.transform = 'translateY(0)';
+                                    e.currentTarget.style.boxShadow = '0 10px 20px rgba(0,0,0,0.05)';
+                                    e.currentTarget.querySelector('.journal-img').style.transform = 'scale(1)';
                                 }}
                             >
                                 <div style={{ width: '100%', height: '220px', overflow: 'hidden', position: 'relative' }}>

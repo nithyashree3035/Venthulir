@@ -68,7 +68,6 @@ const MotionLayer = () => {
                             onClick={() => {
                                 document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
                             }}
-                            style={{ backgroundColor: '#2e7d32' }}
                         >
                             Shop Now
                         </button>
@@ -78,7 +77,6 @@ const MotionLayer = () => {
                                 window.scrollTo(0, 0);
                                 appNavigate('all-products')
                             }}
-                            style={{ color: '#f57f17', borderBottom: '2px solid #f57f17', paddingBottom: '4px' }}
                         >
                             View Best Sellers
                         </button>
@@ -108,7 +106,7 @@ const MotionLayer = () => {
                                     role="button"
                                     aria-label={`Show ${p.name}`}
                                     tabIndex={0}
-                                    onKeyDown={(e) => { if(e.key === 'Enter') setActiveIndex(i); }}
+                                    onKeyDown={(e) => { if (e.key === 'Enter') setActiveIndex(i); }}
                                 >
                                     <div className="product-image-wrapper">
                                         <img src={p.src} alt={p.name} />

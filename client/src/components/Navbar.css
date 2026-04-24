@@ -1,8 +1,8 @@
 /* --- FULL FILE: NAVBAR.CSS --- */
 :root {
-    --royal-green: #0a2e1f;
-    --royal-beige: #f5f5dc;
-    --royal-gold: #d4af37;
+    --royal-green: #0d1f2d;
+    --royal-beige: #f4f2ec;
+    --royal-gold: #c9a84c;
     --nav-white: #ffffff;
 }
 
@@ -29,14 +29,15 @@
 }
 
 .at-top-bar {
-    background: var(--royal-green);
-    color: var(--royal-beige);
+    background: #0d1f2d;
+    color: #e8c97a;
     padding: 6px 0;
     font-size: 10px;
     font-weight: 800;
     letter-spacing: 1px;
     text-transform: uppercase;
     overflow: hidden;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.2);
 }
 
 .at-ticker-move {
@@ -56,9 +57,9 @@
 }
 
 .at-navbar-main {
-    background: var(--nav-white);
+    background: #0d1f2d;
     padding: 10px 0;
-    border-bottom: 1px solid rgba(10, 46, 31, 0.05);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.12);
 }
 
 @media (min-width: 768px) {
@@ -92,7 +93,7 @@
     display: flex;
     background: transparent;
     border: none;
-    color: var(--royal-green);
+    color: #e8c97a;
     cursor: pointer;
 }
 
@@ -111,7 +112,7 @@
 .at-logo-text {
     font-size: 20px;
     font-weight: 950;
-    color: var(--royal-green);
+    color: #e8c97a;
     letter-spacing: -1px;
 }
 
@@ -168,12 +169,12 @@
 .at-label-bot {
     font-size: 13px;
     font-weight: 800;
-    color: var(--royal-green);
+    color: #e8c97a;
 }
 
 .at-icon-btn {
     position: relative;
-    color: var(--royal-green);
+    color: #e8c97a;
 }
 
 .at-badge {
@@ -196,9 +197,15 @@
     align-items: center;
     gap: 8px;
     text-decoration: none;
-    background: var(--royal-beige);
+    background: rgba(201, 168, 76, 0.18);
+    border: 1px solid rgba(201, 168, 76, 0.35);
     padding: 6px 12px;
     border-radius: 50px;
+    transition: all 0.25s ease;
+}
+
+.at-cart-btn:hover {
+    background: rgba(201, 168, 76, 0.3);
 }
 
 @media (min-width: 768px) {
@@ -229,9 +236,10 @@
 
 .at-sub-nav {
     display: none;
-    background: var(--royal-green);
+    background: linear-gradient(90deg, #0d1f2d, #1a3a4a);
     padding: 20px 0;
     width: 100%;
+    border-top: 1px solid rgba(201, 168, 76, 0.15);
 }
 
 .at-sub-nav.mobile-open {
@@ -269,16 +277,46 @@
 .at-sub-link {
     background: transparent;
     border: none;
-    color: var(--royal-beige);
+    color: rgba(232, 201, 122, 0.85);
     text-decoration: none;
     font-size: 14px;
     font-weight: 800;
     text-transform: uppercase;
     white-space: nowrap;
+    transition: color 0.2s;
+    letter-spacing: 0.5px;
+}
+
+.at-sub-link:hover,
+.at-sub-link.active {
+    color: #c9a84c;
+    text-decoration: underline;
+    text-decoration-color: #c9a84c;
+    text-underline-offset: 4px;
 }
 
 @media (min-width: 1024px) {
     .at-sub-link {
         font-size: 11px;
+    }
+}
+
+.at-cart-text {
+    display: none;
+}
+
+@media (min-width: 480px) {
+    .at-cart-text {
+        display: block;
+        font-weight: 900;
+        font-size: 11px;
+        color: #e8c97a;
+        text-transform: uppercase;
+    }
+}
+
+@media (min-width: 768px) {
+    .at-cart-text {
+        font-size: 13px;
     }
 }

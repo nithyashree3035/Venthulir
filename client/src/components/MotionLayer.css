@@ -1,4 +1,4 @@
-/* --- PREMIUM EDITORIAL HERO CSS + STUDENT QUEUE --- */
+/* --- CORPORATE EXECUTIVE HERO CSS --- */
 .premium-hero-container {
     position: absolute;
     top: 0;
@@ -9,11 +9,11 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    background: #fcfcfc;
+    background: linear-gradient(135deg, #0d1f2d 0%, #1a3a4a 60%, #0d1f2d 100%);
     z-index: 1;
 }
 
-/* Base Light Glow */
+/* Corporate Ambient Glow */
 .premium-glow-sphere {
     position: absolute;
     top: 50%;
@@ -21,7 +21,7 @@
     transform: translateY(-50%);
     width: 900px;
     height: 900px;
-    background: radial-gradient(circle, rgba(230, 245, 235, 1) 0%, rgba(244, 250, 246, 0.6) 45%, rgba(252, 252, 252, 0) 70%);
+    background: radial-gradient(circle, rgba(201, 168, 76, 0.12) 0%, rgba(26, 58, 74, 0.3) 45%, rgba(13, 31, 45, 0) 70%);
     border-radius: 50%;
     z-index: 2;
     pointer-events: none;
@@ -66,8 +66,15 @@
 }
 
 @keyframes fadeUp {
-    0% { opacity: 0; transform: translateY(40px); }
-    100% { opacity: 1; transform: translateY(0); }
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .brand-eyebrow {
@@ -75,7 +82,7 @@
     font-weight: 700;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: #4a7c59;
+    color: #c9a84c;
     margin-bottom: 24px;
     display: flex;
     align-items: center;
@@ -87,25 +94,25 @@
 .organic-dot {
     width: 8px;
     height: 8px;
-    background: #4a7c59;
+    background: #c9a84c;
     border-radius: 50%;
     display: inline-block;
-    box-shadow: 0 0 10px rgba(74, 124, 89, 0.5);
+    box-shadow: 0 0 10px rgba(201, 168, 76, 0.5);
 }
 
 .hero-monumental-title {
     font-size: 82px;
     line-height: 1.05;
     font-weight: 900;
-    color: #0b3d2e;
+    color: #f4f2ec;
     font-family: 'Playfair Display', serif;
     margin: 0 0 24px 0;
     letter-spacing: -2px;
-    text-shadow: 0 15px 35px rgba(0, 0, 0, 0.04);
+    text-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
 }
 
 .text-highlight {
-    color: #4a7c59;
+    color: #c9a84c;
     font-style: italic;
     font-weight: 600;
 }
@@ -113,7 +120,7 @@
 .hero-sophisticated-desc {
     font-size: 18px;
     line-height: 1.7;
-    color: #555;
+    color: rgba(244, 242, 236, 0.75);
     margin-bottom: 40px;
     font-weight: 400;
     max-width: 480px;
@@ -128,27 +135,27 @@
 
 .premium-primary-btn {
     padding: 18px 36px;
-    background: #0b3d2e;
-    color: white;
+    background: #c9a84c;
+    color: #0d1f2d;
     font-size: 15px;
     font-weight: 700;
     border: none;
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 15px 25px rgba(11, 61, 46, 0.15);
+    box-shadow: 0 15px 25px rgba(201, 168, 76, 0.25);
 }
 
 .premium-primary-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 20px 30px rgba(11, 61, 46, 0.25);
-    background: #0f4d3a;
+    box-shadow: 0 20px 30px rgba(201, 168, 76, 0.4);
+    background: #e8c97a;
 }
 
 .premium-secondary-btn {
     padding: 16px 0;
     background: transparent;
-    color: #0b3d2e;
+    color: rgba(244, 242, 236, 0.9);
     font-size: 15px;
     font-weight: 700;
     border: none;
@@ -164,7 +171,7 @@
     left: 0;
     width: 100%;
     height: 1px;
-    background: #0b3d2e;
+    background: #c9a84c;
     transform: scaleX(0.3);
     transform-origin: left;
     transition: transform 0.3s ease;
@@ -211,12 +218,12 @@
 }
 
 .epic-stack-card.active-salute {
-    /* The glowing border effect when stepping forward to the front */
-    background: rgba(255, 255, 255, 0.45);
+    /* Corporate gold glow border */
+    background: rgba(13, 31, 45, 0.5);
     backdrop-filter: blur(8px);
-    border: 2px solid rgba(74, 124, 89, 0.6);
-    box-shadow: 0 25px 60px rgba(74, 124, 89, 0.15),
-        inset 0 0 20px rgba(255, 255, 255, 0.6);
+    border: 2px solid rgba(201, 168, 76, 0.6);
+    box-shadow: 0 25px 60px rgba(201, 168, 76, 0.18),
+        inset 0 0 20px rgba(201, 168, 76, 0.08);
 }
 
 .product-image-wrapper {
