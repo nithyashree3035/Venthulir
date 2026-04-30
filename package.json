@@ -11,7 +11,8 @@
         "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run admin\"",
         "build": "cd client && npm run build",
         "build-admin": "cd client && npm run build -- --mode admin",
-        "build-all": "npm run build && npm run build-admin && xcopy /E /I /Y client\\dist-admin client\\dist\\admin",
+        "build-all": "node scripts/build-all.js",
+        "render-build": "npm run install-all && npm run build-all",
         "start": "cd server && npm start"
     },
     "devDependencies": {

@@ -364,9 +364,24 @@ app.put('/api/admin/messages/:id/resolve', async (req, res) => {
 
 // 6. SERVE FRONTEND (Production)
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/dist')));
+    const distPath = path.join(__dirname, '../client/dist');
+    
+    // Serve admin static files
+    app.use('/admin', express.static(path.join(distPath, 'admin')));
+    
+    // Serve customer static files
+    app.use(express.static(distPath));
+
+    // Admin SPA routing
+    app.get('/admin/*', (req, res) => {
+        res.sendFile(path.join(distPath, 'admin', 'index.html'));
+    });
+
+    // Customer SPA routing
     app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, '../client', 'dist', 'index.html'));
+        if (!req.path.startsWith('/api')) {
+            res.sendFile(path.join(distPath, 'index.html'));
+        }
     });
 }
 
@@ -385,6 +400,6 @@ app.get('/api/test-email', async (req, res) => {
     }
 });
 
-const PORT = 7000;
+const PORT = process.env.PORT || 7000;
 app.listen(PORT, () => console.log(`🚀 Royal Server running at http://localhost:${PORT}`));
 

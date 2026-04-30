@@ -47,13 +47,37 @@ app.use('/api/orders', require('./routes/orderRoutes'));
 app.use('/api/offers', require('./routes/offerRoutes'));
 
 // API Diagnostic Routes
-app.get('/', (req, res) => {
-    res.json({
-        status: 'Online',
-        message: 'Venthulir Imperial API is successfully running on Render.',
-        region: 'Production'
+// 6. SERVE FRONTEND (Production)
+if (process.env.NODE_ENV === 'production') {
+    const distPath = path.join(__dirname, '../client/dist');
+    
+    // Serve admin static files
+    app.use('/admin', express.static(path.join(distPath, 'admin')));
+    
+    // Serve customer static files
+    app.use(express.static(distPath));
+
+    // Admin SPA routing
+    app.get('/admin/*', (req, res) => {
+        res.sendFile(path.join(distPath, 'admin', 'index.html'));
     });
-});
+
+    // Customer SPA routing
+    app.get('*', (req, res) => {
+        if (!req.path.startsWith('/api')) {
+            res.sendFile(path.join(distPath, 'index.html'));
+        }
+    });
+} else {
+    // API Diagnostic Routes (Development only)
+    app.get('/', (req, res) => {
+        res.json({
+            status: 'Online',
+            message: 'Venthulir Imperial API is running (Development Mode).',
+            region: 'Local'
+        });
+    });
+}
 
 // Debug Email Route
 app.get('/api/test-email', async (req, res) => {
