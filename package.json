@@ -9,7 +9,7 @@
         "admin": "cd client && npm run dev -- --mode admin",
         "server": "cd server && npm start",
         "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run admin\"",
-        "build": "cd client && npm run build",
+        "build": "npm run render-build",
         "build-admin": "cd client && npm run build -- --mode admin",
         "build-all": "node scripts/build-all.js",
         "render-build": "npm run install-all && npm run build-all",
